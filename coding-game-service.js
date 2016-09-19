@@ -333,7 +333,6 @@ const CodingGameService = new Lang.Class({
         // Listen for any events which are currently outstanding
         let listeningForTriggers = this._log.activeEventsToListenFor();
         this._listeningEventTriggers = {};
-        log(JSON.stringify(listeningForTriggers));
         Object.keys(listeningForTriggers).forEach(Lang.bind(this, function(k) {
             this._startListeningFor(k, listeningForTriggers[k]);
         }));
@@ -450,13 +449,10 @@ const CodingGameService = new Lang.Class({
             // stop listening for this event now.
             log(JSON.stringify(eventToTrigger));
             this._descriptors.events.filter(function(e) {
-                log("Searching " + JSON.stringify(eventToTrigger.data.received) + " for " + e.name);
                 return findInArray(eventToTrigger.data.received, function(r) {
-                    log("Check " + r.name + " against " + e.name);
                     return r.name === e.name;
                 }) !== null;
             }).forEach(Lang.bind(this, function(e) {
-                log("Would dispatch " + e.name);
                 this._dispatch(e);
             }));
 
@@ -640,7 +636,6 @@ const CodingGameService = new Lang.Class({
     },
 
     _startListeningFor: function(name, event) {
-        log(name);
         this.emit_listen_for_event(name);
         this._listeningEventTriggers[name] = event;
     },
@@ -661,7 +656,6 @@ const CodingGameService = new Lang.Class({
     },
 
     _dispatch: function(event) {
-        log(JSON.stringify(event));
         this._dispatchTable[event.type](event, Lang.bind(this, function(logEvent) {
             return this._log.handleEvent(logEvent.type, logEvent.name, logEvent.data);
         }));
