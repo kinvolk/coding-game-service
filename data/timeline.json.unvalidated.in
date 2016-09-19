@@ -226,6 +226,14 @@
             "data": {
                 "name": "artifact::intro::install-programming"
             }
+        },
+        {
+            "name": "chat::meme::intro::intro-complete",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "name": "intro::intro-complete"
+            }
         }
     ]
 }
