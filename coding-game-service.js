@@ -268,6 +268,25 @@ const CodingGameServiceLog = new Lang.Class({
         return missions[missions.length - 1].data.name;
     },
 
+    activeEventsToListenFor: function() {
+        let activeListeningEvents = {};
+
+        this._eventLog.filter(function(e) {
+            return e.type === 'listen-event' || e.type === 'receive-event';
+        }).forEach(function(e) {
+            if (e.type === 'listen-event') {
+                // Its okay to clobber an existing true value in here
+                // since as soon as we receive an event we stop listening
+                // for it completely.
+                activeListeningEvents[e.data.name] = e;
+            } else if (e.type === 'receive-event') {
+                delete activeListeningEvents[e.data.name];
+            }
+        });
+
+        return activeListeningEvents;
+    },
+
     eventHasOccurred: function(name) {
         return findInArray(this._eventLog, function(e) {
             return e.name === name;
@@ -280,7 +299,8 @@ const CodingGameServiceErrorDomain = GLib.quark_from_string('coding-game-service
 const CodingGameServiceErrors = {
     NO_SUCH_EVENT_ERROR: 0,
     NO_SUCH_RESPONSE_ERROR: 1,
-    INTERNAL_ERROR: 2
+    IRRELEVANT_EVENT: 2,
+    INTERNAL_ERROR: 3
 };
 const CodingGameService = new Lang.Class({
     Name: 'CodingGameService',
@@ -302,11 +322,21 @@ const CodingGameService = new Lang.Class({
             'chat-user': Lang.bind(this, this._dispatchChatEvent),
             'start-mission': Lang.bind(this, this._startMissionEvent),
             'register-artifact': Lang.bind(this, this._registerArtifactEvent),
-            'change-setting': Lang.bind(this, this._changeSettingEvent)
+            'change-setting': Lang.bind(this, this._changeSettingEvent),
+            'listen-event': Lang.bind(this, this._listenExternalEvent),
+            'receive-event': Lang.bind(this, this._receiveExternalEvent)
         };
 
         // Log the warnings
         this._descriptors.warnings.forEach(w => log(w));
+
+        // Listen for any events which are currently outstanding
+        let listeningForTriggers = this._log.activeEventsToListenFor();
+        this._listeningEventTriggers = {};
+        log(JSON.stringify(listeningForTriggers));
+        Object.keys(listeningForTriggers).forEach(Lang.bind(this, function(k) {
+            this._startListeningFor(k, listeningForTriggers[k]);
+        }));
 
         // If we started for the first time, dispatch the very first mission
         let activeMission = this._log.activeMission();
@@ -393,6 +423,63 @@ const CodingGameService = new Lang.Class({
         }
 
         return true;
+    },
+
+    vfunc_handle_external_event: function(method, id) {
+        try {
+            let eventToTrigger = this._listeningEventTriggers[id];
+
+            if (!eventToTrigger) {
+                method.return_error_literal(CodingGameServiceErrorDomain,
+                                            CodingGameServiceErrors.IRRELEVANT_EVENT,
+                                            'Not listening for event ' + id);
+                return;
+            }
+
+            // Process an internal event to note that we received the event here
+            // which will cause us to stop listening for it and log it.
+            this._dispatch({
+                name: eventToTrigger.name + '::receive',
+                type: 'receive-event',
+                data: {
+                    name: id
+                }
+            });
+
+            // Run the other events that happen when this one was triggered and
+            // stop listening for this event now.
+            log(JSON.stringify(eventToTrigger));
+            this._descriptors.events.filter(function(e) {
+                log("Searching " + JSON.stringify(eventToTrigger.data.received) + " for " + e.name);
+                return findInArray(eventToTrigger.data.received, function(r) {
+                    log("Check " + r.name + " against " + e.name);
+                    return r.name === e.name;
+                }) !== null;
+            }).forEach(Lang.bind(this, function(e) {
+                log("Would dispatch " + e.name);
+                this._dispatch(e);
+            }));
+
+            this.complete_external_event(method);
+        } catch (e) {
+            logError(e);
+            method.return_error_literal(CodingGameServiceErrorDomain,
+                                        CodingGameServiceErrors.INTERNAL_ERROR,
+                                        String(e));
+        }
+    },
+
+    vfunc_handle_currently_listening_for_events: function(method) {
+        try {
+            let response = new GLib.Variant("a(s)",
+                                            Object.keys(this._listeningEventTriggers).map(k => [k]));
+            this.complete_currently_listening_for_events(method, response);
+        } catch (e) {
+            logError(e);
+            method.return_error_literal(CodingGameServiceErrorDomain,
+                                        CodingGameServiceErrors.INTERNAL_ERROR,
+                                        String(e));
+        }
     },
 
     _dispatchChatEvent: function(event, callback) {
@@ -549,6 +636,27 @@ const CodingGameService = new Lang.Class({
         settings.set_value(event.data.key,
                            new GLib.Variant(event.data.variant,
                                             event.data.value));
+        callback(event);
+    },
+
+    _startListeningFor: function(name, event) {
+        log(name);
+        this.emit_listen_for_event(name);
+        this._listeningEventTriggers[name] = event;
+    },
+
+    _stopListeningFor: function(name) {
+        this.emit_stop_listening_for(name);
+        delete this._listeningEventTriggers[name];
+    },
+
+    _listenExternalEvent: function(event, callback) {
+        this._startListeningFor(event.data.name, event);
+        callback(event);
+    },
+
+    _receiveExternalEvent: function(event, callback) {
+        this._stopListeningFor(event.data.name);
         callback(event);
     },
 
