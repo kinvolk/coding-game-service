@@ -50,14 +50,6 @@
             }
         },
         {
-            "name": "chat::meme::intro::hook::again",
-            "type": "chat-actor",
-            "data": {
-                "actor": "MEME",
-                "name": "intro::hook::again"
-            }
-        },
-        {
             "name": "chat::meme::intro::hook::artifact",
             "type": "register-artifact",
             "data": {
