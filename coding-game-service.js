@@ -301,7 +301,8 @@ const CodingGameService = new Lang.Class({
             'chat-actor': Lang.bind(this, this._dispatchChatEvent),
             'chat-user': Lang.bind(this, this._dispatchChatEvent),
             'start-mission': Lang.bind(this, this._startMissionEvent),
-            'register-artifact': Lang.bind(this, this._registerArtifactEvent)
+            'register-artifact': Lang.bind(this, this._registerArtifactEvent),
+            'change-setting': Lang.bind(this, this._changeSettingEvent)
         };
 
         // Log the warnings
@@ -527,7 +528,32 @@ const CodingGameService = new Lang.Class({
         callback(event);
     },
 
+    _changeSettingEvent: function(event, callback) {
+        let source = Gio.SettingsSchemaSource.get_default();
+        let schema = source.lookup(event.data.schema, true);
+
+        // We first do some introspection on the schema to make sure that we can
+        // change the value as intended and don't get aborted when we try to
+        if (!schema) {
+            throw new Error('Cannot process change-setting event ' + event.data.name +
+                            ', no such schema ' + event.data.schema);
+        }
+
+        if (schema.list_keys().indexOf(event.data.key) === -1) {
+            throw new Error('Cannot process change-setting event ' + event.data.name +
+                            ', schema ' + event.data.schema + ' has no key ' +
+                            event.data.key);
+        }
+
+        let settings = new Gio.Settings({ schema: event.data.schema });
+        settings.set_value(event.data.key,
+                           new GLib.Variant(event.data.variant,
+                                            event.data.value));
+        callback(event);
+    },
+
     _dispatch: function(event) {
+        log(JSON.stringify(event));
         this._dispatchTable[event.type](event, Lang.bind(this, function(logEvent) {
             return this._log.handleEvent(logEvent.type, logEvent.name, logEvent.data);
         }));

@@ -78,6 +78,10 @@
                         },
                         {
                             "type": "event",
+                            "name": "event::intro::enable-wobbly-windows"
+                        },
+                        {
+                            "type": "event",
                             "name": "listen::intro::wobble-window"
                         }
                     ],
@@ -115,6 +119,7 @@
             "data": {
                 "schema": "org.gnome.shell",
                 "key": "wobbly-effect",
+                "variant": "b",
                 "value": true
             }
         },
@@ -124,6 +129,7 @@
             "data": {
                 "schema": "org.gnome.shell",
                 "key": "wobbly-effect",
+                "variant": "b",
                 "value": false
             }
         },
@@ -134,8 +140,8 @@
                 "name": "move-window",
                 "received": [
                     {
-                        "type": "register",
-                        "name": "event::intro::wobble-window"
+                        "type": "event",
+                        "name": "artifact::intro::wobble-window"
                     },
                     {
                         "type": "event",
