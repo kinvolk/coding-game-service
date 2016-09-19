@@ -4,21 +4,22 @@
             "name": "intro",
             "short_desc": "Down the rabbit hole",
             "long_desc": "Why don't you answer the questions and see where the rabbit hole leads",
+            "start_event": "chat::meme::intro::hook::challenge",
             "artifacts": [
                 {
-                    "name": "chat::meme::intro::hook::challenge",
+                    "name": "artifact::intro::hook",
                     "points": 52
                 },
                 {
-                    "name": "chat::meme::intro::choice_see_cool::challenge",
+                    "name": "artifact::choice_see_cool::challenge",
                     "points": 52
                 },
                 {
-                    "name": "listen::intro::wobble-window",
+                    "name": "artifact::intro::wobble-window",
                     "points": 52
                 },
                 {
-                    "name": "chat::meme::intro::install_programming::challenge",
+                    "name": "artifact:intro::install-programming",
                     "points": 52
                 }
             ]
@@ -37,8 +38,8 @@
                 "responses": {
                     "success": [
                         {
-                            "type": "register",
-                            "name": "chat::meme::intro::hook"
+                            "type": "event",
+                            "name": "chat::meme::intro::hook::artifact"
                         },
                         {
                             "type": "event",
@@ -57,6 +58,13 @@
             }
         },
         {
+            "name": "chat::meme::intro::hook::artifact",
+            "type": "register-artifact",
+            "data": {
+                "name": "artifact::intro::hook"
+            }
+        },
+        {
             "name": "chat::meme::intro::choice_see_cool::challenge",
             "type": "chat-actor",
             "data": {
@@ -65,8 +73,8 @@
                 "responses": {
                     "yes": [
                         {
-                            "type": "register",
-                            "name": "chat::meme::intro::choice_see_cool"
+                            "type": "event",
+                            "name": "chat::meme::intro::choice_see_cool::artifact"
                         },
                         {
                             "type": "event",
@@ -84,6 +92,13 @@
                         }
                     ]
                 }
+            }
+        },
+        {
+            "name": "chat::meme::intro::choice_see_cool::artifact",
+            "type": "register-artifact",
+            "data": {
+                "name": "artifact::intro::hook"
             }
         },
         {
@@ -147,6 +162,13 @@
             }
         },
         {
+            "name": "listen::intro::wobble-window::artifact",
+            "type": "register-artifact",
+            "data": {
+                "name": "artifact::intro::wobble-window"
+            }
+        },
+        {
             "name": "chat::meme::intro::wobble-windows-comment",
             "type": "chat-actor",
             "data": {
@@ -190,6 +212,13 @@
             "data": {
                 "actor": "MEME",
                 "name": "intro::install_programming::again"
+            }
+        },
+        {
+            "name": "chat::meme::intro::install-programming::artifact",
+            "type": "register-artifact",
+            "data": {
+                "name": "artifact::intro::install-programming"
             }
         }
     ]

@@ -236,15 +236,16 @@ const CodingGameServiceLog = new Lang.Class({
         });
     },
 
-    entriesForEventNames: function(eventNames) {
+    artifactEventsWithNames: function(artifactNames) {
         let eventsToEntries = {};
 
-        eventNames.forEach(function(e) {
+        artifactNames.forEach(function(e) {
             eventsToEntries[e] = null;
         });
 
         this._eventLog.filter(function(e) {
-            return eventNames.indexOf(e.data.name) !== -1;
+            return e.type === 'register-artifact' &&
+                   artifactNames.indexOf(e.data.name) !== -1;
         }).forEach(function(e) {
             // Unconditionally overwrite eventsToEntries so that each key
             // in the object corresponds to the latest occurrence of the
@@ -265,6 +266,12 @@ const CodingGameServiceLog = new Lang.Class({
 
         return missions[missions.length - 1].data.name;
     },
+
+    eventHasOccurred: function(name) {
+        return findInArray(this._eventLog, function(e) {
+            return e.name === name;
+        }) !== null;
+    }
 });
         
 
@@ -292,7 +299,8 @@ const CodingGameService = new Lang.Class({
         this._dispatchTable = {
             'chat-actor': Lang.bind(this, this._dispatchChatEvent),
             'chat-user': Lang.bind(this, this._dispatchChatEvent),
-            'start-mission': Lang.bind(this, this._startMissionEvent)
+            'start-mission': Lang.bind(this, this._startMissionEvent),
+            'register-artifact': Lang.bind(this, this._registerArtifactEvent)
         };
 
         // Log the warnings
@@ -429,6 +437,34 @@ const CodingGameService = new Lang.Class({
         }
     },
 
+    _registerArtifactEvent: function(event, callback) {
+        // If we have a current mission, update the number of points
+        // based on the fact that we ran a new event. Note that the points
+        // accrue as soon as an event is run, which is meant to be
+        // representative of the fact that it was triggered from other
+        // events.
+        //
+        // This simplifies the design somewhat, since it allows us to
+        // keep the notion of events and artifacts separate and does not
+        // require us to encode the idea of "passing" or "failing" an
+        // event (instead we merely move from one event to another)
+        if (this.current_mission) {
+            let missionSpec = findInArray(this._descriptors.missions, Lang.bind(this, function(m) {
+                return m.name == this.current_mission;
+            }));
+            let achievedArtifact = findInArray(missionSpec.artifacts, function(a) {
+                return a.name === event.data.name;
+            });
+
+            if (achievedArtifact) {
+                this.current_mission_points += achievedArtifact.points;
+                this.current_mission_num_tasks++;
+            }
+        }
+
+        callback(event);
+    },
+
     _startMission: function(name) {
         // When a mission is started, we look at the very first event in this mission
         // and dispatch that if it has not already been dispatched in the log. We also
@@ -446,7 +482,7 @@ const CodingGameService = new Lang.Class({
             return total + p;
         }, 0);
 
-        let completedEvents = this._log.entriesForEventNames(missionSpec.artifacts.map(function(a) {
+        let completedEvents = this._log.artifactEventsWithNames(missionSpec.artifacts.map(function(a) {
             return a.name;
         }));
 
@@ -471,11 +507,16 @@ const CodingGameService = new Lang.Class({
         this.current_mission_available_points = totalAvailablePoints;
 
         // Now, if our starting event has not yet occured, trigger it
-        if (!completedEvents[missionSpec.artifacts[0].name]) {
+        if (!this._log.eventHasOccurred(missionSpec.start_event)) {
             let event = findInArray(this._descriptors.events, function(e) {
-                return e.name === missionSpec.artifacts[0].name;
+                return e.name === missionSpec.start_event;
             });
 
+            if (!event) {
+                throw new Error('No such event ' + missionSpec.start_event +
+                                ', cannot start mission ' + missionSpec.name);
+            }
+ 
             this._dispatch(event);
         }
     },
@@ -489,30 +530,6 @@ const CodingGameService = new Lang.Class({
         this._dispatchTable[event.type](event, Lang.bind(this, function(logEvent) {
             return this._log.handleEvent(logEvent.type, logEvent.data);
         }));
-
-        // If we have a current mission, update the number of points
-        // based on the fact that we ran a new event. Note that the points
-        // accrue as soon as an event is run, which is meant to be
-        // representative of the fact that it was triggered from other
-        // events.
-        //
-        // This simplifies the design somewhat, since it allows us to
-        // keep the notion of events and artifacts separate and does not
-        // require us to encode the idea of "passing" or "failing" an
-        // event (instead we merely move from one event to another)
-        if (this.current_mission) {
-            let missionSpec = findInArray(this._descriptors.missions, Lang.bind(this, function(m) {
-                return m.name == this.current_mission;
-            }));
-            let achievedArtifact = findInArray(missionSpec.artifacts, function(a) {
-                return a.name === event.data.name;
-            });
-
-            if (achievedArtifact) {
-                this.current_mission_points += achievedArtifact.points;
-                this.current_mission_num_tasks++;
-            }
-        }
     }   
 });
 
