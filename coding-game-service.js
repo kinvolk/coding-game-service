@@ -189,10 +189,11 @@ const CodingGameServiceLog = new Lang.Class({
         }
     },
 
-    handleEvent: function(eventType, eventData) {
+    handleEvent: function(eventType, eventName, eventData) {
         let timestamp = new Date().toLocaleString();
         let entry = {
             type: eventType,
+            name: eventName,
             data: eventData,
             timestamp: timestamp
         };
@@ -528,7 +529,7 @@ const CodingGameService = new Lang.Class({
 
     _dispatch: function(event) {
         this._dispatchTable[event.type](event, Lang.bind(this, function(logEvent) {
-            return this._log.handleEvent(logEvent.type, logEvent.data);
+            return this._log.handleEvent(logEvent.type, logEvent.name, logEvent.data);
         }));
     }   
 });
