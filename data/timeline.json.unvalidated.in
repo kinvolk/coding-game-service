@@ -183,16 +183,16 @@
             }
         },
         {
-            "name": "chat::meme::intro::install_programming::challenge",
+            "name": "chat::meme::intro::install_programming_hook::challenge",
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "name": "intro::install_programming::challenge",
+                "name": "intro::install_programming_hook",
                 "responses": {
                     "satisfied": [
                         {
-                            "type": "register",
-                            "name": "chat::meme::intro::install_programming"
+                            "type": "event",
+                            "name": "chat::meme::intro::install-programming::artifact"
                         },
                         {
                             "type": "event",
