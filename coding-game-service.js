@@ -317,6 +317,7 @@ const CodingGameService = new Lang.Class({
         this._dispatchTable = {
             'chat-actor': Lang.bind(this, this._dispatchChatEvent),
             'chat-user': Lang.bind(this, this._dispatchChatEvent),
+            'input-user': Lang.bind(this, this._dispatchInputBubbleEvent),
             'start-mission': Lang.bind(this, this._startMissionEvent),
             'register-artifact': Lang.bind(this, this._registerArtifactEvent),
             'change-setting': Lang.bind(this, this._changeSettingEvent),
@@ -473,6 +474,16 @@ const CodingGameService = new Lang.Class({
                                         CodingGameServiceErrors.INTERNAL_ERROR,
                                         String(e));
         }
+    },
+
+    _dispatchInputBubbleEvent: function(event, callback) {
+        let entry = callback(event);
+        this._chatController.sendChatMessage({
+            timestamp: entry.timestamp,
+            actor: entry.data.actor,
+            input: entry.data.input,
+            name: entry.name
+        });
     },
 
     _dispatchChatEvent: function(event, callback) {
