@@ -4,7 +4,10 @@
             "name": "intro",
             "short_desc": "Down the rabbit hole",
             "long_desc": "Why don't you answer the questions and see where the rabbit hole leads",
-            "start_event": "chat::meme::intro::hook::challenge",
+            "start_events": [
+                "chat::meme::intro::hook",
+                "chat::meme::intro::hook::challenge"
+            ],
             "artifacts": [
                 {
                     "name": "artifact::intro::hook",
