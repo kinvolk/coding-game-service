@@ -312,11 +312,6 @@ const CodingGameService = new Lang.Class({
         this.parent();
 
         this._descriptors = loadTimelineDescriptors(commandLineFile);
-        this._contentProvider = Showmehow.ServiceProxy.new_for_bus_sync(Gio.BusType.SESSION,
-                                                                        0,
-                                                                        'com.endlessm.Showmehow.Service',
-                                                                        '/com/endlessm/Showmehow/Service',
-                                                                        null);
         this._log = new CodingGameServiceLog(Gio.File.new_for_path('game-service.log'));
         this._chatController = new CodingGameServiceChatController(ChatboxService.CodingChatboxProxy);
         this._dispatchTable = {
@@ -488,36 +483,14 @@ const CodingGameService = new Lang.Class({
                 timestamp: entry.timestamp,
                 actor: entry.data.actor,
                 message: entry.data.message,
-                input: entry.data.input,
-                name: entry.data.name
+                name: entry.name
             });
         });
 
         if (event.type === 'chat-actor') {
             // If we don't actually have message text yet, then
             // we'll need to fetch it from showmehow-service
-            if (!event.data.message) {
-                let [name, position] = event.data.name.split('::').slice(0, 2)
-                this._contentProvider.call_get_task_description(name, position, null,
-                                                                Lang.bind(this, function(source, result) {
-                    let success, returnValue;
-
-                    try {
-                        [success, returnValue] = this._contentProvider.call_get_task_description_finish(result);
-                    } catch (e) {
-                        logError(e, 'Call to get_task_description failed, for ' + event.data.name);
-                    }
-
-                    let [message, inputSpecString] = returnValue.deep_unpack();
-                    let inputSpec = JSON.parse(inputSpecString);
-
-                    event.data.message = message;
-                    event.data.input = inputSpec;
-                    sendMessage(event);
-                }));
-            } else {
-                sendMessage(event);
-            }
+            sendMessage(event);
         } else {
             // No sense sending the chat message, just create a log entry
             callback(event);
