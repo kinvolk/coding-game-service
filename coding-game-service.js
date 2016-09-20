@@ -567,23 +567,26 @@ const CodingGameService = new Lang.Class({
         this.current_mission_available_points = totalAvailablePoints;
 
         // Now, if our starting event has not yet occured, trigger it
-        if (!this._log.eventHasOccurred(missionSpec.start_event)) {
-            let event = findInArray(this._descriptors.events, function(e) {
-                return e.name === missionSpec.start_event;
-            });
+        missionSpec.start_events.forEach(Lang.bind(this, function(start_event) {
+            if (!this._log.eventHasOccurred(start_event)) {
+                let event = findInArray(this._descriptors.events, function(e) {
+                    return e.name === start_event;
+                });
 
-            if (!event) {
-                throw new Error('No such event ' + missionSpec.start_event +
-                                ', cannot start mission ' + missionSpec.name);
+                if (!event) {
+                    throw new Error('No such event ' + start_event +
+                                    ', cannot start mission ' + missionSpec.name);
+                }
+     
+                this._dispatch(event);
             }
- 
-            this._dispatch(event);
-        }
+        }));
     },
 
     _startMissionEvent: function(event, callback) {
-        this._startMission(event.data.name);
+        /* Create the log entry, then start the mission */
         callback(event);
+        this._startMission(event.data.name);
     },
 
     _changeSettingEvent: function(event, callback) {
