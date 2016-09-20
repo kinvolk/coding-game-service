@@ -456,7 +456,6 @@ const CodingGameService = new Lang.Class({
 
             // Run the other events that happen when this one was triggered and
             // stop listening for this event now.
-            log(JSON.stringify(eventToTrigger));
             this._descriptors.events.filter(function(e) {
                 return findInArray(eventToTrigger.data.received, function(r) {
                     return r.name === e.name;
