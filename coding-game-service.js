@@ -224,7 +224,9 @@ const CodingGameServiceLog = new Lang.Class({
 
     chatLogForActor: function(actor) {
         return this._eventLog.filter(function(e) {
-            return (e.type === 'chat-actor' || e.type === 'chat-user') && e.data.actor === actor;
+            return (e.type === 'chat-actor' ||
+                    e.type === 'chat-user' ||
+                    e.type == 'input-user') && e.data.actor === actor;
         }).map(function(e) {
             return {
                 timestamp: e.timestamp,
