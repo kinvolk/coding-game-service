@@ -403,11 +403,22 @@ const CodingGameService = new Lang.Class({
                 return e.type === 'event';
             });
 
-            this._descriptors.events.filter(function(e) {
-                return findInArray(events, function(responseEvent) {
+            // We map from events names to event descriptors here to preserve the
+            // ordering
+            let eventDescriptorsToRun = events.map(Lang.bind(this, function(e) {
+                return findInArray(this._descriptors.events, function(responseEvent) {
                     return responseEvent.name === e.name;
-                }) !== null;
-            }).forEach(Lang.bind(this, function(e) {
+                });
+            }));
+
+            // If we can't find them all, throw an internal error here.
+            if (events.length !== eventDescriptorsToRun.length) {
+                throw new Error('Couldn\'t find descriptors for events: ' +
+                                JSON.stringify(events, null, 2) + ', found: ' +
+                                JSON.stringify(eventDescriptorsToRun, null, 2));
+            }
+
+            eventDescriptorsToRun.forEach(Lang.bind(this, function(e) {
                 this._dispatch(e);
             }));
 
