@@ -366,7 +366,7 @@ const CodingGameService = new Lang.Class({
     vfunc_handle_chat_response: function(method, id, contents, response) {
         try {
             let respondingTo = findInArray(this._descriptors.events, function(e) {
-                return (e.type === 'chat-actor' || e.type === 'chat-user') && e.name === id;
+                return (e.type === 'chat-actor' || e.type === 'input-user') && e.name === id;
             });
 
             if (!respondingTo) {
