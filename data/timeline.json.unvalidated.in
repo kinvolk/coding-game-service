@@ -300,7 +300,7 @@
                     }
                 },
                 "responses": {
-                    "satisfied": [
+                    "success": [
                         {
                             "type": "event",
                             "name": "chat::meme::intro::install-programming::artifact"
@@ -308,12 +308,20 @@
                         {
                             "type": "event",
                             "name": "chat::meme::intro::intro-complete"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::goog::intro::install_programming::comment"
                         }
                     ],
-                    "unsatisfied": [
+                    "failure": [
                         {
                             "type": "event",
                             "name": "chat::meme::intro::install_programming::again"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::fruit::intro::install_programming::again"
                         },
                         {
                             "type": "event",
