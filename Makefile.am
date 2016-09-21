@@ -26,7 +26,7 @@ EXTRA_DIST = com.endlessm.CodingGameService.xml \
 	     com.endlessm.CodingGameService.gresource.xml \
 	     data/timeline.json.unvalidated.in \
 	     com.endlessm.Coding.policy.in \
-	     files/coding-shared-dir.in \
+	     files/coding-copy-files.js.in \
 	     $(all_js_files) \
 	     $(arbitrary_files) \
 	     $(NULL)
@@ -58,7 +58,7 @@ data/timeline.json: $(srcdir)/data/timeline.json.unvalidated.in $(all_js_files)
 # Some variables for use in the game service later
 lib/config.js: $(srcdir)/lib/config.js.in
 	$(AM_V_GEN) sed -e 's,%CODING_FILES_DIR%,$(pkgdatadir)/files,g' \
-	                -e 's,%CODING_SHARED_SCRIPT_DIR%,$(pkglibexecdir)/coding-shared-dir,g' \
+	                -e 's,%CODING_COPY_FILES_SCRIPT%,$(pkglibexecdir)/coding-copy-files.js,g' \
 	                $< > $@.tmp && \
 	mv -f $@.tmp $@
 
@@ -69,7 +69,7 @@ com.endlessm.Coding.policy: com.endlessm.Coding.policy.in
 	mv -f $@.tmp $@
 
 # Replace coding_files_dir path
-files/coding-shared-dir: files/coding-shared-dir.in
+files/coding-copy-files.js: files/coding-copy-files.js.in
 	$(AM_V_GEN) mkdir -p files && \
 	$(SED) -e 's,%coding_files_dir%,$(pkgdatadir)/files,g' < $< >$@.tmp && \
 	mv -f $@.tmp $@
@@ -138,7 +138,7 @@ com.endlessm.CodingGameService.service: $(srcdir)/com.endlessm.CodingGameService
 	$(AM_V_GEN) sed -e 's|@bindir[@]|${bindir}|g' $< > $@
 
 # Script for placing files in the shared dir 
-pkglibexec_SCRIPTS = files/coding-shared-dir
+pkglibexec_SCRIPTS = files/coding-copy-files.js
 
 # XDG Autostart
 autostartdir = $(sysconfdir)/xdg/autostart
@@ -156,6 +156,6 @@ CLEANFILES += $(bin_SCRIPTS) \
 	      $(gdbus_codegen_built_sources) \
 	      data/timeline.json \
 	      com.endlessm.Coding.policy \
-	      files/coding-shared-dir \
+	      files/coding-copy-files.js \
 	      lib/config.js \
 	      $(NULL)

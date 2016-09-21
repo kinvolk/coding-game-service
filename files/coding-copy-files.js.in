@@ -1,0 +1,46 @@
+#!/usr/bin/env gjs
+// coding-copy-files.js - Places files in a specified directory. That directory must be
+// in the WHITELIST variable, otherwise putting the file there will not be permitted.
+
+const Gio = imports.gi.Gio;
+const GLib = imports.gi.GLib;
+const System = imports.system;
+
+let WHITELIST = [
+    "/home/shared"
+];
+
+let source = ARGV[0];
+let target = ARGV[1];
+
+if (!source || !target) {
+    log('Must provide source and target path');
+    System.exit(1);
+}
+
+// Guard against malicious users passing in relative paths
+if (source.indexOf('..') !== -1) {
+    log('Source path (' + source + ') must be canonical');
+    System.exit(2);
+}
+
+if (target.indexOf('..') !== -1) {
+    log('Target path (' + target + ') must be canonical');
+    System.exit(3);
+}
+
+if (WHITELIST.filter((w) => target.startsWith(w)).length === 0) {
+    log('Target path must start with one of the following:\n' +
+        WHITELIST.join('\n'));
+    System.exit(4);
+}
+
+// Now that we have done our sanity checks, copy from the coding
+// files directory to the target nominated.
+let sourceFile = Gio.File.new_for_path(GLib.build_pathv('/', [
+    "%coding_files_dir%",
+    source
+]));
+let targetFile = Gio.File.new_for_path(target);
+sourceFile.copy(targetFile, Gio.FileCopyFlags.OVERWRITE, null, null);
+

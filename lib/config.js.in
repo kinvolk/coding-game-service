@@ -1,2 +1,2 @@
 var coding_files_dir = '%CODING_FILES_DIR%';
-var coding_shared_script_dir = '%CODING_SHARED_SCRIPT_DIR%';
+var coding_copy_files_script = '%CODING_COPY_FILES_SCRIPT%';
