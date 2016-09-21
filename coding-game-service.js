@@ -29,6 +29,8 @@ const System = imports.system;
 // are already on disk if the user sets GJS_PATH appropriately.
 imports.searchPath.push('resource:///com/endlessm/coding-game-service');
 
+const Config = imports.lib.config;
+
 // loadTimelineDescriptors
 //
 // Attempts to load timeline descriptors from a file.
@@ -261,7 +263,99 @@ const CodingGameServiceLog = new Lang.Class({
         });
     }
 });
-        
+
+// environmentObjectToEnvp
+//
+// Convert an object containing key-value pairs to an array of
+// strings that can be passed to exec.
+function environmentObjectToEnvp(environment) {
+    if (environment) {
+        return Object.keys(environment)
+                     .map(key => key + '=' + environment[key]);
+    } else {
+        return null;
+    }
+}
+
+
+// environmentAsObject
+//
+// Get all the environment variables as an object, so that we can merge
+// them with new ones.
+function environmentAsObject() {
+    let environment = {};
+    GLib.listenv().forEach(key => environment[key] = GLib.getenv(key));
+    return environment;
+}
+
+// executeCommandForOutput
+//
+// Shell out to some process and get its output. If the process
+// returns a non-zero environment variable, throw.
+//
+// Specify user_environment to override environment variables.
+function executeCommandForOutput(argv, userEnvironment={}) {
+    let environment = environmentAsObject();
+    Object.keys(userEnvironment).forEach(key => {
+        environment[key] = userEnvironment[key];
+    });
+
+    let [ok, stdout, stderr, status] = GLib.spawn_sync(null,
+                                                       argv,
+                                                       environmentObjectToEnvp(environment),
+                                                       0,
+                                                       null);
+
+    if (!ok) {
+        throw new Error('Failed to execute: ' + argv.join(" ") + ", no error " +
+                        'message was set');
+    }
+
+    // Check the exit status to see if the process failed. This will
+    // throw an exception if it did.
+    try {
+        GLib.spawn_check_exit_status(status);
+    } catch (e) {
+        throw new Error('Failed to execute ' + argv.join(' ') + ': ' +
+                        [String(e), String(stdout), String(stderr)].join('\n'));
+    }
+
+    return {
+        status: status,
+        stdout: String(stdout),
+        stderr: String(stderr)
+    };
+}
+
+// copySourceToTarget
+//
+// This function will copy a file from the CODING_FILES_DIR to a given target path.
+// If the user has write permissions for that path (eg, it is within the home
+// directory, we write it there directly. Otherwise, we shell out to pkexec and
+// another script to copy to another (whitelisted) location.
+function copySourceToTarget(source, target) {
+    // We have permission to copy this file.
+    if (target.startsWith(GLib.get_home_dir())) {
+        let sourcePath = GLib.build_pathv('/', [
+            Config.CODING_FILES_DIR,
+            source
+        ]);
+        let sourceFile = Gio.File.new_for_path(sourcePath);
+        let targetFile = Gio.File.new_for_path(target);
+
+        sourceFile.copy(targetFile, Gio.FileCopyFlags.OVERWRITE, null, null);
+    } else {
+        // We do not have permission to copy this file. Shell out to
+        // the coding-copy-files script through pkexec and take the result
+        // from there.
+        executeCommandForOutput([
+            "/usr/bin/pkexec",
+            Config.coding_copy_files_script,
+            source,
+            target
+        ]);
+    }
+}
 
 const CodingGameServiceErrorDomain = GLib.quark_from_string('coding-game-service-error');
 const CodingGameServiceErrors = {
@@ -288,7 +382,8 @@ const CodingGameService = new Lang.Class({
             'register-artifact': Lang.bind(this, this._registerArtifactEvent),
             'change-setting': Lang.bind(this, this._changeSettingEvent),
             'listen-event': Lang.bind(this, this._listenExternalEvent),
-            'receive-event': Lang.bind(this, this._receiveExternalEvent)
+            'receive-event': Lang.bind(this, this._receiveExternalEvent),
+            'copy-file': Lang.bind(this, this._copyFileEvent)
         };
 
         // Log the warnings
@@ -599,6 +694,25 @@ const CodingGameService = new Lang.Class({
         settings.set_value(event.data.key,
                            new GLib.Variant(event.data.variant,
                                             event.data.value));
+        callback(event);
+    },
+
+    _copyFileEvent: function(event, callback) {
+        /* First make sure the file exists */
+        let source = event.data.source;
+        let target = event.data.target;
+
+        let souceDataPath = GLib.build_pathv('/', [
+            Config.coding_files_dir,
+            source
+        ]);
+
+        if (!Gio.File.new_for_path(souceDataPath).query_exists(null)) {
+            throw new Error('Cannot process link-file event ' + event.data.name +
+                            ', source file ' + souceDataPath + ' does not exist');
+        }
+
+        copySourceToTarget(source, target);
         callback(event);
     },
 
