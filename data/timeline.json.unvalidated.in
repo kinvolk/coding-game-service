@@ -375,6 +375,10 @@
                     },
                     {
                         "type": "event",
+                        "name": "event::intro::disable-wobbly-windows"
+                    },
+                    {
+                        "type": "event",
                         "name": "chat::meme::intro::install_programming"
                     },
                     {
