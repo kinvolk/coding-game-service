@@ -383,6 +383,14 @@
                     },
                     {
                         "type": "event",
+                        "name": "chat::dank::intro::new_splash_paint"
+                    },
+                    {
+                        "type": "event",
+                        "name": "chat::dank::intro::new_splash_paint::input"
+                    },
+                    {
+                        "type": "event",
                         "name": "chat::fruit::intro::install_programming::comment"
                     },
                     {
@@ -405,6 +413,78 @@
             "data": {
                 "actor": "MEME",
                 "message": "Things are not as they seem around here"
+            }
+        },
+        {
+            "name": "chat::dank::intro::new_splash_paint",
+            "type": "chat-actor",
+            "data": {
+                "actor": "DANK",
+                "message": "Here's something cool I found! Why don't you try 'newsplash' and see what the paint bucket changes this time?"
+            }
+        },
+        {
+            "name": "chat::dank::intro::new_splash_paint::again",
+            "type": "chat-actor",
+            "data": {
+                "actor": "DANK",
+                "message": "We want a NEW splash, not an old one!"
+            }
+        },
+        {
+            "name": "chat::dank::intro::new_splash_paint::complete",
+            "type": "chat-actor",
+            "data": {
+                "actor": "DANK",
+                "message": "How is that for a difference?"
+            }
+        },
+        {
+            "name": "chat::dank::intro::new_splash_paint::input",
+            "type": "input-user",
+            "data": {
+                "actor": "DANK",
+                "input": {
+                    "type": "text",
+                    "settings": {
+                        "showmehow_id": "intro::change_background_pic"
+                    }
+                },
+                "responses": {
+                    "success": [
+                        {
+                            "type": "event",
+                            "name": "event::intro::new_splash_paint::background"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::dank::intro::new_splash_paint::complete"
+                        }
+                    ],
+                    "failure": [
+                        {
+                            "type": "event",
+                            "name": "chat::dank::intro::new_splash_paint::again"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::dank::intro::new_splash_paint::input"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "event::intro::new_splash_paint::background",
+            "type": "change-setting",
+            "data": {
+                "schema": "org.gnome.desktop.background",
+                "key": "picture-uri",
+                "variant": "s",
+                "value": {
+                    "type": "internal-file-uri",
+                    "value": "background_pic.jpg"
+                }
             }
         },
         {
