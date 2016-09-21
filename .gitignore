@@ -11,6 +11,8 @@
 /autom4te.cache/
 /com.endlessm.CodingGameService.service
 /com.endlessm.CodingGameService.gschema.valid
+/com.endlessm.Coding.policy
+/files/coding-shared-dir
 /compile
 /config.log
 /config.guess

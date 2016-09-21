@@ -1,5 +1,5 @@
 # Arbitrary files
-arbitrary_files = files/sw.txt
+arbitrary_files = files/sw.txt files/background_pic.jpg files/test.txt
 
 filesdir = $(pkgdatadir)/files
 files_DATA = $(arbitrary_files)
@@ -25,6 +25,8 @@ EXTRA_DIST = com.endlessm.CodingGameService.xml \
 	     com.endlessm.CodingGameService.service.in \
 	     com.endlessm.CodingGameService.gresource.xml \
 	     data/timeline.json.unvalidated.in \
+	     com.endlessm.Coding.policy.in \
+	     files/coding-shared-dir.in \
 	     $(all_js_files) \
 	     $(arbitrary_files) \
 	     $(NULL)
@@ -55,7 +57,21 @@ data/timeline.json: $(srcdir)/data/timeline.json.unvalidated.in $(all_js_files)
 
 # Some variables for use in the game service later
 lib/config.js: $(srcdir)/lib/config.js.in
-	$(AM_V_GEN) sed -e 's,%CODING_FILES_DIR%,$(pkgdatadir)/files,g' $< > $@.tmp && \
+	$(AM_V_GEN) sed -e 's,%CODING_FILES_DIR%,$(pkgdatadir)/files,g' \
+	                -e 's,%CODING_SHARED_SCRIPT_DIR%,$(pkglibexecdir)/coding-shared-dir,g' \
+	                $< > $@.tmp && \
+	mv -f $@.tmp $@
+
+# Replace pkglibexecdir path
+com.endlessm.Coding.policy: com.endlessm.Coding.policy.in
+	$(AM_V_GEN) mkdir -p data && \
+	$(SED) -e 's,%pkglibexecdir%,$(pkglibexecdir),' < $< >$@.tmp && \
+	mv -f $@.tmp $@
+
+# Replace coding_files_dir path
+files/coding-shared-dir: files/coding-shared-dir.in
+	$(AM_V_GEN) mkdir -p files && \
+	$(SED) -e 's,%coding_files_dir%,$(pkgdatadir)/files,g' < $< >$@.tmp && \
 	mv -f $@.tmp $@
 
 # GResources
@@ -121,9 +137,17 @@ service_DATA = com.endlessm.CodingGameService.service
 com.endlessm.CodingGameService.service: $(srcdir)/com.endlessm.CodingGameService.service.in
 	$(AM_V_GEN) sed -e 's|@bindir[@]|${bindir}|g' $< > $@
 
+# Script for placing files in the shared dir 
+pkglibexec_SCRIPTS = files/coding-shared-dir
+
 # XDG Autostart
 autostartdir = $(sysconfdir)/xdg/autostart
 dist_autostart_DATA = com.endlessm.CodingGameService.desktop
+
+# Polkit policy
+
+polkit_policydir = $(datadir)/polkit-1/actions
+dist_polkit_policy_DATA = com.endlessm.Coding.policy
 
 # Things to get rid of later
 CLEANFILES += $(bin_SCRIPTS) \
@@ -131,4 +155,7 @@ CLEANFILES += $(bin_SCRIPTS) \
 	      $(resources_built_sources) \
 	      $(gdbus_codegen_built_sources) \
 	      data/timeline.json \
+	      com.endlessm.Coding.policy \
+	      files/coding-shared-dir \
+	      lib/config.js \
 	      $(NULL)
