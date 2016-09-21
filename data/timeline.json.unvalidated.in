@@ -108,15 +108,23 @@
                         },
                         {
                             "type": "event",
-                            "name": "chat::meme::intro::enable-wobbly-windows::comment"
+                            "name": "chat::meme::intro::tell-goog-key"
                         },
                         {
                             "type": "event",
-                            "name": "event::intro::enable-wobbly-windows"
+                            "name": "chat::goog::intro::tell-goog-key"
                         },
                         {
                             "type": "event",
-                            "name": "listen::intro::wobble-window"
+                            "name": "chat::dank::intro::tell-goog-key"
+                        },
+                        {
+                            "type": "event",
+                            "name": "event::intro::leave-key-behind"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::goog::intro::tell-goog-key::input"
                         }
                     ],
                     "no": [
@@ -148,11 +156,126 @@
             }
         },
         {
+            "name": "chat::meme::intro::tell-goog-key",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "So here's the thing. Someone left a key behind and I heard that GOOG will unlock the system if you just tell it a password. All you have to do is find it ..."
+            }
+        },
+        {
+            "name": "chat::goog::intro::tell-goog-key",
+            "type": "chat-actor",
+            "data": {
+                "actor": "GOOG",
+                "message": "Yeah there's no way that's going to happen. You tell me the password and I'll just ignore you! I can do what I want!"
+            }
+        },
+        {
+            "name": "chat::goog::intro::tell-goog-key::again",
+            "type": "chat-actor",
+            "data": {
+                "actor": "GOOG",
+                "message": "Wrong! You'll never make me open this thing up"
+            }
+        },
+        {
+            "name": "chat::goog::intro::goog-receive-key::segfault",
+            "type": "chat-actor",
+            "data": {
+                "actor": "GOOG",
+                "message": "Whatever. That's the right key but I'll just call a method to ignore you... Segmentation Fault (Signal 9)."
+            }
+        },
+        {
+            "name": "chat::goog::intro::goog-receive-key::name-error",
+            "type": "chat-actor",
+            "data": {
+                "actor": "GOOG",
+                "message": "Uh, let me try again. There's a function around here to just pretend this never happened. NameError."
+            }
+        },
+        {
+            "name": "chat::goog::intro::goog-receive-key::give-in",
+            "type": "chat-actor",
+            "data": {
+                "actor": "GOOG",
+                "message": "You've gotta be kidding me! Is there no other way?!"
+            }
+        },
+        {
+            "name": "chat::goog::intro::tell-goog-key::input",
+            "type": "input-user",
+            "data": {
+                "actor": "GOOG",
+                "input": {
+                    "type": "text",
+                    "settings": {
+                        "showmehow_id": "intro::goog_key"
+                    }
+                },
+                "responses": {
+                    "failure": [
+                        {
+                            "type": "event",
+                            "name": "chat::goog::intro::tell-goog-key::again"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::goog::intro::tell-goog-key::input"
+                        }
+                    ],
+                    "success": [
+                        {
+                            "type": "event",
+                            "name": "chat::goog::intro::goog-receive-key::segfault"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::goog::intro::goog-receive-key::name-error"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::goog::intro::goog-receive-key::give-in"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::meme::intro::enable-wobbly-windows::comment"
+                        },
+                        {
+                            "type": "event",
+                            "name": "event::intro::enable-wobbly-windows"
+                        },
+                        {
+                            "type": "event",
+                            "name": "listen::intro::wobble-window"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::dank::intro::tell-goog-key",
+            "type": "chat-actor",
+            "data": {
+                "actor": "DANK",
+                "message": "DANK here! I found something in a place all of us have access to! Maybe you should come take a look!"
+            }
+        },
+        {
+            "name": "event::intro::leave-key-behind",
+            "type": "copy-file",
+            "data": {
+                "source": "sw.txt",
+                "target": "/home/shared/secret.txt"
+            }
+        },
+        {
             "name": "chat::meme::intro::enable-wobbly-windows::comment",
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "message": "I turned this window into jello"
+                "message": "SYSTEM UNLOCKED! Lets have some fun! I turned this window into jello - check it out!"
             }
         },
         {
