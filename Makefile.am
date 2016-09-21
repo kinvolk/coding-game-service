@@ -1,6 +1,13 @@
+# Arbitrary files
+arbitrary_files = files/sw.txt
+
+filesdir = $(pkgdatadir)/files
+files_DATA = $(arbitrary_files)
+
 # Resource javascript modules
 resource_js_files = \
 	lib/validation.js \
+	lib/config.js \
 	$(NULL)
 
 # All javascript modules
@@ -18,7 +25,9 @@ EXTRA_DIST = com.endlessm.CodingGameService.xml \
 	     com.endlessm.CodingGameService.service.in \
 	     com.endlessm.CodingGameService.gresource.xml \
 	     data/timeline.json.unvalidated.in \
-	     $(all_js_files)
+	     $(all_js_files) \
+	     $(arbitrary_files) \
+	     $(NULL)
 CLEANFILES =
 
 # Rename the coding-game-service script
@@ -43,6 +52,11 @@ gdbus_codegen_built_sources = CodingGameService.c CodingGameService.h
 data/timeline.json: $(srcdir)/data/timeline.json.unvalidated.in $(all_js_files)
 	mkdir -p data
 	cp $< $@
+
+# Some variables for use in the game service later
+lib/config.js: $(srcdir)/lib/config.js.in
+	$(AM_V_GEN) sed -e 's,%CODING_FILES_DIR%,$(pkgdatadir)/files,g' $< > $@.tmp && \
+	mv -f $@.tmp $@
 
 # GResources
 resource_files = $(resource_js_files) \
