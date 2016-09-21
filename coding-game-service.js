@@ -470,7 +470,7 @@ const CodingGameService = new Lang.Class({
                 return findInArray(this._descriptors.events, function(responseEvent) {
                     return responseEvent.name === e.name;
                 });
-            }));
+            })).filter(e => e);
 
             // If we can't find them all, throw an internal error here.
             if (events.length !== eventDescriptorsToRun.length) {
