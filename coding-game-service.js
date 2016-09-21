@@ -357,6 +357,28 @@ function copySourceToTarget(source, target) {
     }
 }
 
+// resolveGSettingsValue
+//
+// This function examines a value which is intended to be passed to GSettings
+// and checks if any postprocessing should be done on it. For instance, it
+// might refer to a file that is in the internal data dirs, so we need to change
+// the value to a uri to reflect that.
+function resolveGSettingsValue(value) {
+    if (typeof(value) === 'object') {
+        switch(value.type) {
+            case 'internal-file-uri':
+                return 'file://' + GLib.build_pathv('/', [
+                    Config.coding_files_dir,
+                    value.value
+                ]);
+            default:
+                throw new Error('Don\'t know how to handle type ' + value.type);
+        }
+    }
+
+    return value;
+}
+
 const CodingGameServiceErrorDomain = GLib.quark_from_string('coding-game-service-error');
 const CodingGameServiceErrors = {
     NO_SUCH_EVENT_ERROR: 0,
@@ -690,10 +712,10 @@ const CodingGameService = new Lang.Class({
                             event.data.key);
         }
 
+        let value = resolveGSettingsValue(event.data.value);
         let settings = new Gio.Settings({ settings_schema: schema });
         settings.set_value(event.data.key,
-                           new GLib.Variant(event.data.variant,
-                                            event.data.value));
+                           new GLib.Variant(event.data.variant, value));
         callback(event);
     },
 
