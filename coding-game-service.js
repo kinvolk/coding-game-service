@@ -329,7 +329,7 @@ function executeCommandForOutput(argv, userEnvironment={}) {
 
 // copySourceToTarget
 //
-// This function will copy a file from the CODING_FILES_DIR to a given target path.
+// This function will copy a file from the coding_files_dir to a given target path.
 // If the user has write permissions for that path (eg, it is within the home
 // directory, we write it there directly. Otherwise, we shell out to pkexec and
 // another script to copy to another (whitelisted) location.
@@ -337,7 +337,7 @@ function copySourceToTarget(source, target) {
     // We have permission to copy this file.
     if (target.startsWith(GLib.get_home_dir())) {
         let sourcePath = GLib.build_pathv('/', [
-            Config.CODING_FILES_DIR,
+            Config.coding_files_dir,
             source
         ]);
         let sourceFile = Gio.File.new_for_path(sourcePath);
