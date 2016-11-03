@@ -47,6 +47,7 @@ function loadTimelineDescriptorsFromFile(file) {
 
     try {
         let contents = file.load_contents(null)[1];
+        descriptors = JSON.parse(contents);
         success = true;
     } catch (e) {
         warnings.push('Unable to load ' + file.get_parse_name() + ': ' + String(e));
@@ -77,10 +78,13 @@ function loadTimelineDescriptorsFromFile(file) {
  * hold a reference to a GFileMonitor or null, which needs to
  * be kept in scope to watch for changes to files.
  */
-function loadTimelineDescriptors(cmdlineFilename) {
-    let filenamesToTry = [
-        cmdlineFilename,
-        GLib.build_filenamev([GLib.get_user_config_dir(), 'com.endlessm.CodingGameService', 'timeline.json'])
+function loadTimelineDescriptors(cmdlineFile) {
+    let filesToTry = [
+        cmdlineFile,
+        Gio.File.new_for_path(GLib.build_filenamev([GLib.get_user_config_dir(),
+                                                    'com.endlessm.CodingGameService',
+                                                    'timeline.json'])),
+        Gio.File.new_for_uri('resource:///com/endlessm/coding-game-service/data/timeline.json')
     ];
 
     let warnings = [];
@@ -89,14 +93,12 @@ function loadTimelineDescriptors(cmdlineFilename) {
 
     /* Here we use a 'dumb' for loop, since we need to update
      * warnings if a filename didn't exist */
-    for (let i = 0; i < filenamesToTry.length; ++i) {
-        let filename = filenamesToTry[i];
-        if (!filename)
+    for (let i = 0; i < filesToTry.length; ++i) {
+        let file = filesToTry[i];
+        if (!file)
             continue;
 
-        let file = Gio.File.new_for_path(filename);
         let loadWarnings;
-
         [descriptors, loadWarnings] = loadTimelineDescriptorsFromFile(file);
 
         /* Concat the warnings anyway even if we weren't successful, since
@@ -112,16 +114,6 @@ function loadTimelineDescriptors(cmdlineFilename) {
             monitor = file.monitor(Gio.FileMonitorFlags.NONE, null);
             break;
         }
-    }
-
-    /* If we don't have a file to work with here, go with the resources
-     * path, but assume that it is trusted.
-     *
-     * This isn't the preferable way of doing it, though it seems like resource
-     * paths are not working, at least not locally */
-    if (!descriptors) {
-        descriptors = JSON.parse(Gio.resources_lookup_data('/com/endlessm/coding-game-service/data/timeline.json',
-                                                           Gio.ResourceLookupFlags.NONE).get_data());
     }
 
     /* Add a 'warnings' key to descriptors. */
@@ -305,10 +297,10 @@ const CodingGameService = new Lang.Class({
     Name: 'CodingGameService',
     Extends: CodingGameServiceDBUS.CodingGameServiceSkeleton,
 
-    _init: function(commandLineFilename) {
+    _init: function(commandLineFile) {
         this.parent();
 
-        let [descriptors, monitor] = loadTimelineDescriptors(commandLineFilename);
+        let [descriptors, monitor] = loadTimelineDescriptors(commandLineFile);
 
         this._descriptors = descriptors;
         this._monitor = monitor;
@@ -577,7 +569,7 @@ const CodingGameServiceApplication = new Lang.Class({
     _init: function(params) {
         this.parent(params);
         this._skeleton = null;
-        this._commandLineFilename = null;
+        this._commandLineFile = null;
 
         this.add_main_option('lessons-file', 'l'.charCodeAt(0), GLib.OptionFlags.NONE, GLib.OptionArg.FILENAME,
                              'Use this file for lessons', 'PATH');
@@ -591,7 +583,7 @@ const CodingGameServiceApplication = new Lang.Class({
     vfunc_handle_local_options: function(options) {
         let lessonsFileVal = options.lookup_value('lessons-file', new GLib.VariantType('ay'));
         if (lessonsFileVal)
-            this._commandLineFilename = lessonsFileVal.get_bytestring().toString();
+            this._commandLineFile = Gio.File.new_for_path(lessonsFileVal.get_bytestring().toString());
 
         // Continue default processing...
         return -1;
@@ -600,7 +592,7 @@ const CodingGameServiceApplication = new Lang.Class({
     vfunc_dbus_register: function(conn, object_path) {
         this.parent(conn, object_path);
 
-        this._skeleton = new CodingGameService(this._commandLineFilename);
+        this._skeleton = new CodingGameService(this._commandLineFile);
         this._skeleton.export(conn, object_path);
         return true;
     },
