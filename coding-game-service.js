@@ -16,7 +16,6 @@
 const GLib = imports.gi.GLib;
 const Gio = imports.gi.Gio;
 const CodingGameServiceDBUS = imports.gi.CodingGameService;
-const ChatboxService = imports.gi.ChatboxService;
 const Showmehow = imports.gi.Showmehow;
 
 // This is a hack to cause CodingGameService js resources to get loaded
@@ -116,69 +115,6 @@ function findInArray(array, callback) {
     }
     return result[0];
 }
-
-const CodingGameServiceChatController = new Lang.Class({
-    Name: 'CodingGameServiceChatController',
-
-    _init: function(proxyClass) {
-        this._proxyClass = proxyClass;
-
-        // Methods shouldn't use this directly. Instead, call
-        // withLoadedChatboxProxy and use the provided
-        // "chatbox" in the return function to ensure that calls
-        // are only made when the proxy has actually been initialized.
-        this._internalChatboxProxy = null;
-    },
-
-    // The purpose of this function is to allow client callers to lazy-load
-    // the chatbox service connection so that it doesn't get spawned right
-    // away on startup whilst the game service is running. @callback
-    // will be called when the connection has been made.
-    //
-    // Note that callback might called either synchronously or asynchronously
-    // here - you should not make any assumptions about the order of execution
-    // of callback around other code. If you depend on the proxy to be loaded
-    // then you should put the code that depends on it inside this callback.
-    _withLoadedChatboxProxy: function(callback) {
-        if (this._internalChatboxProxy) {
-            callback(this._internalChatboxProxy);
-        } else {
-            let name = 'com.endlessm.Coding.Chatbox';
-            let path = '/com/endlessm/Coding/Chatbox';
-
-            this._proxyClass.new_for_bus(Gio.BusType.SESSION,
-                                         0,
-                                         name,
-                                         path,
-                                         null,
-                                         Lang.bind(this, function(source, result) {
-                try {
-                    this._internalChatboxProxy = this._proxyClass.new_for_bus_finish(result);
-                } catch (e) {
-                    logError(e, 'Error occurred in connecting to com.endlesssm.Coding.Chatbox');
-                }
-
-                // Once we're done here, invoke the callback as above
-                callback(this._internalChatboxProxy);
-            }));
-        }
-    },
-
-    sendChatMessage: function(message) {
-        let serialized = JSON.stringify(message);
-        this._withLoadedChatboxProxy(function(chatbox) {
-            chatbox.call_receive_message(serialized, null, function(source, result) {
-                try {
-                    [success, returnValue] = chatbox.call_receive_message_finish(result);
-                } catch (e) {
-                    logError(e,
-                             'Failed to send message to chatbox (' +
-                             JSON.stringify(message, null, 2));
-                }
-            });
-        });
-    }
-});
 
 const CodingGameServiceLog = new Lang.Class({
     Name: 'CodingGameServiceLog',
@@ -295,7 +231,6 @@ const CodingGameService = new Lang.Class({
                                                                         '/com/endlessm/Showmehow/Service',
                                                                         null);
         this._log = new CodingGameServiceLog(Gio.File.new_for_path('game-service.log'));
-        this._chatController = new CodingGameServiceChatController(ChatboxService.CodingChatboxProxy);
         this._dispatchTable = {
             'chat-actor': Lang.bind(this, this._dispatchChatEvent),
             'chat-user': Lang.bind(this, this._dispatchChatEvent),
@@ -400,13 +335,7 @@ const CodingGameService = new Lang.Class({
         let sendMessage = Lang.bind(this, function(event) {
             // Creates a log entry then sends the message to the client
             let entry = callback(event);
-            // this._chatController.sendChatMessage({
-            //     timestamp: entry.timestamp,
-            //     actor: entry.data.actor,
-            //     message: entry.data.message,
-            //     input: entry.data.input,
-            //     name: entry.data.name
-            // });
+            // TODO: send this to the chatbox
         });
 
         if (event.type === 'chat-actor') {
