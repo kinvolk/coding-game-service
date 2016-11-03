@@ -260,7 +260,7 @@ const CodingGameService = new Lang.Class({
         if (activeMission)
             this._startMission(activeMission);
         else
-            this.dispatch({
+            this._dispatch({
                 type: 'start-mission',
                 data: {
                     name: this._descriptors.start.initial_mission
@@ -307,7 +307,7 @@ const CodingGameService = new Lang.Class({
                 return true;
             }
 
-            this.dispatch({
+            this._dispatch({
                 name: id + '::response',
                 type: 'chat-user',
                 data: {
@@ -327,7 +327,7 @@ const CodingGameService = new Lang.Class({
                     return responseEvent.name === e.name;
                 }) !== null;
             }).forEach(Lang.bind(this, function(e) {
-                this.dispatch(e);
+                this._dispatch(e);
             }));
 
             this.complete_chat_response(method);
@@ -426,7 +426,7 @@ const CodingGameService = new Lang.Class({
                 return e.name === missionSpec.artifacts[0].name;
             });
 
-            this.dispatch(event);
+            this._dispatch(event);
         }
     },
 
@@ -435,7 +435,7 @@ const CodingGameService = new Lang.Class({
         callback(event);
     },
 
-    dispatch: function(event) {
+    _dispatch: function(event) {
         this._dispatchTable[event.type](event, Lang.bind(this, function(logEvent) {
             return this._log.handleEvent(logEvent.type, logEvent.data);
         }));
