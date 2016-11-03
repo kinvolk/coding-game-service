@@ -172,7 +172,7 @@ const CodingGameServiceChatController = new Lang.Class({
                 try {
                     this._internalChatboxProxy = this._proxyClass.new_for_bus_finish(result);
                 } catch (e) {
-                    logError(e, "Error occurred in connecting to com.endlesssm.Coding.Chatbox");
+                    logError(e, 'Error occurred in connecting to com.endlesssm.Coding.Chatbox');
                 }
 
                 /* Once we're done here, invoke the callback as above */
@@ -189,7 +189,7 @@ const CodingGameServiceChatController = new Lang.Class({
                     [success, returnValue] = chatbox.call_receive_message_finish(result);
                 } catch (e) {
                     logError(e,
-                             "Failed to send message to chatbox (" +
+                             'Failed to send message to chatbox (' +
                              JSON.stringify(message, null, 2));
                 }
             });
@@ -289,7 +289,7 @@ const CodingGameService = new Lang.Class({
                                                                         'com.endlessm.Showmehow.Service',
                                                                         '/com/endlessm/Showmehow/Service',
                                                                         null);
-        this._log = new CodingGameServiceLog(Gio.File.new_for_path("game-service.log"));
+        this._log = new CodingGameServiceLog(Gio.File.new_for_path('game-service.log'));
         this._chatController = new CodingGameServiceChatController(ChatboxService.CodingChatboxProxy);
         this._dispatchTable = {
             'chat-actor': Lang.bind(this, this._dispatchChatEvent),
@@ -427,7 +427,7 @@ const CodingGameService = new Lang.Class({
             /* If we don't actually have message text yet, then
              * we'll need to fetch it from showmehow-service */
             if (!event.data.message) {
-                let [name, position] = event.data.name.split("::").slice(0, 2)
+                let [name, position] = event.data.name.split('::').slice(0, 2)
                 this._contentProvider.call_get_task_description(name, position, null,
                                                                 Lang.bind(this, function(source, result) {
                     let success, returnValue;
@@ -435,7 +435,7 @@ const CodingGameService = new Lang.Class({
                     try {
                         [success, returnValue] = this._contentProvider.call_get_task_description_finish(result);
                     } catch (e) {
-                        logError(e, "Call to get_task_description failed, for " + event.data.name);
+                        logError(e, 'Call to get_task_description failed, for ' + event.data.name);
                     }
 
                     let [message, inputSpecString] = returnValue.deep_unpack();
@@ -463,7 +463,7 @@ const CodingGameService = new Lang.Class({
         });
 
         if (!missionSpec) {
-            throw new Error("No such mission named " + name);
+            throw new Error('No such mission named ' + name);
         }
 
         let totalAvailablePoints = missionSpec.artifacts.map(function(a) {
