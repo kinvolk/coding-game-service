@@ -29,26 +29,6 @@ const System = imports.system;
 // are already on disk if the user sets GJS_PATH appropriately.
 imports.searchPath.push('resource:///com/endlessm/coding-game-service');
 
-// loadTimelineDescriptorsFromFile
-//
-// Given a GFile, load and validate lesson descriptors from it. Returns
-// the descriptors and warnings as a tuple.
-function loadTimelineDescriptorsFromFile(file) {
-    let warnings = [];
-    let descriptors = null;
-    let success = false;
-
-    try {
-        let contents = file.load_contents(null)[1];
-        descriptors = JSON.parse(contents);
-        success = true;
-    } catch (e) {
-        warnings.push('Unable to load ' + file.get_parse_name() + ': ' + String(e));
-    }
-
-    return [success ? descriptors : null, warnings];
-}
-
 // loadTimelineDescriptors
 //
 // Attempts to load timeline descriptors from a file.
@@ -87,12 +67,14 @@ function loadTimelineDescriptors(cmdlineFile) {
         if (!file)
             continue;
 
-        let loadWarnings;
-        [descriptors, loadWarnings] = loadTimelineDescriptorsFromFile(file);
-
-        // Concat the warnings anyway even if we weren't successful, since
-        // the developer might still be interested in them.
-        warnings = warnings.concat(loadWarnings);
+        try {
+            let contents = file.load_contents(null)[1];
+            descriptors = JSON.parse(contents);
+        } catch (e) {
+            // Add the warnings anyway even if we weren't successful, since
+            // the developer might still be interested in them.
+            warnings.push('Unable to load ' + file.get_parse_name() + ': ' + String(e));
+        }
 
         // If we were successful, then break here, otherwise try and load
         // the next file.
