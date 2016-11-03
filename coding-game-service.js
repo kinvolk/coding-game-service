@@ -230,11 +230,16 @@ const CodingGameServiceLog = new Lang.Class({
         };
 
         this._eventLog.push(entry);
-        this._logFile.replace_contents(JSON.stringify(this._eventLog, null, 2),
-                                       null,
-                                       false,
-                                       Gio.FileCreateFlags.NONE,
-                                       null);
+
+        try {
+            let logContents = JSON.stringify(this._eventLog, null, 2);
+            this._logFile.replace_contents(logContents,
+                                           null, false,
+                                           Gio.FileCreateFlags.NONE, null);
+        } catch(e) {
+            logError(e, 'Unable to save game service log');
+        }
+
         return entry;
     },
 
