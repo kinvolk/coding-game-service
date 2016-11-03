@@ -202,7 +202,24 @@ const CodingGameServiceLog = new Lang.Class({
 
     _init: function(logFile) {
         this._logFile = logFile;
-        this._eventLog = JSON.parse(this._logFile.load_contents(null)[1]);
+        this._eventLog = [];
+
+        let logContents = '';
+
+        try {
+            logContents = this._logFile.load_contents(null)[1];
+        } catch (e if e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) {
+            // ignore errors when the file does not exist
+        } catch (e) {
+            logError(e, 'Unable to load game service log');
+            return;
+        }
+
+        try {
+            this._eventLog = JSON.parse(logContents);
+        } catch (e) {
+            logError(e, 'Unable to parse contents of game service log file');
+        }
     },
 
     handleEvent: function(eventType, eventData) {
