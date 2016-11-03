@@ -2,8 +2,12 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ([2.69])
-AC_INIT([coding-game-service], [0.0.0], [http://www.endlessm.com])
-AM_INIT_AUTOMAKE([foreign subdir-objects])
+AC_INIT([com.endlessm.CodingGameService],
+        [0.0.0],
+        [https://phabricator.endlessm.com],
+        [com.endlessm.CodingGameService],
+        [http://www.endlessm.com])
+AM_INIT_AUTOMAKE([1.12 dist-xz no-dist-gzip foreign tar-ustar subdir-objects])
 AM_SILENT_RULES([yes])
 
 # Set up libtool
