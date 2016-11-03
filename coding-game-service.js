@@ -560,56 +560,6 @@ const CodingGameService = new Lang.Class({
     }   
 });
 
-/**
- * parseArguments
- *
- * Sadly, GOptionEntry is not supported by Gjs, so this is a poor-man's
- * option parser.
- *
- * This option parser is a simple 'state machine' option parser. It just
- * has a state as to whether it is parsing a double-dash option, or
- * if it is parsing something else. There is no type checking or
- * validation.
- *
- * Sadly, this means that there is no way to add arguments to --help
- * to show the user.
- *
- * Everything is stored as an array.
- */
-function parseArguments(argv) {
-    var parsing = null;
-    var options = {};
-
-    argv.forEach(function(arg, i) {
-        let isDoubleDash = arg.startsWith('--');
-        if (isDoubleDash) {
-            parsing = arg.slice(2);
-        }
-
-        let key = parsing || arg;
-        options[key] = options[key] || [];
-
-        /* Whether we push arg to the options
-         * list depends on what is ahead of us.
-         *
-         * If this was a double-dash argument
-         * then check if the next argument
-         * starts with something that is
-         * not a double dash. If so, we should
-         * treat this argument as a key and
-         * not a value, otherwise treat it
-         * truthy value.
-         */
-        if (!isDoubleDash ||
-            i === argv.length - 1 ||
-            argv[i + 1].startsWith('--')) {
-            options[key].push(isDoubleDash ? !!arg : arg);
-        }
-    });
-
-    return options;
-}
-
 const CodingGameServiceApplication = new Lang.Class({
     Name: 'CodingGameServiceApplication',
     Extends: Gio.Application,
@@ -618,6 +568,9 @@ const CodingGameServiceApplication = new Lang.Class({
         this.parent(params);
         this._skeleton = null;
         this._commandLineFilename = null;
+
+        this.add_main_option('lessons-file', 'l'.charCodeAt(0), GLib.OptionFlags.NONE, GLib.OptionArg.FILENAME,
+                             'Use this file for lessons', 'PATH');
     },
 
     vfunc_startup: function() {
@@ -626,19 +579,11 @@ const CodingGameServiceApplication = new Lang.Class({
     },
 
     vfunc_handle_local_options: function(options) {
-        this.parent(options);
+        let lessonsFileVal = options.lookup_value('lessons-file', new GLib.VariantType('ay'));
+        if (lessonsFileVal)
+            this._commandLineFilename = lessonsFileVal.get_bytestring().toString();
 
-        /* For some rather daft reasons, we have to parse ARGV
-         * directly to find out some interesting things. */
-        let parsed = parseArguments(ARGV);
-        try {
-            this._commandLineFilename = parsed['lessons-file'][0];
-        } catch (e) {
-            this._commandLineFilename = null;
-        }
-
-        /* Must return -1 here to continue processing, otherwise
-         * we will exit with a code */
+        // Continue default processing...
         return -1;
     },
 
@@ -662,7 +607,6 @@ const CodingGameServiceApplication = new Lang.Class({
 let args = [System.programInvocationName].concat(ARGV);
 let application = new CodingGameServiceApplication({
     application_id: 'com.endlessm.CodingGameService.Service',
-    flags: Gio.ApplicationFlags.IS_SERVICE |
-        Gio.ApplicationFlags.HANDLES_COMMAND_LINE
+    flags: Gio.ApplicationFlags.IS_SERVICE
 });
 application.run(args);
