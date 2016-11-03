@@ -25,6 +25,7 @@ const Showmehow = imports.gi.Showmehow;
 const CodingGameServiceResource = imports.gi.CodingGameService.get_resource();  // eslint-disable-line no-unused-vars
 
 const Lang = imports.lang;
+const System = imports.system;
 
 /* Put ourself in the search path. Note that we have the least priority.
  * This will allow us to run locally against non-packed files that
@@ -658,9 +659,10 @@ const CodingGameServiceApplication = new Lang.Class({
     }
 });
 
+let args = [System.programInvocationName].concat(ARGV);
 let application = new CodingGameServiceApplication({
     application_id: 'com.endlessm.CodingGameService.Service',
     flags: Gio.ApplicationFlags.IS_SERVICE |
         Gio.ApplicationFlags.HANDLES_COMMAND_LINE
 });
-application.run(ARGV);
+application.run(args);
