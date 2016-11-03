@@ -1,19 +1,17 @@
 #!/usr/bin/env gjs
-/* coding-game-service.js
- *
- * Copyright (c) 2016 Endless Mobile Inc.
- * All Rights Reserved.
- *
- * The Coding Game Service is the central place where timelines about game state
- * progression are kept. This service essentially administers a large JSON file
- * with a history of all events and can reconstruct chatbox conversations from that.
- *
- * It reads another JSON file which is a predefined "script" for what should
- * happen on particular actions, for instance, showing another chatbox
- * message, or waiting for a particular event. It is designed to be stateful, unlike
- * showmehow-service, which is stateless.
- */
-
+// coding-game-service.js
+//
+// Copyright (c) 2016 Endless Mobile Inc.
+// All Rights Reserved.
+//
+// The Coding Game Service is the central place where timelines about game state
+// progression are kept. This service essentially administers a large JSON file
+// with a history of all events and can reconstruct chatbox conversations from that.
+//
+// It reads another JSON file which is a predefined "script" for what should
+// happen on particular actions, for instance, showing another chatbox
+// message, or waiting for a particular event. It is designed to be stateful, unlike
+// showmehow-service, which is stateless.
 
 const GLib = imports.gi.GLib;
 const Gio = imports.gi.Gio;
@@ -21,23 +19,21 @@ const CodingGameServiceDBUS = imports.gi.CodingGameService;
 const ChatboxService = imports.gi.ChatboxService;
 const Showmehow = imports.gi.Showmehow;
 
-/* This is a hack to cause CodingGameService js resources to get loaded */
+// This is a hack to cause CodingGameService js resources to get loaded
 const CodingGameServiceResource = imports.gi.CodingGameService.get_resource();  // eslint-disable-line no-unused-vars
 
 const Lang = imports.lang;
 const System = imports.system;
 
-/* Put ourself in the search path. Note that we have the least priority.
- * This will allow us to run locally against non-packed files that
- * are already on disk if the user sets GJS_PATH appropriately. */
+// Put ourself in the search path. Note that we have the least priority.
+// This will allow us to run locally against non-packed files that
+// are already on disk if the user sets GJS_PATH appropriately.
 imports.searchPath.push('resource:///com/endlessm/coding-game-service');
 
-/**
- * loadTimelineDescriptorsFromFile
- *
- * Given a GFile, load and validate lesson descriptors from it. Returns
- * the descriptors and warnings as a tuple.
- */
+// loadTimelineDescriptorsFromFile
+//
+// Given a GFile, load and validate lesson descriptors from it. Returns
+// the descriptors and warnings as a tuple.
 function loadTimelineDescriptorsFromFile(file) {
     let warnings = [];
     let descriptors = null;
@@ -54,29 +50,27 @@ function loadTimelineDescriptorsFromFile(file) {
     return [success ? descriptors : null, warnings];
 }
 
-/**
- * loadTimelineDescriptors
- *
- * Attempts to load timeline descriptors from a file.
- *
- * The default case is to load the descriptors from the internal resource
- * file that makes up CodingGameService's binary. However, we first:
- *  1. Look at the command line to see if a file was provided there
- *  2. Look in $XDG_CONFIG_HOME/com.endlessm.CodingGameService for a file
- *     called 'timeline.json'
- *  3. Use the internal resource named 'data/timeline.json'
- *
- * The first two are assumed to be 'untrusted' - they will be validated
- * before being loaded in. If there are any errors, we try to use
- * what we can, but will add in an 'errors' entry to signify that
- * there were some errors that should be dealt with. Client applications
- * may query for errors and display them appropriately. This is
- * to help the lesson authors quickly catch problems.
- *
- * Returns a tuple of [descriptors, monitor]. The monitor may
- * hold a reference to a GFileMonitor or null, which needs to
- * be kept in scope to watch for changes to files.
- */
+// loadTimelineDescriptors
+//
+// Attempts to load timeline descriptors from a file.
+//
+// The default case is to load the descriptors from the internal resource
+// file that makes up CodingGameService's binary. However, we first:
+//  1. Look at the command line to see if a file was provided there
+//  2. Look in $XDG_CONFIG_HOME/com.endlessm.CodingGameService for a file
+//     called 'timeline.json'
+//  3. Use the internal resource named 'data/timeline.json'
+//
+// The first two are assumed to be 'untrusted' - they will be validated
+// before being loaded in. If there are any errors, we try to use
+// what we can, but will add in an 'errors' entry to signify that
+// there were some errors that should be dealt with. Client applications
+// may query for errors and display them appropriately. This is
+// to help the lesson authors quickly catch problems.
+//
+// Returns a tuple of [descriptors, monitor]. The monitor may
+// hold a reference to a GFileMonitor or null, which needs to
+// be kept in scope to watch for changes to files.
 function loadTimelineDescriptors(cmdlineFile) {
     let filesToTry = [
         cmdlineFile,
@@ -90,8 +84,8 @@ function loadTimelineDescriptors(cmdlineFile) {
     let descriptors = null;
     let monitor = null;
 
-    /* Here we use a 'dumb' for loop, since we need to update
-     * warnings if a filename didn't exist */
+    // Here we use a 'dumb' for loop, since we need to update
+    // warnings if a filename didn't exist
     for (let i = 0; i < filesToTry.length; ++i) {
         let file = filesToTry[i];
         if (!file)
@@ -100,22 +94,22 @@ function loadTimelineDescriptors(cmdlineFile) {
         let loadWarnings;
         [descriptors, loadWarnings] = loadTimelineDescriptorsFromFile(file);
 
-        /* Concat the warnings anyway even if we weren't successful, since
-         * the developer might still be interested in them. */
+        // Concat the warnings anyway even if we weren't successful, since
+        // the developer might still be interested in them.
         warnings = warnings.concat(loadWarnings);
 
-        /* If we were successful, then break here, otherwise try and load
-         * the next file.
-         *
-         * Note that success is defined as 'we were able to partially load
-         * a file.' */
+        // If we were successful, then break here, otherwise try and load
+        // the next file.
+        //
+        // Note that success is defined as 'we were able to partially load
+        // a file.'
         if (descriptors) {
             monitor = file.monitor(Gio.FileMonitorFlags.NONE, null);
             break;
         }
     }
 
-    /* Add a 'warnings' key to descriptors. */
+    // Add a 'warnings' key to descriptors.
     descriptors.warnings = warnings;
     return [descriptors, monitor];
 }
@@ -134,22 +128,22 @@ const CodingGameServiceChatController = new Lang.Class({
     _init: function(proxyClass) {
         this._proxyClass = proxyClass;
 
-        /* Methods shouldn't use this directly. Instead, call
-         * withLoadedChatboxProxy and use the provided
-         * "chatbox" in the return function to ensure that calls
-         * are only made when the proxy has actually been initialized. */
+        // Methods shouldn't use this directly. Instead, call
+        // withLoadedChatboxProxy and use the provided
+        // "chatbox" in the return function to ensure that calls
+        // are only made when the proxy has actually been initialized.
         this._internalChatboxProxy = null;
     },
 
-    /* The purpose of this function is to allow client callers to lazy-load
-     * the chatbox service connection so that it doesn't get spawned right
-     * away on startup whilst the game service is running. @callback
-     * will be called when the connection has been made.
-     *
-     * Note that callback might called either synchronously or asynchronously
-     * here - you should not make any assumptions about the order of execution
-     * of callback around other code. If you depend on the proxy to be loaded
-     * then you should put the code that depends on it inside this callback. */
+    // The purpose of this function is to allow client callers to lazy-load
+    // the chatbox service connection so that it doesn't get spawned right
+    // away on startup whilst the game service is running. @callback
+    // will be called when the connection has been made.
+    //
+    // Note that callback might called either synchronously or asynchronously
+    // here - you should not make any assumptions about the order of execution
+    // of callback around other code. If you depend on the proxy to be loaded
+    // then you should put the code that depends on it inside this callback.
     _withLoadedChatboxProxy: function(callback) {
         if (this._internalChatboxProxy) {
             callback(this._internalChatboxProxy);
@@ -169,7 +163,7 @@ const CodingGameServiceChatController = new Lang.Class({
                     logError(e, 'Error occurred in connecting to com.endlesssm.Coding.Chatbox');
                 }
 
-                /* Once we're done here, invoke the callback as above */
+                // Once we're done here, invoke the callback as above
                 callback(this._internalChatboxProxy);
             }));
         }
@@ -263,9 +257,9 @@ const CodingGameServiceLog = new Lang.Class({
         this._eventLog.filter(function(e) {
             return eventNames.indexOf(e.data.name) !== -1;
         }).forEach(function(e) {
-            /* Unconditionally overwrite eventsToEntries so that each key
-             * in the object corresponds to the latest occurrence of the
-             * event */
+            // Unconditionally overwrite eventsToEntries so that each key
+            // in the object corresponds to the latest occurrence of the
+            // event
             eventsToEntries[e.data.name] = e;
         });
 
@@ -316,16 +310,16 @@ const CodingGameService = new Lang.Class({
             'start-mission': Lang.bind(this, this._startMissionEvent)
         };
 
-        /* Log the warnings, and also make them available to clients who are interested.
-         *
-         * XXX: For some odd reason, I'm not able to return 'as" here and need to
-         * return an array of structures in order to get this to work. */
+        // Log the warnings, and also make them available to clients who are interested.
+        //
+        // XXX: For some odd reason, I'm not able to return 'as" here and need to
+        // return an array of structures in order to get this to work.
         this._descriptors.warnings.forEach(w => log(w));
 
-        /* If we did have a monitor on the file, it means that we can notify clients
-         * when a reload has happened. To do that, connect to the 'changed' signal
-         * and emit the 'content-refreshed' signal when a change happens. Clients
-         * should reset their internal state when this happens. */
+        // If we did have a monitor on the file, it means that we can notify clients
+        // when a reload has happened. To do that, connect to the 'changed' signal
+        // and emit the 'content-refreshed' signal when a change happens. Clients
+        // should reset their internal state when this happens.
         if (this._monitor) {
             this._monitor.connect('changed', Lang.bind(this, function(monitor, file, other, type) {
                 if (type === Gio.FileMonitorEvent.CHANGED) {
@@ -341,7 +335,7 @@ const CodingGameService = new Lang.Class({
             }));
         }
 
-        /* If we started for the first time, dispatch the very first mission */
+        // If we started for the first time, dispatch the very first mission
         let activeMission = this._log.activeMission();
 
         if (activeMission) {
@@ -405,7 +399,7 @@ const CodingGameService = new Lang.Class({
                 }
             });
 
-            /* Now that we have the events, run each of them */
+            // Now that we have the events, run each of them
             let events = respondingTo.data.responses[eventKeyToRun].filter(function(e) {
                 return e.type === 'event';
             });
@@ -431,20 +425,20 @@ const CodingGameService = new Lang.Class({
 
     _dispatchChatEvent: function(event, callback) {
         let sendMessage = Lang.bind(this, function(event) {
-            /* Creates a log entry then sends the message to the client */
+            // Creates a log entry then sends the message to the client
             let entry = callback(event);
-            this._chatController.sendChatMessage({
-                timestamp: entry.timestamp,
-                actor: entry.data.actor,
-                message: entry.data.message,
-                input: entry.data.input,
-                name: entry.data.name
-            });
+            // this._chatController.sendChatMessage({
+            //     timestamp: entry.timestamp,
+            //     actor: entry.data.actor,
+            //     message: entry.data.message,
+            //     input: entry.data.input,
+            //     name: entry.data.name
+            // });
         });
 
         if (event.type === 'chat-actor') {
-            /* If we don't actually have message text yet, then
-             * we'll need to fetch it from showmehow-service */
+            // If we don't actually have message text yet, then
+            // we'll need to fetch it from showmehow-service
             if (!event.data.message) {
                 let [name, position] = event.data.name.split('::').slice(0, 2)
                 this._contentProvider.call_get_task_description(name, position, null,
@@ -468,15 +462,15 @@ const CodingGameService = new Lang.Class({
                 sendMessage(event);
             }
         } else {
-            /* No sense sending the chat message, just create a log entry */
+            // No sense sending the chat message, just create a log entry
             callback(event);
         }
     },
 
     _startMission: function(name) {
-        /* When a mission is started, we look at the very first event in this mission
-         * and dispatch that if it has not already been dispatched in the log. We also
-         * set the active mission name and the points counter */
+        // When a mission is started, we look at the very first event in this mission
+        // and dispatch that if it has not already been dispatched in the log. We also
+        // set the active mission name and the points counter
         let missionSpec = findInArray(this._descriptors.missions, function(m) {
             return m.name === name;
         });
@@ -515,7 +509,7 @@ const CodingGameService = new Lang.Class({
         this.current_mission_points = totalAccruedPoints;
         this.current_mission_available_points = totalAvailablePoints;
 
-        /* Now, if our starting event has not yet occured, trigger it */
+        // Now, if our starting event has not yet occured, trigger it
         if (!completedEvents[missionSpec.artifacts[0].name]) {
             let event = findInArray(this._descriptors.events, function(e) {
                 return e.name === missionSpec.artifacts[0].name;
@@ -535,16 +529,16 @@ const CodingGameService = new Lang.Class({
             return this._log.handleEvent(logEvent.type, logEvent.data);
         }));
 
-        /* If we have a current mission, update the number of points
-         * based on the fact that we ran a new event. Note that the points
-         * accrue as soon as an event is run, which is meant to be
-         * representative of the fact that it was triggered from other
-         * events.
-         *
-         * This simplifies the design somewhat, since it allows us to
-         * keep the notion of events and artifacts separate and does not
-         * require us to encode the idea of "passing" or "failing" an
-         * event (instead we merely move from one event to another) */
+        // If we have a current mission, update the number of points
+        // based on the fact that we ran a new event. Note that the points
+        // accrue as soon as an event is run, which is meant to be
+        // representative of the fact that it was triggered from other
+        // events.
+        //
+        // This simplifies the design somewhat, since it allows us to
+        // keep the notion of events and artifacts separate and does not
+        // require us to encode the idea of "passing" or "failing" an
+        // event (instead we merely move from one event to another)
         if (this.current_mission) {
             let missionSpec = findInArray(this._descriptors.missions, Lang.bind(this, function(m) {
                 return m.name == this.current_mission;
