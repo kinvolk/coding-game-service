@@ -68,9 +68,7 @@ function loadTimelineDescriptorsFromFile(file) {
 // may query for errors and display them appropriately. This is
 // to help the lesson authors quickly catch problems.
 //
-// Returns a tuple of [descriptors, monitor]. The monitor may
-// hold a reference to a GFileMonitor or null, which needs to
-// be kept in scope to watch for changes to files.
+// Returns an array of timeline descriptors.
 function loadTimelineDescriptors(cmdlineFile) {
     let filesToTry = [
         cmdlineFile,
@@ -82,7 +80,6 @@ function loadTimelineDescriptors(cmdlineFile) {
 
     let warnings = [];
     let descriptors = null;
-    let monitor = null;
 
     // Here we use a 'dumb' for loop, since we need to update
     // warnings if a filename didn't exist
@@ -103,15 +100,13 @@ function loadTimelineDescriptors(cmdlineFile) {
         //
         // Note that success is defined as 'we were able to partially load
         // a file.'
-        if (descriptors) {
-            monitor = file.monitor(Gio.FileMonitorFlags.NONE, null);
+        if (descriptors)
             break;
-        }
     }
 
     // Add a 'warnings' key to descriptors.
     descriptors.warnings = warnings;
-    return [descriptors, monitor];
+    return descriptors;
 }
 
 function findInArray(array, callback) {
@@ -293,10 +288,7 @@ const CodingGameService = new Lang.Class({
     _init: function(commandLineFile) {
         this.parent();
 
-        let [descriptors, monitor] = loadTimelineDescriptors(commandLineFile);
-
-        this._descriptors = descriptors;
-        this._monitor = monitor;
+        this._descriptors = loadTimelineDescriptors(commandLineFile);
         this._contentProvider = Showmehow.ServiceProxy.new_for_bus_sync(Gio.BusType.SESSION,
                                                                         0,
                                                                         'com.endlessm.Showmehow.Service',
@@ -315,25 +307,6 @@ const CodingGameService = new Lang.Class({
         // XXX: For some odd reason, I'm not able to return 'as" here and need to
         // return an array of structures in order to get this to work.
         this._descriptors.warnings.forEach(w => log(w));
-
-        // If we did have a monitor on the file, it means that we can notify clients
-        // when a reload has happened. To do that, connect to the 'changed' signal
-        // and emit the 'content-refreshed' signal when a change happens. Clients
-        // should reset their internal state when this happens.
-        if (this._monitor) {
-            this._monitor.connect('changed', Lang.bind(this, function(monitor, file, other, type) {
-                if (type === Gio.FileMonitorEvent.CHANGED) {
-                    let [descriptors, warnings] = loadTimelineDescriptorsFromFile(file);
-
-                    if (descriptors) {
-                        this._descriptors = descriptors;
-                        this._descriptors.warnings = warnings;
-
-                        this.emit_lessons_changed();
-                    }
-                }
-            }));
-        }
 
         // If we started for the first time, dispatch the very first mission
         let activeMission = this._log.activeMission();
