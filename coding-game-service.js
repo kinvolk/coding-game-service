@@ -133,8 +133,6 @@ function findInArray(array, callback) {
     return result[0];
 }
 
-let LOG_CONTENTS = [];
-
 const CodingGameServiceChatController = new Lang.Class({
     Name: 'CodingGameServiceChatController',
 
