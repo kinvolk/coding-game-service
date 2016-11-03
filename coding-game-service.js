@@ -301,8 +301,10 @@ const CodingGameService = new Lang.Class({
     Name: 'CodingGameService',
     Extends: CodingGameServiceDBUS.CodingGameServiceSkeleton,
 
-    _init: function(descriptors, monitor) {
+    _init: function(commandLineFilename) {
         this.parent();
+
+        let [descriptors, monitor] = loadTimelineDescriptors(commandLineFilename);
 
         this._descriptors = descriptors;
         this._monitor = monitor;
@@ -593,8 +595,8 @@ const CodingGameServiceApplication = new Lang.Class({
 
     vfunc_dbus_register: function(conn, object_path) {
         this.parent(conn, object_path);
-        let [descriptors, monitor] = loadTimelineDescriptors(this._commandLineFilename);
-        this._skeleton = new CodingGameService(descriptors, monitor);
+
+        this._skeleton = new CodingGameService(this._commandLineFilename);
         this._skeleton.export(conn, object_path);
         return true;
     },
