@@ -83,8 +83,8 @@ function loadTimelineDescriptors(cmdlineFilename) {
         GLib.build_filenamev([GLib.get_user_config_dir(), 'coding-game-service', 'timeline.json'])
     ].filter(f => !!f);
 
-    var warnings = [];
-    var descriptors = null;
+    let warnings = [];
+    let descriptors = null;
     let monitor = null;
 
     /* Here we use a 'dumb' for loop, since we need to update
