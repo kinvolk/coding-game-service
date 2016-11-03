@@ -110,9 +110,9 @@ function loadTimelineDescriptors(cmdlineFile) {
 
 function findInArray(array, callback) {
     let result = array.filter(callback);
-    if (!result.length) {
+    if (!result.length)
         return null;
-    }
+
     return result[0];
 }
 
@@ -202,9 +202,8 @@ const CodingGameServiceLog = new Lang.Class({
             return e.type === 'start-mission';
         });
 
-        if (!missions.length) {
+        if (!missions.length)
             return null;
-        }
 
         return missions[missions.length - 1].data.name;
     },
@@ -246,16 +245,15 @@ const CodingGameService = new Lang.Class({
         // If we started for the first time, dispatch the very first mission
         let activeMission = this._log.activeMission();
 
-        if (activeMission) {
+        if (activeMission)
             this._startMission(activeMission);
-        } else {
+        else
             this.dispatch({
                 type: 'start-mission',
                 data: {
                     name: this._descriptors.start.initial_mission
                 }
             });
-        }
     },
 
     vfunc_handle_chat_history: function(method, actor) {
@@ -377,9 +375,8 @@ const CodingGameService = new Lang.Class({
             return m.name === name;
         });
 
-        if (!missionSpec) {
+        if (!missionSpec)
             throw new Error('No such mission named ' + name);
-        }
 
         let totalAvailablePoints = missionSpec.artifacts.map(function(a) {
             return a.points;
@@ -493,9 +490,8 @@ const CodingGameServiceApplication = new Lang.Class({
     },
 
     vfunc_dbus_unregister: function(conn, object_path) {
-        if (this._skeleton) {
+        if (this._skeleton)
             this._skeleton.unexport();
-        }
 
         this.parent(conn, object_path);
     }
