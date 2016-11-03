@@ -1,0 +1,196 @@
+{
+    "missions": [
+        {
+            "name": "intro",
+            "short_desc": "Down the rabbit hole",
+            "long_desc": "Why don't you answer the questions and see where the rabbit hole leads",
+            "artifacts": [
+                {
+                    "name": "chat::meme::intro::hook::challenge",
+                    "points": 52
+                },
+                {
+                    "name": "chat::meme::intro::choice_see_cool::challenge",
+                    "points": 52
+                },
+                {
+                    "name": "listen::intro::wobble-window",
+                    "points": 52
+                },
+                {
+                    "name": "chat::meme::intro::install_programming::challenge",
+                    "points": 52
+                }
+            ]
+        }
+    ],
+    "start": {
+        "initial_mission": "intro"
+    },
+    "events": [
+        {
+            "name": "chat::meme::intro::hook::challenge",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "name": "intro::hook::challenge",
+                "responses": {
+                    "success": [
+                        {
+                            "type": "register",
+                            "name": "chat::meme::intro::hook"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::meme::intro::choice_see_cool::challenge"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::meme::intro::hook::again",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "name": "intro::hook::again"
+            }
+        },
+        {
+            "name": "chat::meme::intro::choice_see_cool::challenge",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "name": "intro::choice_see_cool::challenge",
+                "responses": {
+                    "yes": [
+                        {
+                            "type": "register",
+                            "name": "chat::meme::intro::choice_see_cool"
+                        },
+                        {
+                            "type": "event",
+                            "name": "listen::intro::wobble-window"
+                        }
+                    ],
+                    "no": [
+                        {
+                            "type": "event",
+                            "name": "chat::meme::intro::choice_see_cool::again"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::meme::intro::choice_see_cool::challenge"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::meme::intro::choice_see_cool::again",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "name": "intro::choice_see_cool::again"
+            }
+        },
+        {
+            "name": "event::intro::enable-wobbly-windows",
+            "type": "change-setting",
+            "data": {
+                "schema": "org.gnome.shell",
+                "key": "wobbly-effect",
+                "value": true
+            }
+        },
+        {
+            "name": "event::intro::disable-wobbly-windows",
+            "type": "change-setting",
+            "data": {
+                "schema": "org.gnome.shell",
+                "key": "wobbly-effect",
+                "value": false
+            }
+        },
+        {
+            "name": "listen::intro::wobble-window",
+            "type": "listen-event",
+            "data": {
+                "name": "move-window",
+                "received": [
+                    {
+                        "type": "register",
+                        "name": "event::intro::wobble-window"
+                    },
+                    {
+                        "type": "event",
+                        "name": "listen::intro::stop-wobble-window"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "listen::intro::stop-wobble-window",
+            "type": "listen-event",
+            "data": {
+                "name": "stop-moving-windows",
+                "received": [
+                    {
+                        "type": "event",
+                        "name": "chat::meme::intro::wobble-windows-comment"
+                    },
+                    {
+                        "type": "event",
+                        "name": "chat::meme::intro::install_programming::challenge"
+                    }
+                ]
+            }
+        },
+        {
+            "name": "chat::meme::intro::wobble-windows-comment",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "name": "intro::wobble-windows-comment"
+            }
+        },
+        {
+            "name": "chat::meme::intro::install_programming::challenge",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "name": "intro::install_programming::challenge",
+                "responses": {
+                    "satisfied": [
+                        {
+                            "type": "register",
+                            "name": "chat::meme::intro::install_programming"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::meme::intro::intro-complete"
+                        }
+                    ],
+                    "unsatisfied": [
+                        {
+                            "type": "event",
+                            "name": "chat::meme::intro::install_programming::again"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::meme::intro::install_programming::challenge"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::meme::intro::install_programming::again",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "name": "intro::install_programming::again"
+            }
+        }
+    ]
+}

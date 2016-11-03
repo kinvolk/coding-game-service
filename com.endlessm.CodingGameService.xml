@@ -1,0 +1,28 @@
+<node>
+  <interface name="com.endlessm.CodingGameService">
+    <method name="ChatHistory">
+      <arg name="actor" direction="in" type="s"/>
+      <arg name="messages" direction="out" type="a(s)"/>
+    </method>
+    <method name="ChatResponse">
+      <arg name="id" direction="in" type="s"/>
+      <arg name="content" direction="in" type="s"/>
+      <arg name="result" direction="in" type="s"/>
+    </method>
+    <method name="ExternalEvent">
+      <arg name="id" direction="in" type="s"/>
+    </method> 
+    <signal name="ListenForEvent">
+      <arg name="id" type="s"/>
+    </signal>
+    <signal name="StopListeningFor">
+      <arg name="id" type="s"/>
+    </signal>
+    <property name="CurrentMissionName" type="s" access="read"/>
+    <property name="CurrentMissionDesc" type="s" access="read"/>
+    <property name="CurrentMissionPoints" type="i" access="read"/>
+    <property name="CurrentMissionNumTasks" type="i" access="read"/>
+    <property name="CurrentMissionNumTasksAvailable" type="i" access="read"/>
+    <property name="CurrentMissionAvailablePoints" type="i" access="read"/>
+  </interface>
+<node>
