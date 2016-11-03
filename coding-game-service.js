@@ -80,7 +80,7 @@ function loadTimelineDescriptorsFromFile(file) {
 function loadTimelineDescriptors(cmdlineFilename) {
     let filenamesToTry = [
         cmdlineFilename,
-        GLib.build_pathv('/', [GLib.get_user_config_dir(), 'coding-game-service', 'timeline.json'])
+        GLib.build_filenamev([GLib.get_user_config_dir(), 'coding-game-service', 'timeline.json'])
     ].filter(f => !!f);
 
     var warnings = [];
