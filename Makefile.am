@@ -67,9 +67,8 @@ resources_built_sources = coding-game-service-resources.c coding-game-service-re
 libcoding_game_service_1_0_la_SOURCES = $(resources_built_sources) \
 					$(gdbus_codegen_built_sources) \
 					$(NULL)
-libcoding_game_service_1_0_la_CFLAGS = @CODING_GAME_SERVICE_CFLAGS@
-libcoding_game_service_1_0_la_LDFLAGS = @CODING_GAME_SERVICE_LDFLAGS@
-libcoding_game_service_1_0_la_LIBADD = @CODING_GAME_SERVICE_LIBS@
+libcoding_game_service_1_0_la_CFLAGS = $(CODING_GAME_SERVICE_CFLAGS)
+libcoding_game_service_1_0_la_LIBADD = $(CODING_GAME_SERVICE_LIBS)
 
 # All libraries
 lib_LTLIBRARIES = libcoding_game_service-1.0.la

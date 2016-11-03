@@ -26,7 +26,6 @@ PKG_CHECK_MODULES(CODING_GAME_SERVICE, [glib-2.0 gio-2.0 gobject-2.0 gio-unix-2.
 
 # Checks for library functions.
 
-AC_SUBST([CODING_GAME_SERVICE_CFLAGS])
-AC_SUBST([CODING_GAME_SERVICE_LDFLAGS])
+# Substitute variables
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT
