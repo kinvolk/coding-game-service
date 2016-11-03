@@ -81,7 +81,7 @@ function loadTimelineDescriptors(cmdlineFilename) {
     let filenamesToTry = [
         cmdlineFilename,
         GLib.build_filenamev([GLib.get_user_config_dir(), 'com.endlessm.CodingGameService', 'timeline.json'])
-    ].filter(f => !!f);
+    ];
 
     let warnings = [];
     let descriptors = null;
@@ -90,7 +90,11 @@ function loadTimelineDescriptors(cmdlineFilename) {
     /* Here we use a 'dumb' for loop, since we need to update
      * warnings if a filename didn't exist */
     for (let i = 0; i < filenamesToTry.length; ++i) {
-        let file = Gio.File.new_for_path(filenamesToTry[i]);
+        let filename = filenamesToTry[i];
+        if (!filename)
+            continue;
+
+        let file = Gio.File.new_for_path(filename);
         let loadWarnings;
 
         [descriptors, loadWarnings] = loadTimelineDescriptorsFromFile(file);
