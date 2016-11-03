@@ -51,7 +51,6 @@ data/timeline.json: $(srcdir)/data/timeline.json.unvalidated.in $(all_js_files)
 	cp $< $@
 
 # GResources
-
 resource_files = $(resource_js_files) \
 	data/timeline.json \
 	$(NULL)
