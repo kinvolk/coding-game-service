@@ -23,17 +23,17 @@ EXTRA_DIST = com.endlessm.CodingGameService.xml \
 CLEANFILES =
 
 # Rename the coding-game-service script
-coding-game-service: $(abs_top_srcdir)/coding-game-service.js
+coding-game-service: $(srcdir)/coding-game-service.js
 	cp $< $@
 	chmod +x $@
 
 # Rename the coding-game-validator script
-coding-game-validator: $(abs_top_srcdir)/coding-game-validator.js
+coding-game-validator: $(srcdir)/coding-game-validator.js
 	cp $< $@
 	chmod +x $@
 
 # GDBus-Codegen for CodingGameService
-CodingGameService.c: $(abs_top_srcdir)/com.endlessm.CodingGameService.xml
+CodingGameService.c: $(srcdir)/com.endlessm.CodingGameService.xml
 	gdbus-codegen --generate-c-code CodingGameService --c-namespace CodingGameService --c-generate-object-manager --interface-prefix com.endlessm. $<
 
 CodingGameService.h: CodingGameService.c
@@ -46,7 +46,7 @@ gsettings_SCHEMAS = com.endlessm.CodingGameService.gschema.xml
 @GSETTINGS_RULES@
 
 # Validation of timeline (produces data.timeline)
-data/timeline.json: $(abs_top_srcdir)/data/timeline.json.unvalidated.in $(all_js_files)
+data/timeline.json: $(srcdir)/data/timeline.json.unvalidated.in $(all_js_files)
 	mkdir -p data
 	cp $< $@
 
@@ -56,9 +56,9 @@ resource_files = $(resource_js_files) \
 	data/timeline.json \
 	$(NULL)
 
-coding-game-service-resources.h: $(abs_top_srcdir)/com.endlessm.CodingGameService.gresource.xml $(resource_files)
+coding-game-service-resources.h: $(srcdir)/com.endlessm.CodingGameService.gresource.xml $(resource_files)
 	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(srcdir) --sourcedir=$(builddir) --generate --c-name coding_game_service $<
-coding-game-service-resources.c: $(abs_top_srcdir)/com.endlessm.CodingGameService.gresource.xml $(resource_files)
+coding-game-service-resources.c: $(srcdir)/com.endlessm.CodingGameService.gresource.xml $(resource_files)
 	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(srcdir) --sourcedir=$(builddir) --generate --c-name coding_game_service $<
 
 resources_built_sources = coding-game-service-resources.c coding-game-service-resources.h
@@ -111,7 +111,7 @@ servicedir = $(datadir)/dbus-1/services
 service_DATA = com.endlessm.CodingGameService.service
 
 # DBus Service
-com.endlessm.CodingGameService.service: $(abs_top_srcdir)/com.endlessm.CodingGameService.service.in
+com.endlessm.CodingGameService.service: $(srcdir)/com.endlessm.CodingGameService.service.in
 	$(AM_V_GEN) sed -e 's|@bindir[@]|${bindir}|g' $< > $@
 
 # XDG Autostart
