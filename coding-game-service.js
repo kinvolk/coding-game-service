@@ -230,10 +230,7 @@ const CodingGameService = new Lang.Class({
             'start-mission': Lang.bind(this, this._startMissionEvent)
         };
 
-        // Log the warnings, and also make them available to clients who are interested.
-        //
-        // XXX: For some odd reason, I'm not able to return 'as" here and need to
-        // return an array of structures in order to get this to work.
+        // Log the warnings
         this._descriptors.warnings.forEach(w => log(w));
 
         // If we started for the first time, dispatch the very first mission
