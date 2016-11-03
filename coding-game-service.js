@@ -32,8 +32,6 @@ const System = imports.system;
  * are already on disk if the user sets GJS_PATH appropriately. */
 imports.searchPath.push('resource:///com/endlessm/coding-game-service');
 
-const CODING_GAME_SERVICE_SCHEMA = 'com.endlessm.CodingGameService';
-
 /**
  * loadTimelineDescriptorsFromFile
  *

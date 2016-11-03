@@ -16,7 +16,6 @@ AM_DISTCHECK_CONFIGURE_FLAGS = --enable-introspection
 EXTRA_DIST = com.endlessm.CodingGameService.xml \
 	     com.endlessm.CodingGameService.desktop \
 	     com.endlessm.CodingGameService.service.in \
-	     com.endlessm.CodingGameService.gschema.xml \
 	     com.endlessm.CodingGameService.gresource.xml \
 	     data/timeline.json.unvalidated.in \
 	     $(all_js_files)
@@ -39,11 +38,6 @@ CodingGameService.c: $(srcdir)/com.endlessm.CodingGameService.xml
 CodingGameService.h: CodingGameService.c
 
 gdbus_codegen_built_sources = CodingGameService.c CodingGameService.h
-
-# GSettings schemas
-gsettings_SCHEMAS = com.endlessm.CodingGameService.gschema.xml
-
-@GSETTINGS_RULES@
 
 # Validation of timeline (produces data.timeline)
 data/timeline.json: $(srcdir)/data/timeline.json.unvalidated.in $(all_js_files)
