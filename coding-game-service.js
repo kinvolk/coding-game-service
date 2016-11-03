@@ -62,8 +62,9 @@ function loadTimelineDescriptorsFromFile(file) {
  * The default case is to load the descriptors from the internal resource
  * file that makes up CodingGameService's binary. However, we first:
  *  1. Look at the command line to see if a file was provided there
- *  2. Look in $XDG_CONFIG_HOME for a file called 'lessons.json'
- *  3. Use the internal resource named 'data/lessons.json'
+ *  2. Look in $XDG_CONFIG_HOME/com.endlessm.CodingGameService for a file
+ *     called 'timeline.json'
+ *  3. Use the internal resource named 'data/timeline.json'
  *
  * The first two are assumed to be 'untrusted' - they will be validated
  * before being loaded in. If there are any errors, we try to use
@@ -569,8 +570,8 @@ const CodingGameServiceApplication = new Lang.Class({
         this._skeleton = null;
         this._commandLineFile = null;
 
-        this.add_main_option('lessons-file', 'l'.charCodeAt(0), GLib.OptionFlags.NONE, GLib.OptionArg.FILENAME,
-                             'Use this file for lessons', 'PATH');
+        this.add_main_option('timeline-file', 'l'.charCodeAt(0), GLib.OptionFlags.NONE, GLib.OptionArg.FILENAME,
+                             'Use this file for timeline', 'PATH');
     },
 
     vfunc_startup: function() {
@@ -579,9 +580,9 @@ const CodingGameServiceApplication = new Lang.Class({
     },
 
     vfunc_handle_local_options: function(options) {
-        let lessonsFileVal = options.lookup_value('lessons-file', new GLib.VariantType('ay'));
-        if (lessonsFileVal)
-            this._commandLineFile = Gio.File.new_for_path(lessonsFileVal.get_bytestring().toString());
+        let timelineFileVal = options.lookup_value('timeline-file', new GLib.VariantType('ay'));
+        if (timelineFileVal)
+            this._commandLineFile = Gio.File.new_for_path(timelineFileVal.get_bytestring().toString());
 
         // Continue default processing...
         return -1;
