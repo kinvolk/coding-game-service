@@ -119,8 +119,10 @@ function findInArray(array, callback) {
 const CodingGameServiceLog = new Lang.Class({
     Name: 'CodingGameServiceLog',
 
-    _init: function(logFile) {
-        this._logFile = logFile;
+    _init: function() {
+        this._logFile = Gio.File.new_for_path(GLib.build_filenamev([GLib.get_user_config_dir(),
+                                                                    'com.endlessm.CodingGameService',
+                                                                    'game-service.log'])),
         this._eventLog = [];
 
         let logContents = '';
@@ -150,6 +152,16 @@ const CodingGameServiceLog = new Lang.Class({
         };
 
         this._eventLog.push(entry);
+
+        try {
+            let logFileDirectory = this._logFile.get_parent();
+            logFileDirectory.make_directory_with_parents(null);
+        } catch(e if e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.EXISTS)) {
+            // Ignore this case
+        } catch (e) {
+            logError(e, 'Unable to create game service log directory');
+            // Keep going -- we'll fail anyway
+        }
 
         try {
             let logContents = JSON.stringify(this._eventLog, null, 2);
@@ -229,7 +241,7 @@ const CodingGameService = new Lang.Class({
                                                                         'com.endlessm.Showmehow.Service',
                                                                         '/com/endlessm/Showmehow/Service',
                                                                         null);
-        this._log = new CodingGameServiceLog(Gio.File.new_for_path('game-service.log'));
+        this._log = new CodingGameServiceLog();
         this._dispatchTable = {
             'chat-actor': Lang.bind(this, this._dispatchChatEvent),
             'chat-user': Lang.bind(this, this._dispatchChatEvent),
