@@ -296,8 +296,9 @@ const CodingGameService = new Lang.Class({
     Name: 'CodingGameService',
     Extends: CodingGameServiceDBUS.CodingGameServiceSkeleton,
 
-    _init: function(props, descriptors, monitor) {
-        this.parent(props);
+    _init: function(descriptors, monitor) {
+        this.parent();
+
         this._descriptors = descriptors;
         this._monitor = monitor;
         this._contentProvider = Showmehow.ServiceProxy.new_for_bus_sync(Gio.BusType.SESSION,
@@ -588,7 +589,7 @@ const CodingGameServiceApplication = new Lang.Class({
     vfunc_dbus_register: function(conn, object_path) {
         this.parent(conn, object_path);
         let [descriptors, monitor] = loadTimelineDescriptors(this._commandLineFilename);
-        this._skeleton = new CodingGameService({}, descriptors, monitor);
+        this._skeleton = new CodingGameService(descriptors, monitor);
         this._skeleton.export(conn, object_path);
         return true;
     },
