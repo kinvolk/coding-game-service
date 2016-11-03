@@ -116,5 +116,5 @@ CLEANFILES += $(bin_SCRIPTS) \
 	      $(service_DATA) \
 	      $(resources_built_sources) \
 	      $(gdbus_codegen_built_sources) \
-	      data/lessons.json \
+	      data/timeline.json \
 	      $(NULL)
