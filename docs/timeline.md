@@ -81,3 +81,29 @@ is made up of the following events:
         "Sure why not" button. It causes the 'move-window' event
         to be registered as an event we are actively listening for
         and then emits the `ListenForEvent` signal with `move-window`.
+
+        When the `move-window` signal is received we dispatch any events
+        in the `received` section of this event. The game service will
+        also emit the `StopListeningFor` signal to indicate that it no
+        longer needs to know about that signal.
+
+    event::intro::stop-wobble-window
+
+        This event is fired when the 'move-window' external event is received
+        by the game service (because the shell would have called into
+        ExternalEvent). This happens because event::intro::wobble-window is
+        listed as a member in the "received" part of
+        listen::intro::wobble-window. This will cause `ListenForEvent` to be
+        emitted with `stop-moving-windows`.
+
+        This isn't to be confused with the `StopListeningFor` signal emitted
+        earlier. That signal was to indicate to the shell that we are no longer
+        interested in `move-window` events. This signal indicates to the shell
+        that we are now interested for when the user *stops* moving a window
+        (defined to be no grab-motion events within a five second period).
+
+        When the event is received, the game service will emit `StopListeningFor`
+        with `stop-moving-windows` - this indicates to the shell that we are no
+        longer interested in events indicating that no windows are being moved
+        and that the shell can disconnect any signal handlers or internal logic
+        used to monitor window movement.
