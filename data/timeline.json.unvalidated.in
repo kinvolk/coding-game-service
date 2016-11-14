@@ -306,7 +306,7 @@
                 "received": [
                     {
                         "type": "event",
-                        "name": "artifact::intro::wobble-window"
+                        "name": "listen::intro::wobble-window::artifact"
                     },
                     {
                         "type": "event",
