@@ -53,18 +53,9 @@
                 },
                 "responses": {
                     "success": [
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::hook::artifact"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::choice_see_cool"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::choice_see_cool::challenge"
-                        }
+                        "chat::meme::intro::hook::artifact",
+                        "chat::meme::intro::choice_see_cool",
+                        "chat::meme::intro::choice_see_cool::challenge"
                     ]
                 }
             }
@@ -102,40 +93,16 @@
                 },
                 "responses": {
                     "yes": [
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::choice_see_cool::artifact"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::tell-goog-key"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::goog::intro::tell-goog-key"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::dank::intro::tell-goog-key"
-                        },
-                        {
-                            "type": "event",
-                            "name": "event::intro::leave-key-behind"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::goog::intro::tell-goog-key::input"
-                        }
+                        "chat::meme::intro::choice_see_cool::artifact",
+                        "chat::meme::intro::tell-goog-key",
+                        "chat::goog::intro::tell-goog-key",
+                        "chat::dank::intro::tell-goog-key",
+                        "event::intro::leave-key-behind",
+                        "chat::goog::intro::tell-goog-key::input"
                     ],
                     "no": [
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::choice_see_cool::again"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::choice_see_cool::challenge"
-                        }
+                        "chat::meme::intro::choice_see_cool::again",
+                        "chat::meme::intro::choice_see_cool::challenge"
                     ]
                 }
             }
@@ -216,40 +183,16 @@
                 },
                 "responses": {
                     "failure": [
-                        {
-                            "type": "event",
-                            "name": "chat::goog::intro::tell-goog-key::again"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::goog::intro::tell-goog-key::input"
-                        }
+                        "chat::goog::intro::tell-goog-key::again",
+                        "chat::goog::intro::tell-goog-key::input"
                     ],
                     "success": [
-                        {
-                            "type": "event",
-                            "name": "chat::goog::intro::goog-receive-key::segfault"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::goog::intro::goog-receive-key::name-error"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::goog::intro::goog-receive-key::give-in"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::enable-wobbly-windows::comment"
-                        },
-                        {
-                            "type": "event",
-                            "name": "event::intro::enable-wobbly-windows"
-                        },
-                        {
-                            "type": "event",
-                            "name": "listen::intro::wobble-window"
-                        }
+                        "chat::goog::intro::goog-receive-key::segfault",
+                        "chat::goog::intro::goog-receive-key::name-error",
+                        "chat::goog::intro::goog-receive-key::give-in",
+                        "chat::meme::intro::enable-wobbly-windows::comment",
+                        "event::intro::enable-wobbly-windows",
+                        "listen::intro::wobble-window"
                     ]
                 }
             }
@@ -304,30 +247,12 @@
             "data": {
                 "name": "move-window",
                 "received": [
-                    {
-                        "type": "event",
-                        "name": "listen::intro::wobble-window::artifact"
-                    },
-                    {
-                        "type": "event",
-                        "name": "chat::meme::intro::stop-wobble-window-comment"
-                    },
-                    {
-                        "type": "event",
-                        "name": "chat::fruit::intro::stop-wobble-window-comment"
-                    },
-                    {
-                        "type": "event",
-                        "name": "chat::dank::intro::stop-wobble-window-comment"
-                    },
-                    {
-                        "type": "event",
-                        "name": "chat::goog::intro::stop-wobble-window-comment"
-                    },
-                    {
-                        "type": "event",
-                        "name": "listen::intro::stop-wobble-window"
-                    }
+                    "listen::intro::wobble-window::artifact",
+                    "chat::meme::intro::stop-wobble-window-comment",
+                    "chat::fruit::intro::stop-wobble-window-comment",
+                    "chat::dank::intro::stop-wobble-window-comment",
+                    "chat::goog::intro::stop-wobble-window-comment",
+                    "listen::intro::stop-wobble-window"
                 ]
             }
         },
@@ -369,34 +294,13 @@
             "data": {
                 "name": "stop-moving-windows",
                 "received": [
-                    {
-                        "type": "event",
-                        "name": "chat::meme::intro::wobble-windows-comment"
-                    },
-                    {
-                        "type": "event",
-                        "name": "event::intro::disable-wobbly-windows"
-                    },
-                    {
-                        "type": "event",
-                        "name": "chat::meme::intro::install_programming"
-                    },
-                    {
-                        "type": "event",
-                        "name": "chat::dank::intro::new_splash_paint"
-                    },
-                    {
-                        "type": "event",
-                        "name": "chat::dank::intro::new_splash_paint::input"
-                    },
-                    {
-                        "type": "event",
-                        "name": "chat::fruit::intro::install_programming::comment"
-                    },
-                    {
-                        "type": "event",
-                        "name": "chat::meme::intro::install_programming::challenge"
-                    }
+                    "chat::meme::intro::wobble-windows-comment",
+                    "event::intro::disable-wobbly-windows",
+                    "chat::meme::intro::install_programming",
+                    "chat::dank::intro::new_splash_paint",
+                    "chat::dank::intro::new_splash_paint::input",
+                    "chat::fruit::intro::install_programming::comment",
+                    "chat::meme::intro::install_programming::challenge"
                 ]
             }
         },
@@ -452,24 +356,12 @@
                 },
                 "responses": {
                     "success": [
-                        {
-                            "type": "event",
-                            "name": "event::intro::new_splash_paint::background"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::dank::intro::new_splash_paint::complete"
-                        }
+                        "event::intro::new_splash_paint::background",
+                        "chat::dank::intro::new_splash_paint::complete"
                     ],
                     "failure": [
-                        {
-                            "type": "event",
-                            "name": "chat::dank::intro::new_splash_paint::again"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::dank::intro::new_splash_paint::input"
-                        }
+                        "chat::dank::intro::new_splash_paint::again",
+                        "chat::dank::intro::new_splash_paint::input"
                     ]
                 }
             }
@@ -508,32 +400,14 @@
                 },
                 "responses": {
                     "success": [
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::install-programming::artifact"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::intro-complete"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::goog::intro::install_programming::comment"
-                        }
+                        "chat::meme::intro::install-programming::artifact",
+                        "chat::meme::intro::intro-complete",
+                        "chat::goog::intro::install_programming::comment"
                     ],
                     "failure": [
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::install_programming::again"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::fruit::intro::install_programming::again"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::install_programming::challenge"
-                        }
+                        "chat::meme::intro::install_programming::again",
+                        "chat::fruit::intro::install_programming::again",
+                        "chat::meme::intro::install_programming::challenge"
                     ]
                 }
             }

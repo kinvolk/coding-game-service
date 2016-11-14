@@ -385,23 +385,18 @@ function resolveGSettingsValue(value) {
 // in descriptors so that they can be dispatched. Throws if
 // an event was not able to be found.
 function findEventsToDispatchInDescriptors(findEvents, eventDescriptors) {
-    // Now that we have the events, run each of them
-    let events = findEvents.filter(function(e) {
-        return e.type === 'event';
-    });
-
     // We map from events names to event descriptors here to preserve the
     // ordering
     let eventDescriptorsToRun = events.map(function(e) {
         return eventDescriptors.some(function(responseEvent) {
-            return responseEvent.name === e.name;
+            return responseEvent.name === e;
         });
     });
 
     // If we can't find them all, throw an internal error here.
-    if (events.length !== eventDescriptorsToRun.length) {
+    if (findEvents.length !== eventDescriptorsToRun.length) {
         throw new Error('Couldn\'t find descriptors for events: ' +
-                        JSON.stringify(events, null, 2) + ', found: ' +
+                        JSON.stringify(findEvents, null, 2) + ', found: ' +
                         JSON.stringify(eventDescriptorsToRun, null, 2));
     }
 
