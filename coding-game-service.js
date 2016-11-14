@@ -379,6 +379,36 @@ function resolveGSettingsValue(value) {
     return value;
 }
 
+// findEventsToDispatchInDecriptors
+//
+// Takes a list of events and finds the corresponding event entries
+// in descriptors so that they can be dispatched. Throws if
+// an event was not able to be found.
+function findEventsToDispatchInDescriptors(findEvents, eventDescriptors) {
+    // Now that we have the events, run each of them
+    let events = findEvents.filter(function(e) {
+        return e.type === 'event';
+    });
+
+    // We map from events names to event descriptors here to preserve the
+    // ordering
+    let eventDescriptorsToRun = events.map(function(e) {
+        return eventDescriptors.some(function(responseEvent) {
+            return responseEvent.name === e.name;
+        });
+    });
+
+    // If we can't find them all, throw an internal error here.
+    if (events.length !== eventDescriptorsToRun.length) {
+        throw new Error('Couldn\'t find descriptors for events: ' +
+                        JSON.stringify(events, null, 2) + ', found: ' +
+                        JSON.stringify(eventDescriptorsToRun, null, 2));
+    }
+
+    return eventDescriptorsToRun;
+}
+
+
 const CodingGameServiceErrorDomain = GLib.quark_from_string('coding-game-service-error');
 const CodingGameServiceErrors = {
     NO_SUCH_EVENT_ERROR: 0,
@@ -481,27 +511,10 @@ const CodingGameService = new Lang.Class({
                 }
             });
 
-            // Now that we have the events, run each of them
-            let events = respondingTo.data.responses[eventKeyToRun].filter(function(e) {
-                return e.type === 'event';
-            });
-
-            // We map from events names to event descriptors here to preserve the
-            // ordering
-            let eventDescriptorsToRun = events.map(Lang.bind(this, function(e) {
-                return findInArray(this._descriptors.events, function(responseEvent) {
-                    return responseEvent.name === e.name;
-                });
-            })).filter(e => e);
-
-            // If we can't find them all, throw an internal error here.
-            if (events.length !== eventDescriptorsToRun.length) {
-                throw new Error('Couldn\'t find descriptors for events: ' +
-                                JSON.stringify(events, null, 2) + ', found: ' +
-                                JSON.stringify(eventDescriptorsToRun, null, 2));
-            }
-
-            eventDescriptorsToRun.forEach(Lang.bind(this, function(e) {
+            let responses = respondingTo.data.responses[eventKeyToRun];
+            let toDispatch = findEventsToDispatchInDescriptors(responses,
+                                                               this._descriptors.events);
+            toDispatch.forEach(Lang.bind(this, function(e) {
                 this._dispatch(e);
             }));
 
@@ -539,11 +552,9 @@ const CodingGameService = new Lang.Class({
 
             // Run the other events that happen when this one was triggered and
             // stop listening for this event now.
-            this._descriptors.events.filter(function(e) {
-                return eventToTrigger.data.received.some(function(r) {
-                    return r.name === e.name;
-                });
-            }).forEach(Lang.bind(this, function(e) {
+            let toDispatch = findEventsToDispatchInDescriptors(eventToTrigger.data.received,
+                                                               this._descriptors.events);
+            toDispatch.forEach(Lang.bind(this, function(e) {
                 this._dispatch(e);
             }));
 
