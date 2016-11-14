@@ -6,7 +6,7 @@ game service to perform some action which the game service doesn't currently
 do. The best way to do this is to add a new event type and trigger an event
 of that name through some other action.
 
-All events must have a `name` `type` and `data` members. The `data` member must
+All events must have a `name`, `type` and `data` members. The `data` member must
 be an object and can contain whatever properties are necessary (though these
 should be consistent between events with the same type).
 
