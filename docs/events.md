@@ -23,7 +23,7 @@ a `timestamp` member if that is necessary.
 
 If you need to dispatch additional events, the general pattern is to put
 those event names in a list under some property of the event's `data` member and
-then to run something similar to the the following snippit:
+then to run something similar to the the following snippet:
 
     let toDispatch = findEventsToDispatchInDescriptors(event.data.property,
                                                        this._descriptors.events);
