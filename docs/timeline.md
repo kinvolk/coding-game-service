@@ -1,7 +1,7 @@
 The timeline structure
 ======================
 
-The "events" member of `timeline.json` is a flat of events. The order of the list
+The "events" member of `timeline.json` is a flat of list events. The order of the list
 does not say anything about the order in which the events occurr. Events just occur
 in the order in which they happen to be emitted.
 
