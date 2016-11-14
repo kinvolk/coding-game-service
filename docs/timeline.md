@@ -41,7 +41,7 @@ is made up of the following events:
         This event causes a "user input bubble" to appear
         wiht two choices.
     
-    chat::meme::intro::choice_see_cool::challenge::response
+    chat::meme::intro::choice_see_cool::challenge::response (case 1)
 
         This event is not listed in `timeline.json` but
         occurs when the user presses the "Go away" button.
@@ -57,7 +57,7 @@ is made up of the following events:
         This event is also fired (again) when the user
         presses the "Go away" button.
 
-    chat::meme::intro::choice_see_cool::challenge::response
+    chat::meme::intro::choice_see_cool::challenge::response (case 2)
 
         This event is not listed in `timeline.json` but
         occurs when the user presses the "Sure why not"
