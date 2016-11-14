@@ -2,11 +2,11 @@ The timeline structure
 ======================
 
 The "events" member of `timeline.json` is a flat of list events. The order of the list
-does not say anything about the order in which the events occurr. Events just occur
+does not say anything about the order in which the events occur. Events just occur
 in the order in which they happen to be emitted.
 
 If you need to add new events, the convention is to add them around the same location
-as they should logically occurr relative to some other event. The naming convention
+as they should logically occur relative to some other event. The naming convention
 is not strictly enforced, but it is useful to give events name which identify
 their type, which actor they relate to, the mission they are for, the individual
 interaction of that mission and the part of that event sequence making up the
@@ -44,7 +44,7 @@ is made up of the following events:
     chat::meme::intro::choice_see_cool::challenge::response
 
         This event is not listed in `timeline.json` but
-        occurrs when the user presses the "Go away" button.
+        occurs when the user presses the "Go away" button.
     
     chat::meme::intro::choice_see_cool::again
 
@@ -60,14 +60,14 @@ is made up of the following events:
     chat::meme::intro::choice_see_cool::challenge::response
 
         This event is not listed in `timeline.json` but
-        occurrs when the user presses the "Sure why not"
+        occurs when the user presses the "Sure why not"
         button.
 
     artifact::intro::choice_see_cool
 
         This event is fired when the the user presses the
         "Sure why not" button and registers that the artifact
-        for intro::choice_see_cool has occurred.
+        for intro::choice_see_cool has occured.
 
     event::intro::enable-wobbly-windows
 
