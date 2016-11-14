@@ -155,6 +155,30 @@
             }
         },
         {
+            "name": "chat::goog::intro::goog-receive-key::wait-name-error",
+            "type": "wait-for",
+            "data": {
+                "timeout": 5000,
+                "then": [
+                    "chat::goog::intro::goog-receive-key::name-error",
+                    "chat::goog::intro::goog-receive-key::wait-give-in"
+                ]
+            }
+        },
+        {
+            "name": "chat::goog::intro::goog-receive-key::wait-give-in",
+            "type": "wait-for",
+            "data": {
+                "timeout": 5000,
+                "then": [
+                    "chat::goog::intro::goog-receive-key::give-in",
+                    "chat::meme::intro::enable-wobbly-windows::comment",
+                    "event::intro::enable-wobbly-windows",
+                    "listen::intro::wobble-window"
+                ]
+            }
+        },
+        {
             "name": "chat::goog::intro::goog-receive-key::name-error",
             "type": "chat-actor",
             "data": {
@@ -188,11 +212,7 @@
                     ],
                     "success": [
                         "chat::goog::intro::goog-receive-key::segfault",
-                        "chat::goog::intro::goog-receive-key::name-error",
-                        "chat::goog::intro::goog-receive-key::give-in",
-                        "chat::meme::intro::enable-wobbly-windows::comment",
-                        "event::intro::enable-wobbly-windows",
-                        "listen::intro::wobble-window"
+                        "chat::goog::intro::goog-receive-key::wait-name-error"
                     ]
                 }
             }

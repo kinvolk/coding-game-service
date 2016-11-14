@@ -430,7 +430,8 @@ const CodingGameService = new Lang.Class({
             'change-setting': Lang.bind(this, this._changeSettingEvent),
             'listen-event': Lang.bind(this, this._listenExternalEvent),
             'receive-event': Lang.bind(this, this._receiveExternalEvent),
-            'copy-file': Lang.bind(this, this._copyFileEvent)
+            'copy-file': Lang.bind(this, this._copyFileEvent),
+            'wait-for': Lang.bind(this, this._waitForEvent)
         };
 
         // Log the warnings
@@ -762,6 +763,17 @@ const CodingGameService = new Lang.Class({
     _receiveExternalEvent: function(event, callback) {
         this._stopListeningFor(event.data.name);
         callback(event);
+    },
+
+    _waitForEvent: function(event, callback) {
+        callback(event);
+        GLib.timeout_add(GLib.PRIORITY_DEFAULT, event.data.timeout, Lang.bind(this, function() {
+            let toDispatch = findEventsToDispatchInDescriptors(event.data.then,
+                                                               this._descriptors.events);
+            toDispatch.forEach(Lang.bind(this, function(e) {
+                this._dispatch(e);
+            }));
+        }));
     },
 
     _dispatch: function(event) {
