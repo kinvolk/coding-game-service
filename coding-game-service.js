@@ -17,7 +17,6 @@ const GLib = imports.gi.GLib;
 const Gio = imports.gi.Gio;
 const CodingGameServiceDBUS = imports.gi.CodingGameService;
 const ChatboxService = imports.gi.ChatboxService;
-const Showmehow = imports.gi.Showmehow;
 
 // This is a hack to cause CodingGameService js resources to get loaded
 const CodingGameServiceResource = imports.gi.CodingGameService.get_resource();  // eslint-disable-line no-unused-vars
@@ -509,8 +508,6 @@ const CodingGameService = new Lang.Class({
         });
 
         if (event.type === 'chat-actor') {
-            // If we don't actually have message text yet, then
-            // we'll need to fetch it from showmehow-service
             sendMessage(event);
         } else {
             // No sense sending the chat message, just create a log entry
