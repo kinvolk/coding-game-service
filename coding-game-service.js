@@ -443,7 +443,7 @@ const CodingGameService = new Lang.Class({
 
     vfunc_handle_currently_listening_for_events: function(method) {
         try {
-            let response = new GLib.Variant("a(s)",
+            let response = new GLib.Variant('a(s)',
                                             Object.keys(this._listeningEventTriggers).map(k => [k]));
             this.complete_currently_listening_for_events(method, response);
         } catch (e) {
