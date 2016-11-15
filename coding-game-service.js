@@ -571,7 +571,7 @@ const CodingGameService = new Lang.Class({
     },
 
     _startMissionEvent: function(event, callback) {
-        /* Create the log entry, then start the mission */
+        // Create the log entry, then start the mission
         callback(event);
         this._startMission(event.data.name);
     },
