@@ -425,9 +425,9 @@ const CodingGameService = new Lang.Class({
             // Run the other events that happen when this one was triggered and
             // stop listening for this event now.
             this._descriptors.events.filter(function(e) {
-                return findInArray(eventToTrigger.data.received, function(r) {
+                return eventToTrigger.data.received.some(function(r) {
                     return r.name === e.name;
-                }) !== null;
+                });
             }).forEach(Lang.bind(this, function(e) {
                 this._dispatch(e);
             }));
