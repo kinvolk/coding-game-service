@@ -258,9 +258,9 @@ const CodingGameServiceLog = new Lang.Class({
     },
 
     eventHasOccurred: function(name) {
-        return findInArray(this._eventLog, function(e) {
+        return this._eventLog.some(function(e) {
             return e.name === name;
-        }) !== null;
+        });
     }
 });
         
