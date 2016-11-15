@@ -3,5 +3,6 @@
   <gresource prefix="/com/endlessm/coding-game-service">
     <file>data/timeline.json</file>
     <file>lib/validation.js</file>
+    <file>lib/desktopFile.js</file>
   </gresource>
 </gresources>
