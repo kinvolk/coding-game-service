@@ -593,7 +593,7 @@ const CodingGameService = new Lang.Class({
                             event.data.key);
         }
 
-        let settings = new Gio.Settings({ schema: event.data.schema });
+        let settings = new Gio.Settings({ settings_schema: schema });
         settings.set_value(event.data.key,
                            new GLib.Variant(event.data.variant,
                                             event.data.value));
