@@ -147,7 +147,7 @@ dist_autostart_DATA = com.endlessm.CodingGameService.desktop
 # Polkit policy
 
 polkit_policydir = $(datadir)/polkit-1/actions
-dist_polkit_policy_DATA = com.endlessm.Coding.policy
+polkit_policy_DATA = com.endlessm.Coding.policy
 
 # Things to get rid of later
 CLEANFILES += $(bin_SCRIPTS) \
