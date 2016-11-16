@@ -55,13 +55,19 @@ is made up of the following events:
     chat::meme::intro::choice_see_cool::challenge
     
         This event is also fired (again) when the user
-        presses the "Go away" button.
+        presses the "Go away" button. It causes a chat
+        bubble with the choice to be shown again.
 
     chat::meme::intro::choice_see_cool::challenge::response (case 2)
 
         This event is not listed in `timeline.json` but
         occurs when the user presses the "Sure why not"
         button.
+
+    chat::meme::intro::choice_see_cool::comment_here_goes
+
+        This event causes a chat bubble to appear with
+        "Okay, here goes".
 
     artifact::intro::choice_see_cool
 
@@ -87,12 +93,12 @@ is made up of the following events:
         also emit the `StopListeningFor` signal to indicate that it no
         longer needs to know about that signal.
 
-    event::intro::stop-wobble-window
+    listen::intro::stop-wobble-window
 
         This event is fired when the `move-window` external event is received
         by the game service (because the shell would have called into
-        `ExternalEvent`). This happens because event::intro::wobble-window is
-        listed as a member in the "received" part of
+        `ExternalEvent`). This happens because listen::intro::stop-wobble-window
+        is listed as a member in the "received" part of
         listen::intro::wobble-window. This will cause `ListenForEvent` to be
         emitted with `stop-moving-windows`.
 
