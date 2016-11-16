@@ -39,7 +39,7 @@ is made up of the following events:
     chat::meme::intro::choice_see_cool::challenge
     
         This event causes a "user input bubble" to appear
-        wiht two choices.
+        with two choices.
     
     chat::meme::intro::choice_see_cool::challenge::response (case 1)
 

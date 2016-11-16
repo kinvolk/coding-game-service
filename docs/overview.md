@@ -28,7 +28,7 @@ game service, so for instance a response to one actor's message might
 trigger a new message by another actor.
 
 The main consumer of the chat messages is the "coding-chatbox" application.
-The game service is designed primarly with this usecase in mind. As such,
+The game service is designed primarily with this use case in mind. As such,
 chat responses are not responses to D-Bus method calls in the usual sense, but
 instead sent as new messages to com.endlessm.Coding.Chatbox.
 
@@ -96,7 +96,7 @@ cause the signal `ListenForEvent` to be fired with `move-window`. Any
 other application or system service that might want to tell the game service
 about a window being moved can then call `ExternalEvent` with `move-window`
 when that happens. Applications should not notify the game service of
-events unless they recieve the `ListenForEvent` signal as an optimisation.
+events unless they receive the `ListenForEvent` signal as an optimisation.
 
 When an external event occurs, the game service looks up the event which
 caused that external event to be listened for and runs any events listed
