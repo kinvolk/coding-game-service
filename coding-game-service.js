@@ -339,14 +339,15 @@ function executeCommandForOutput(argv, userEnvironment) {
 // directory, we write it there directly. Otherwise, we shell out to pkexec and
 // another script to copy to another (whitelisted) location.
 function copySourceToTarget(source, target) {
+    let targetFile = Gio.File.new_for_path(target);
+
     // We have permission to copy this file.
-    if (target.startsWith(GLib.get_home_dir())) {
+    if (targetFile.has_prefix(GLib.get_home_dir())) {
         let sourcePath = GLib.build_filenamev([
             Config.coding_files_dir,
             source
         ]);
         let sourceFile = Gio.File.new_for_path(sourcePath);
-        let targetFile = Gio.File.new_for_path(target);
 
         sourceFile.copy(targetFile, Gio.FileCopyFlags.OVERWRITE, null, null);
     } else {
