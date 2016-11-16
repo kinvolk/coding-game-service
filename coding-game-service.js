@@ -294,15 +294,20 @@ function environmentAsObject() {
 // returns a non-zero environment variable, throw.
 //
 // Specify user_environment to override environment variables.
-function executeCommandForOutput(argv, userEnvironment={}) {
-    let environment = environmentAsObject();
-    Object.keys(userEnvironment).forEach(key => {
-        environment[key] = userEnvironment[key];
-    });
+function executeCommandForOutput(argv, userEnvironment) {
+    let environment = null;
 
+    if (userEnvironment) {
+        environment = environmentAsObject();
+        Object.keys(userEnvironment).forEach(key => {
+            environment[key] = userEnvironment[key];
+        });
+    }
+
+    let envp = environment ? null : environmentObjectToEnvp(environment);
     let [ok, stdout, stderr, status] = GLib.spawn_sync(null,
                                                        argv,
-                                                       environmentObjectToEnvp(environment),
+                                                       envp,
                                                        0,
                                                        null);
 
