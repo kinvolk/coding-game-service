@@ -336,7 +336,7 @@ function executeCommandForOutput(argv, userEnvironment={}) {
 function copySourceToTarget(source, target) {
     // We have permission to copy this file.
     if (target.startsWith(GLib.get_home_dir())) {
-        let sourcePath = GLib.build_pathv('/', [
+        let sourcePath = GLib.build_filenamev([
             Config.coding_files_dir,
             source
         ]);
@@ -367,7 +367,7 @@ function resolveGSettingsValue(value) {
     if (typeof(value) === 'object') {
         switch(value.type) {
             case 'internal-file-uri':
-                return 'file://' + GLib.build_pathv('/', [
+                return 'file://' + GLib.build_filenamev([
                     Config.coding_files_dir,
                     value.value
                 ]);
@@ -731,7 +731,7 @@ const CodingGameService = new Lang.Class({
         let source = event.data.source;
         let target = event.data.target;
 
-        let souceDataPath = GLib.build_pathv('/', [
+        let souceDataPath = GLib.build_filenamev([
             Config.coding_files_dir,
             source
         ]);

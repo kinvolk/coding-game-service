@@ -37,7 +37,7 @@ if (WHITELIST.filter((w) => target.startsWith(w)).length === 0) {
 
 // Now that we have done our sanity checks, copy from the coding
 // files directory to the target nominated.
-let sourceFile = Gio.File.new_for_path(GLib.build_pathv('/', [
+let sourceFile = Gio.File.new_for_path(GLib.build_filenamev([
     '%coding_files_dir%',
     source
 ]));
