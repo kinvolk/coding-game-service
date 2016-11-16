@@ -6,7 +6,7 @@ designed to encourage people to explore the operating system, become users
 and learn the skills required to be a software developer.
 
 Architecturally it is divided into a few main components.
- 1. A GDBus service that is resident on the system, listening for events
+ 1. A D-Bus service that is resident on the system, listening for events
     and updating its own state accordingly.
  2. A log file which tracks all the relevant game related activity and can
     be replayed at any moment.
@@ -29,7 +29,7 @@ trigger a new message by another actor.
 
 The main consumer of the chat messages is the "coding-chatbox" application.
 The game service is designed primarly with this usecase in mind. As such,
-chat responses are not responses to DBus method calls in the usual sense, but
+chat responses are not responses to D-Bus method calls in the usual sense, but
 instead sent as new messages to com.endlessm.Coding.Chatbox.
 
 The only relevant methods exposed to external clients are ChatHistory, which
@@ -52,7 +52,7 @@ for instance, it might be possible to collect artifacts and partially
 complete missions which the user has not seen yet.
 
 Information about the currently active mission is stored in properties
-which are made public on the `com.endlessm.CodingGameService` DBus object.
+which are made public on the `com.endlessm.CodingGameService` D-Bus object.
 Those properties are used by the game manager to display the user's progress
 throughout the game itself.
 
@@ -85,7 +85,7 @@ External Events
 
 Events are usually triggered in one of two ways. The first way is by the
 user interacting with the `coding-chatbox` application and responding to
-messages there. That calls the `ChatResponse` method on the DBus service.
+messages there. That calls the `ChatResponse` method on the D-Bus service.
 
 The other way is by other applications calling `ExternalEvent`. This method
 is just called with a single string stating what that event was. A call to
