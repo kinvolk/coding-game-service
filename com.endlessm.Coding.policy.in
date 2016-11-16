@@ -13,7 +13,7 @@
       <allow_inactive>yes</allow_inactive>
       <allow_active>yes</allow_active>
     </defaults>
-    <annotate key="org.freedesktop.policykit.exec.path">%pkglibexecdir%/coding-copy-files</annotate>
+    <annotate key="org.freedesktop.policykit.exec.path">%pkglibexecdir%/coding-copy-files.js</annotate>
   </action>
 
 </policyconfig>
