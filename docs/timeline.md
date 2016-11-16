@@ -78,7 +78,7 @@ is made up of the following events:
     listen::intro::wobble-window
 
         This event is also fired when the user presses the
-        "Sure why not" button. It causes the 'move-window' event
+        "Sure why not" button. It causes the `move-window` event
         to be registered as an event we are actively listening for
         and then emits the `ListenForEvent` signal with `move-window`.
 
@@ -89,9 +89,9 @@ is made up of the following events:
 
     event::intro::stop-wobble-window
 
-        This event is fired when the 'move-window' external event is received
+        This event is fired when the `move-window` external event is received
         by the game service (because the shell would have called into
-        ExternalEvent). This happens because event::intro::wobble-window is
+        `ExternalEvent`). This happens because event::intro::wobble-window is
         listed as a member in the "received" part of
         listen::intro::wobble-window. This will cause `ListenForEvent` to be
         emitted with `stop-moving-windows`.

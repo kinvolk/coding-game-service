@@ -27,14 +27,14 @@ conversation with the user. Internally, they are all backed by the same
 game service, so for instance a response to one actor's message might
 trigger a new message by another actor.
 
-The main consumer of the chat messages is the "coding-chatbox" application.
+The main consumer of the chat messages is the `coding-chatbox` application.
 The game service is designed primarily with this use case in mind. As such,
 chat responses are not responses to D-Bus method calls in the usual sense, but
-instead sent as new messages to com.endlessm.Coding.Chatbox.
+instead sent as new messages to `com.endlessm.Coding.Chatbox`.
 
-The only relevant methods exposed to external clients are ChatHistory, which
-gets the entire chat history for a particular actor and ChatResponse. These
-are primarily for use by the coding-chatbox app, to respond to a particular
+The only relevant methods exposed to external clients are `ChatHistory`, which
+gets the entire chat history for a particular actor and `ChatResponse`. These
+are primarily for use by the `coding-chatbox` app, to respond to a particular
 message-id or to fetch the history of a conversation on startup.
 
 Timeline and Missions
