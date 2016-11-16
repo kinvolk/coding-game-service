@@ -342,7 +342,7 @@ function copySourceToTarget(source, target) {
     let targetFile = Gio.File.new_for_path(target);
 
     // We have permission to copy this file.
-    if (targetFile.has_prefix(GLib.get_home_dir())) {
+    if (targetFile.has_prefix(Gio.File.new_for_path(GLib.get_home_dir()))) {
         let sourcePath = GLib.build_filenamev([
             Config.coding_files_dir,
             source
