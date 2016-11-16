@@ -124,7 +124,7 @@ const CodingGameServiceChatController = new Lang.Class({
                          'Failed to send message to chatbox (' +
                          JSON.stringify(message, null, 2));
             }
-        });
+        }));
     }
 });
 
