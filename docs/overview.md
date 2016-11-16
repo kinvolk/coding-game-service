@@ -70,7 +70,7 @@ more informaton on what to do for that.
 Log File
 ========
 
-Every event that occurrs in the game is written to
+Every event that occurs in the game is written to
 `$XDG_CONFIG_HOME/com.endlessm.CodingGameService/game-service.log`. The
 `CodingGameService` object doesn't have direct access to every entry, only those
 mediated through the log file. The log file exposes methods to answer relevant
@@ -98,7 +98,7 @@ about a window being moved can then call `ExternalEvent` with `move-window`
 when that happens. Applications should not notify the game service of
 events unless they recieve the `ListenForEvent` signal as an optimisation.
 
-When an external event occurrs, the game service looks up the event which
+When an external event occurs, the game service looks up the event which
 caused that external event to be listened for and runs any events listed
 in its `data.received` member.
 
