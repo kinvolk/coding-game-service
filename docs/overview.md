@@ -90,26 +90,28 @@ messages there. That calls the `ChatResponse` method on the D-Bus service.
 The other way is by other applications calling `ExternalEvent`. This method
 is just called with a single string stating what that event was. A call to
 `ExternalEvent` is only relevant if the game service was in a state where
-it was listening for that event. For example, in the `intro` mission, the
+it was listening for that event. Other applications can determine this by
+observing changes on the `CurrentlyListeningForEvents` property, which
+is an array of boxed strings. For example, in the `intro` mission, the
 game service becomes interested in the user moving a window. This will
-cause the signal `ListenForEvent` to be fired with `move-window`. Any
-other application or system service that might want to tell the game service
-about a window being moved can then call `ExternalEvent` with `move-window`
-when that happens. Applications should not notify the game service of
-events unless they receive the `ListenForEvent` signal as an optimisation.
+cause the signal `CurrentlyListeningForEvents` to be updated to include
+`move-window`. Any other application or system service that might want to
+tell the game service about a window being moved can then call
+`ExternalEvent` with `move-window` when that happens. Applications should
+not notify the game service of events unless they notice that
+`CurrentlyListeningForEvents` includes that event type
+as an optimisation.
 
 When an external event occurs, the game service looks up the event which
 caused that external event to be listened for and runs any events listed
 in its `data.received` member.
 
 When the game service is no longer interested in some event, for instance,
-because some timeout happened or the event was already received, it will
-emit `StopListeningFor` with that event name. Other applications can
-catch this signal and stop running any internal logic to detect whether
-that event should be sent.
+because some timeout happened or the event was already received, it
+remove that event type from the `CurrentlyListeningForEvents` property.
+Other applications can catch this change and stop running any internal
+logic to detect whether that event should be sent.
 
 If applications start up after the game service and they might want to send
-events to it, they should call `CurrentlyListeningForEvents` to get all
-events which the game service is currently interested in (eg, all those
-for which `ListenForEvent` was sent and `StopListeningFor` has not been
-sent.
+events to it, they should inspect the value of `CurrentlyListeningForEvents`
+to determine which events to start listening for.
