@@ -31,7 +31,9 @@ user input bubble is passed to the chatbox, we may
 also optionally pass a `showmehow_id` which indicates
 that the response should be processed by `showmehow-service` first
 and then sent to the game service through
-the `ChatResponse` method.
+the `ChatResponse` method. `showmehow_id` is the name of the entry
+in `showmehow-service`'s `lessons.json` that the chatbox can call
+out to `showmehow-service` with in order to match the response.
 
 Interaction between Coding-Game-Service and Showmehow
 =====================================================
