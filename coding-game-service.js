@@ -158,7 +158,7 @@ const CodingGameServiceLog = new Lang.Class({
     },
 
     handleEvent: function(eventType, eventName, eventData) {
-        let timestamp = new Date().toLocaleString();
+        let timestamp = new Date().toString();
         let entry = {
             type: eventType,
             name: eventName,
