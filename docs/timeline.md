@@ -15,9 +15,9 @@ interaction. For instance, the following interaction:
     MEME: Wanna see something cool?
                     USER: 1. Go away
                           2. Sure, why not
-                    
+
                     USER: Go away
-    
+
     MEME: Sure you don't?
                     USER: 1. Go away
                           2. Sure, why not
@@ -32,20 +32,20 @@ interaction. For instance, the following interaction:
 is made up of the following events:
 
     chat::meme::intro::choice_see_cool::comment
-    
+
         This event causes a chat bubble to appear with
         "Wanna see something cool?"
-    
+
     chat::meme::intro::choice_see_cool::challenge
-    
+
         This event causes a "user input bubble" to appear
         with two choices.
-    
+
     chat::meme::intro::choice_see_cool::challenge::response (case 1)
 
         This event is not listed in `timeline.json` but
         occurs when the user presses the "Go away" button.
-    
+
     chat::meme::intro::choice_see_cool::again
 
         This event is fired when the user presses the
@@ -53,7 +53,7 @@ is made up of the following events:
         appear with the "Sure you don't?" message.
 
     chat::meme::intro::choice_see_cool::challenge
-    
+
         This event is also fired (again) when the user
         presses the "Go away" button. It causes a chat
         bubble with the choice to be shown again.

@@ -9,7 +9,7 @@ It has a binding to the following properties:
 
     CurrentMissionName
     CurrentMissionDesc
-    CurrentMissionPoints  
+    CurrentMissionPoints
     CurrentMissionNumTasks
     CurrentMissionNumTasksAvailable
     CurrentMissionAvailablePoints

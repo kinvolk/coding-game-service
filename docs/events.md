@@ -30,5 +30,3 @@ then to run something similar to the the following snippet:
     toDispatch.forEach(Lang.bind(this, function(e) {
         this._dispatch(e);
     }));
-
-
