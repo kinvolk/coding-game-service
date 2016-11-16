@@ -742,11 +742,6 @@ const CodingGameService = new Lang.Class({
             source
         ]);
 
-        if (!Gio.File.new_for_path(souceDataPath).query_exists(null)) {
-            throw new Error('Cannot process link-file event ' + event.data.name +
-                            ', source file ' + souceDataPath + ' does not exist');
-        }
-
         copySourceToTarget(source, target);
         callback(event);
     },
