@@ -155,7 +155,7 @@ CLEANFILES += $(bin_SCRIPTS) \
 	      $(resources_built_sources) \
 	      $(gdbus_codegen_built_sources) \
 	      data/timeline.json \
-	      com.endlessm.Coding.policy \
+	      $(polkit_policy_DATA) \
 	      files/coding-copy-files.js \
 	      lib/config.js \
 	      $(NULL)
