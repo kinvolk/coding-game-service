@@ -393,8 +393,8 @@ function resolveGSettingsValue(value) {
 function findEventsToDispatchInDescriptors(findEvents, eventDescriptors) {
     // We map from events names to event descriptors here to preserve the
     // ordering
-    let eventDescriptorsToRun = events.map(function(e) {
-        return eventDescriptors.some(function(responseEvent) {
+    let eventDescriptorsToRun = findEvents.map(function(e) {
+        return findInArray(eventDescriptors, function(responseEvent) {
             return responseEvent.name === e;
         });
     });
