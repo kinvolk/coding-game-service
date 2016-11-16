@@ -297,9 +297,13 @@ const CodingGameService = new Lang.Class({
         // Listen for any events which are currently outstanding
         let listeningForTriggers = this._log.activeEventsToListenFor();
         this._listeningEventTriggers = {};
+
+        // Freeze notifications to avoid bus traffic here
+        this.freeze_notify();
         Object.keys(listeningForTriggers).forEach(Lang.bind(this, function(k) {
             this._startListeningFor(k, listeningForTriggers[k]);
         }));
+        this.thaw_notify();
 
         // If we started for the first time, dispatch the very first mission
         let activeMission = this._log.activeMission();
@@ -431,21 +435,6 @@ const CodingGameService = new Lang.Class({
             }));
 
             this.complete_external_event(method);
-        } catch (e) {
-            logError(e);
-            method.return_error_literal(CodingGameServiceErrorDomain,
-                                        CodingGameServiceErrors.INTERNAL_ERROR,
-                                        String(e));
-        }
-
-        return true;
-    },
-
-    vfunc_handle_currently_listening_for_events: function(method) {
-        try {
-            let response = new GLib.Variant('a(s)',
-                                            Object.keys(this._listeningEventTriggers).map(k => [k]));
-            this.complete_currently_listening_for_events(method, response);
         } catch (e) {
             logError(e);
             method.return_error_literal(CodingGameServiceErrorDomain,
@@ -603,13 +592,15 @@ const CodingGameService = new Lang.Class({
     },
 
     _startListeningFor: function(name, event) {
-        this.emit_listen_for_event(name);
         this._listeningEventTriggers[name] = event;
+        let v = new GLib.Variant("a(s)", Object.keys(this._listeningEventTriggers).map(k => [k]));
+        this.currently_listening_for_events = v;
     },
 
     _stopListeningFor: function(name) {
-        this.emit_stop_listening_for(name);
         delete this._listeningEventTriggers[name];
+        let v = new GLib.Variant("a(s)", Object.keys(this._listeningEventTriggers).map(k => [k]));
+        this.currently_listening_for_events = v;
     },
 
     _listenExternalEvent: function(event, callback) {
