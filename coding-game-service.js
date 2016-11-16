@@ -257,6 +257,32 @@ const CodingGameServiceLog = new Lang.Class({
         return activeListeningEvents;
     },
 
+    // This function returns pairs of event names and timestamps
+    // for each wait-for event. Those timestamps can be used along
+    // with the timeout member in order to add new timeouts
+    // back to the main loop in case the service is terminated.
+    activeTimeouts: function() {
+        // This is a mapping of event names to timestamps
+        let activeTimeoutEvents = {
+        };
+
+        this._eventLog.filter(function(e) {
+            return e.type === 'wait-for' || e.type === 'wait-for-complete'
+        }).forEach(function(e) {
+            if (e.type === 'wait-for') {
+                // Its okay to clobber an existing value here - that
+                // just means the timeout would have restarted.
+                activeTimeoutEvents[e.name] = e.timestamp;
+            } else if (e.type === 'wait-for-complete') {
+                if (activeTimeoutEvents[e.data.name]) {
+                    delete activeTimeoutEvents[e.data.name];
+                }
+            }
+        });
+
+        return activeTimeoutEvents;
+    },
+
     eventHasOccurred: function(name) {
         return this._eventLog.some(function(e) {
             return e.name === name;
@@ -437,7 +463,8 @@ const CodingGameService = new Lang.Class({
             'listen-event': Lang.bind(this, this._listenExternalEvent),
             'receive-event': Lang.bind(this, this._receiveExternalEvent),
             'copy-file': Lang.bind(this, this._copyFileEvent),
-            'wait-for': Lang.bind(this, this._waitForEvent)
+            'wait-for': Lang.bind(this, this._waitForEvent),
+            'wait-for-complete': Lang.bind(this, this._waitForEventComplete)
         };
 
         // Log the warnings
@@ -448,6 +475,36 @@ const CodingGameService = new Lang.Class({
         this._listeningEventTriggers = {};
         Object.keys(listeningForTriggers).forEach(Lang.bind(this, function(k) {
             this._startListeningFor(k, listeningForTriggers[k]);
+        }));
+
+        // Re-add any timeouts to the main loop which are currently outstanding.
+        // Note that we don't just re-add the timeout, but look at the timestamp
+        // to determine how much time has passed since the invocation of the
+        // wait-for event and either add it back to the mainloop with a value
+        // which takes that time into account or just fire it on the next iteration
+        let activeTimeouts = this._log.activeTimeouts();
+        Object.keys(activeTimeouts).map(Lang.bind(this, function(name) {
+            let timestamp = activeTimeouts[name];
+            let event = findInArray(this._descriptors.events, function(e) {
+                return e.name === name;
+            });
+
+            // Examine the timestamp to see how much time has
+            // passed since the wait-for event happened. We only get second
+            // level precision here but that's good enough.
+            let delta = Date.now() - Date.parse(timestamp);
+
+            // We will allow a negative delta for now and fire those events
+            // later once we are done with map()
+            return {
+                event: event,
+                remaining: event.data.timeout - delta
+            };
+        })).forEach(Lang.bind(this, function(spec) {
+            // If the event has a negative remaining time value, then
+            // add it with a timeout of zero so that it gets dispatched
+            // on the next main loop iteration
+            this._completeWaitForEventIn(spec.event, Math.max(spec.remaining, 0));
         }));
 
         // If we started for the first time, dispatch the very first mission
@@ -766,15 +823,31 @@ const CodingGameService = new Lang.Class({
         callback(event);
     },
 
-    _waitForEvent: function(event, callback) {
-        callback(event);
-        GLib.timeout_add(GLib.PRIORITY_DEFAULT, event.data.timeout, Lang.bind(this, function() {
+    _completeWaitForEventIn: function(event, timeout) {
+        GLib.timeout_add(GLib.PRIORITY_DEFAULT, timeout, Lang.bind(this, function() {
+            this._dispatch({
+                name: event.name + '::completed',
+                type: 'wait-for-complete',
+                data: {
+                    name: event.name
+                }
+            });
+
             let toDispatch = findEventsToDispatchInDescriptors(event.data.then,
                                                                this._descriptors.events);
             toDispatch.forEach(Lang.bind(this, function(e) {
                 this._dispatch(e);
             }));
         }));
+    },
+
+    _waitForEventComplete: function(event, callback) {
+        callback(event);
+    },
+
+    _waitForEvent: function(event, callback) {
+        callback(event);
+        this._completeWaitForEventIn(event, event.data.timeout);
     },
 
     _dispatch: function(event) {
