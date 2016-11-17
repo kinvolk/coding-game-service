@@ -5,42 +5,49 @@ filesdir = $(pkgdatadir)/files
 files_DATA = $(arbitrary_files)
 
 # Resource javascript modules
-resource_js_files = \
+resource_dist_js_files = \
 	lib/validation.js \
+	$(NULL)
+
+resource_nondist_js_files = \
 	lib/config.js \
 	$(NULL)
 
+lib/config.js: $(srcdir)/lib/config.js.in
+	$(AM_V_GEN) mkdir -p lib/ && \
+	sed -e 's,%CODING_FILES_DIR%,$(pkgdatadir)/files,g' \
+	    -e 's,%CODING_COPY_FILES_SCRIPT%,$(pkglibexecdir)/coding-copy-files.js,g' \
+	$< > $@.tmp && \
+	mv -f $@.tmp $@
+
 # All javascript modules
-all_js_files = \
+all_dist_js_files = \
 	coding-game-validator.js \
 	coding-game-service.js \
-	$(resource_js_files) \
+	$(resource_dist_js_files) \
+	$(NULL)
+
+all_js_files = \
+	$(all_dist_js_files) \
+	$(resource_nondist_js_files) \
 	$(NULL)
 
 
 AM_CONFIG_MACRO_DIR =
 AM_DISTCHECK_CONFIGURE_FLAGS = --enable-introspection
-EXTRA_DIST = com.endlessm.CodingGameService.xml \
-	     com.endlessm.CodingGameService.desktop \
-	     com.endlessm.CodingGameService.service.in \
-	     com.endlessm.CodingGameService.gresource.xml \
-	     data/timeline.json.unvalidated.in \
-	     com.endlessm.Coding.policy.in \
-	     files/coding-copy-files.js.in \
-	     $(all_js_files) \
-	     $(arbitrary_files) \
-	     $(NULL)
+EXTRA_DIST = \
+	com.endlessm.CodingGameService.xml \
+	com.endlessm.CodingGameService.desktop \
+	com.endlessm.CodingGameService.service.in \
+	com.endlessm.CodingGameService.gresource.xml \
+	data/timeline.json.unvalidated.in \
+	com.endlessm.Coding.policy.in \
+	files/coding-copy-files.js.in \
+	lib/config.js.in \
+	$(all_dist_js_files) \
+	$(arbitrary_files) \
+	$(NULL)
 CLEANFILES =
-
-# Rename the coding-game-service script
-coding-game-service: $(srcdir)/coding-game-service.js
-	cp $< $@
-	chmod +x $@
-
-# Rename the coding-game-validator script
-coding-game-validator: $(srcdir)/coding-game-validator.js
-	cp $< $@
-	chmod +x $@
 
 # GDBus-Codegen for CodingGameService
 CodingGameService.c: $(srcdir)/com.endlessm.CodingGameService.xml
@@ -55,27 +62,10 @@ data/timeline.json: $(srcdir)/data/timeline.json.unvalidated.in $(all_js_files)
 	mkdir -p data
 	cp $< $@
 
-# Some variables for use in the game service later
-lib/config.js: $(srcdir)/lib/config.js.in
-	$(AM_V_GEN) sed -e 's,%CODING_FILES_DIR%,$(pkgdatadir)/files,g' \
-	                -e 's,%CODING_COPY_FILES_SCRIPT%,$(pkglibexecdir)/coding-copy-files.js,g' \
-	                $< > $@.tmp && \
-	mv -f $@.tmp $@
-
-# Replace pkglibexecdir path
-com.endlessm.Coding.policy: com.endlessm.Coding.policy.in
-	$(AM_V_GEN) mkdir -p data && \
-	$(SED) -e 's,%pkglibexecdir%,$(pkglibexecdir),' < $< >$@.tmp && \
-	mv -f $@.tmp $@
-
-# Replace coding_files_dir path
-files/coding-copy-files.js: files/coding-copy-files.js.in
-	$(AM_V_GEN) mkdir -p files && \
-	$(SED) -e 's,%coding_files_dir%,$(pkgdatadir)/files,g' < $< >$@.tmp && \
-	mv -f $@.tmp $@
-
 # GResources
-resource_files = $(resource_js_files) \
+resource_files = \
+	$(resource_dist_js_files) \
+	$(resource_nondist_js_files) \
 	data/timeline.json \
 	$(NULL)
 
@@ -97,8 +87,18 @@ libcoding_game_service_1_0_la_LIBADD = $(CODING_GAME_SERVICE_LIBS)
 lib_LTLIBRARIES = libcoding_game_service-1.0.la
 
 # Scripts to install
-bin_SCRIPTS = coding-game-service \
-	      coding-game-validator
+bin_SCRIPTS = \
+	coding-game-service \
+	coding-game-validator \
+	$(NULL)
+
+coding-game-service: $(srcdir)/coding-game-service.js
+	cp $< $@
+	chmod +x $@
+
+coding-game-validator: $(srcdir)/coding-game-validator.js
+	cp $< $@
+	chmod +x $@
 
 # Header files to install
 coding_game_serviceincludedir = $(includedir)/coding-game-service
@@ -130,32 +130,42 @@ typelib_DATA = $(INTROSPECTION_GIRS:.gir=.typelib)
 CLEANFILES += $(gir_DATA) $(typelib_DATA)
 endif
 
+# DBus Service
 servicedir = $(datadir)/dbus-1/services
 service_DATA = com.endlessm.CodingGameService.service
 
-# DBus Service
 com.endlessm.CodingGameService.service: $(srcdir)/com.endlessm.CodingGameService.service.in
 	$(AM_V_GEN) sed -e 's|@bindir[@]|${bindir}|g' $< > $@
 
 # Script for placing files in the shared dir 
 pkglibexec_SCRIPTS = files/coding-copy-files.js
 
+files/coding-copy-files.js: files/coding-copy-files.js.in
+	$(AM_V_GEN) mkdir -p files && \
+	$(SED) -e 's,%coding_files_dir%,$(pkgdatadir)/files,g' < $< >$@.tmp && \
+	mv -f $@.tmp $@
+
 # XDG Autostart
 autostartdir = $(sysconfdir)/xdg/autostart
 dist_autostart_DATA = com.endlessm.CodingGameService.desktop
 
 # Polkit policy
-
 polkit_policydir = $(datadir)/polkit-1/actions
 polkit_policy_DATA = com.endlessm.Coding.policy
 
+com.endlessm.Coding.policy: com.endlessm.Coding.policy.in
+	$(AM_V_GEN) mkdir -p data && \
+	$(SED) -e 's,%pkglibexecdir%,$(pkglibexecdir),' < $< >$@.tmp && \
+	mv -f $@.tmp $@
+
 # Things to get rid of later
-CLEANFILES += $(bin_SCRIPTS) \
-	      $(service_DATA) \
-	      $(resources_built_sources) \
-	      $(gdbus_codegen_built_sources) \
-	      data/timeline.json \
-	      $(polkit_policy_DATA) \
-	      files/coding-copy-files.js \
-	      lib/config.js \
-	      $(NULL)
+CLEANFILES += \
+	$(bin_SCRIPTS) \
+	$(service_DATA) \
+	$(resources_built_sources) \
+	$(gdbus_codegen_built_sources) \
+	$(polkit_policy_DATA) \
+	data/timeline.json \
+	files/coding-copy-files.js \
+	lib/config.js \
+	$(NULL)
