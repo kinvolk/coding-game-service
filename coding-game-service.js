@@ -407,7 +407,7 @@ const CodingGameService = new Lang.Class({
                 method.return_error_literal(CodingGameServiceErrorDomain,
                                             CodingGameServiceErrors.IRRELEVANT_EVENT,
                                             'Not listening for event ' + id);
-                return;
+                return true;
             }
 
             // Process an internal event to note that we received the event here
@@ -437,6 +437,8 @@ const CodingGameService = new Lang.Class({
                                         CodingGameServiceErrors.INTERNAL_ERROR,
                                         String(e));
         }
+
+        return true;
     },
 
     vfunc_handle_currently_listening_for_events: function(method) {
@@ -450,6 +452,8 @@ const CodingGameService = new Lang.Class({
                                         CodingGameServiceErrors.INTERNAL_ERROR,
                                         String(e));
         }
+
+        return true;
     },
 
     _dispatchInputBubbleEvent: function(event, callback) {
