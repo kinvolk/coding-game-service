@@ -102,15 +102,13 @@ const CodingGameServiceChatController = new Lang.Class({
     Name: 'CodingGameServiceChatController',
 
     _init: function() {
-        let name = 'com.endlessm.Coding.Chatbox';
-        let path = '/com/endlessm/Coding/Chatbox';
-
         try {
-            this._internalChatboxProxy = ChatboxService.CodingChatboxProxy.new_for_bus_sync(Gio.BusType.SESSION,
-                                                                                            0,
-                                                                                            name,
-                                                                                            path,
-                                                                                            null);
+            this._internalChatboxProxy =
+                ChatboxService.CodingChatboxProxy.new_for_bus_sync(Gio.BusType.SESSION,
+                                                                   0,
+                                                                   'com.endlessm.Coding.Chatbox',
+                                                                   '/com/endlessm/Coding/Chatbox',
+                                                                   null);
          } catch (e) {
              logError(e, 'Error occurred in connecting to com.endlesssm.Coding.Chatbox');
          }
