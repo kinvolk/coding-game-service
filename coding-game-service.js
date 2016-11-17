@@ -301,7 +301,7 @@ function executeCommandForOutput(argv) {
                                                        null);
 
     if (!ok) {
-        throw new Error('Failed to execute: ' + argv.join(" ") + ", no error " +
+        throw new Error('Failed to execute: ' + argv.join(' ') + ', no error ' +
                         'message was set');
     }
 
@@ -344,7 +344,7 @@ function copySourceToTarget(source, target) {
         // the coding-copy-files script through pkexec and take the result
         // from there.
         executeCommandForOutput([
-            "/usr/bin/pkexec",
+            '/usr/bin/pkexec',
             Config.coding_copy_files_script,
             source,
             target
