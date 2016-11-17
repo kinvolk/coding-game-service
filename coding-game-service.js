@@ -356,13 +356,14 @@ function copySourceToTarget(source, target) {
 function resolveGSettingsValue(value) {
     if (typeof(value) === 'object') {
         switch(value.type) {
-            case 'internal-file-uri':
-                return 'file://' + GLib.build_filenamev([
-                    Config.coding_files_dir,
-                    value.value
-                ]);
-            default:
-                throw new Error('Don\'t know how to handle type ' + value.type);
+        case 'internal-file-uri':
+            let path = GLib.build_filenamev([
+                Config.coding_files_dir,
+                value.value
+            ]);
+            return GLib.filename_to_uri(path, null);
+        default:
+            throw new Error('Don\'t know how to handle type ' + value.type);
         }
     }
 
