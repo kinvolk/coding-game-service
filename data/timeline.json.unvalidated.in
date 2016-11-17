@@ -4,21 +4,25 @@
             "name": "intro",
             "short_desc": "Down the rabbit hole",
             "long_desc": "Why don't you answer the questions and see where the rabbit hole leads",
+            "start_events": [
+                "chat::meme::intro::hook",
+                "chat::meme::intro::hook::challenge"
+            ],
             "artifacts": [
                 {
-                    "name": "chat::meme::intro::hook::challenge",
+                    "name": "artifact::intro::hook",
                     "points": 52
                 },
                 {
-                    "name": "chat::meme::intro::choice_see_cool::challenge",
+                    "name": "artifact::choice_see_cool::challenge",
                     "points": 52
                 },
                 {
-                    "name": "listen::intro::wobble-window",
+                    "name": "artifact::intro::wobble-window",
                     "points": 52
                 },
                 {
-                    "name": "chat::meme::intro::install_programming::challenge",
+                    "name": "artifact:intro::install-programming",
                     "points": 52
                 }
             ]
@@ -29,16 +33,33 @@
     },
     "events": [
         {
-            "name": "chat::meme::intro::hook::challenge",
+            "name": "chat::meme::intro::hook",
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "name": "intro::hook::challenge",
+                "message": "Hey you"
+            }
+        },
+        {
+            "name": "chat::meme::intro::hook::challenge",
+            "type": "input-user",
+            "data": {
+                "actor": "MEME",
+                "input": {
+                    "type": "text",
+                    "settings": {
+                        "showmehow_id": "intro::hook"
+                    }
+                },
                 "responses": {
                     "success": [
                         {
-                            "type": "register",
-                            "name": "chat::meme::intro::hook"
+                            "type": "event",
+                            "name": "chat::meme::intro::hook::artifact"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::meme::intro::choice_see_cool"
                         },
                         {
                             "type": "event",
@@ -49,24 +70,49 @@
             }
         },
         {
-            "name": "chat::meme::intro::hook::again",
+            "name": "chat::meme::intro::hook::artifact",
+            "type": "register-artifact",
+            "data": {
+                "name": "artifact::intro::hook"
+            }
+        },
+        {
+            "name": "chat::meme::intro::choice_see_cool",
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "name": "intro::hook::again"
+                "message": "Wanna see something cool?"
             }
         },
         {
             "name": "chat::meme::intro::choice_see_cool::challenge",
-            "type": "chat-actor",
+            "type": "input-user",
             "data": {
                 "actor": "MEME",
-                "name": "intro::choice_see_cool::challenge",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "yes": {
+                            "text": "Sure, why not"
+                        },
+                        "no": {
+                            "text": "Go away"
+                        }
+                    }
+                },
                 "responses": {
                     "yes": [
                         {
-                            "type": "register",
-                            "name": "chat::meme::intro::choice_see_cool"
+                            "type": "event",
+                            "name": "chat::meme::intro::choice_see_cool::artifact"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::meme::intro::enable-wobbly-windows::comment"
+                        },
+                        {
+                            "type": "event",
+                            "name": "event::intro::enable-wobbly-windows"
                         },
                         {
                             "type": "event",
@@ -87,11 +133,26 @@
             }
         },
         {
+            "name": "chat::meme::intro::choice_see_cool::artifact",
+            "type": "register-artifact",
+            "data": {
+                "name": "artifact::intro::hook"
+            }
+        },
+        {
             "name": "chat::meme::intro::choice_see_cool::again",
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "name": "intro::choice_see_cool::again"
+                "message": "Sure you don't?"
+            }
+        },
+        {
+            "name": "chat::meme::intro::enable-wobbly-windows::comment",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "I turned this window into jello"
             }
         },
         {
@@ -100,6 +161,7 @@
             "data": {
                 "schema": "org.gnome.shell",
                 "key": "wobbly-effect",
+                "variant": "b",
                 "value": true
             }
         },
@@ -109,6 +171,7 @@
             "data": {
                 "schema": "org.gnome.shell",
                 "key": "wobbly-effect",
+                "variant": "b",
                 "value": false
             }
         },
@@ -119,14 +182,62 @@
                 "name": "move-window",
                 "received": [
                     {
-                        "type": "register",
-                        "name": "event::intro::wobble-window"
+                        "type": "event",
+                        "name": "artifact::intro::wobble-window"
+                    },
+                    {
+                        "type": "event",
+                        "name": "chat::meme::intro::stop-wobble-window-comment"
+                    },
+                    {
+                        "type": "event",
+                        "name": "chat::fruit::intro::stop-wobble-window-comment"
+                    },
+                    {
+                        "type": "event",
+                        "name": "chat::dank::intro::stop-wobble-window-comment"
+                    },
+                    {
+                        "type": "event",
+                        "name": "chat::goog::intro::stop-wobble-window-comment"
                     },
                     {
                         "type": "event",
                         "name": "listen::intro::stop-wobble-window"
                     }
                 ]
+            }
+        },
+        {
+            "name": "chat::meme::intro::stop-wobble-window-comment",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Aaaack! Stop it!"
+            }
+        },
+        {
+            "name": "chat::fruit::intro::stop-wobble-window-comment",
+            "type": "chat-actor",
+            "data": {
+                "actor": "FRUIT",
+                "message": "Woah! What on earth is going on here?"
+            }
+        },
+        {
+            "name": "chat::goog::intro::stop-wobble-window-comment",
+            "type": "chat-actor",
+            "data": {
+                "actor": "GOOG",
+                "message": "What the?!?!"
+            }
+        },
+        {
+            "name": "chat::dank::intro::stop-wobble-window-comment",
+            "type": "chat-actor",
+            "data": {
+                "actor": "DANK",
+                "message": "Abort! Abort!"
             }
         },
         {
@@ -141,9 +252,24 @@
                     },
                     {
                         "type": "event",
+                        "name": "chat::meme::intro::install_programming"
+                    },
+                    {
+                        "type": "event",
+                        "name": "chat::fruit::intro::install_programming::comment"
+                    },
+                    {
+                        "type": "event",
                         "name": "chat::meme::intro::install_programming::challenge"
                     }
                 ]
+            }
+        },
+        {
+            "name": "listen::intro::wobble-window::artifact",
+            "type": "register-artifact",
+            "data": {
+                "name": "artifact::intro::wobble-window"
             }
         },
         {
@@ -151,30 +277,51 @@
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "name": "intro::wobble-windows-comment"
+                "message": "Things are not as they seem around here"
+            }
+        },
+        {
+            "name": "chat::meme::intro::install_programming",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "You think I can teach you something cool? Try this: install-programming"
             }
         },
         {
             "name": "chat::meme::intro::install_programming::challenge",
-            "type": "chat-actor",
+            "type": "input-user",
             "data": {
                 "actor": "MEME",
-                "name": "intro::install_programming::challenge",
+                "input": {
+                    "type": "text",
+                    "settings": {
+                        "showmehow_id": "intro::install_programming_hook"
+                    }
+                },
                 "responses": {
-                    "satisfied": [
+                    "success": [
                         {
-                            "type": "register",
-                            "name": "chat::meme::intro::install_programming"
+                            "type": "event",
+                            "name": "chat::meme::intro::install-programming::artifact"
                         },
                         {
                             "type": "event",
                             "name": "chat::meme::intro::intro-complete"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::goog::intro::install_programming::comment"
                         }
                     ],
-                    "unsatisfied": [
+                    "failure": [
                         {
                             "type": "event",
                             "name": "chat::meme::intro::install_programming::again"
+                        },
+                        {
+                            "type": "event",
+                            "name": "chat::fruit::intro::install_programming::again"
                         },
                         {
                             "type": "event",
@@ -189,7 +336,46 @@
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "name": "intro::install_programming::again"
+                "message": "'install-programming' EXACTLY. I haven't got all day!"
+            }
+        },
+        {
+            "name": "chat::fruit::intro::install_programming::again",
+            "type": "chat-actor",
+            "data": {
+                "actor": "FRUIT",
+                "message": "That's it, step away from that keyboard"
+            }
+        },
+        {
+            "name": "chat::fruit::intro::install_programming::comment",
+            "type": "chat-actor",
+            "data": {
+                "actor": "FRUIT",
+                "message": "You don't want to do this. Stay in that walled garden!"
+            }
+        },
+        {
+            "name": "chat::goog::intro::install_programming::comment",
+            "type": "chat-actor",
+            "data": {
+                "actor": "GOOG",
+                "message": "This really isn't going to be pretty..."
+            }
+        },
+        {
+            "name": "chat::meme::intro::install-programming::artifact",
+            "type": "register-artifact",
+            "data": {
+                "name": "artifact::intro::install-programming"
+            }
+        },
+        {
+            "name": "chat::meme::intro::intro-complete",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Buckle up Dorothy, because Kansas is going bye-bye!\nSee you in the 'Coding Fun' app on your desktop!"
             }
         }
     ]
