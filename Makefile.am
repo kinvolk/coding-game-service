@@ -7,7 +7,7 @@ resource_js_files = \
 all_js_files = \
 	coding-game-validator.js \
 	coding-game-service.js \
-	$(resource_js_files)
+	$(resource_js_files) \
 	$(NULL)
 
 
