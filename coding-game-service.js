@@ -13,10 +13,10 @@
 // message, or waiting for a particular event. It is designed to be stateful, unlike
 // showmehow-service, which is stateless.
 
+const ChatboxService = imports.gi.ChatboxService;
+const CodingGameServiceDBUS = imports.gi.CodingGameService;
 const GLib = imports.gi.GLib;
 const Gio = imports.gi.Gio;
-const CodingGameServiceDBUS = imports.gi.CodingGameService;
-const ChatboxService = imports.gi.ChatboxService;
 
 // This is a hack to cause CodingGameService js resources to get loaded
 const CodingGameServiceResource = imports.gi.CodingGameService.get_resource();  // eslint-disable-line no-unused-vars
