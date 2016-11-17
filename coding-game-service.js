@@ -298,7 +298,7 @@ function executeCommandForOutput(argv) {
         let [ok, stdout, stderr, status] = GLib.spawn_sync(null,
                                                            argv,
                                                            null,
-                                                           0,
+                                                           GLib.SpawnFlags.SEARCH_PATH,
                                                            null);
 
         // Check the exit status to see if the process failed. This will
@@ -339,7 +339,7 @@ function copySourceToTarget(source, target) {
         // the coding-copy-files script through pkexec and take the result
         // from there.
         executeCommandForOutput([
-            '/usr/bin/pkexec',
+            'pkexec',
             Config.coding_copy_files_script,
             source,
             target
