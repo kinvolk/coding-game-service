@@ -118,7 +118,7 @@ const CodingGameServiceChatController = new Lang.Class({
         let serialized = JSON.stringify(message);
         this._internalChatboxProxy.call_receive_message(serialized, null, Lang.bind(this, function(source, result) {
             try {
-                [success, returnValue] = this._internalChatboxProxy.call_receive_message_finish(result);
+                let [success, returnValue] = this._internalChatboxProxy.call_receive_message_finish(result);
             } catch (e) {
                 logError(e,
                          'Failed to send message to chatbox (' +
