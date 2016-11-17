@@ -289,50 +289,14 @@ const CodingGameServiceLog = new Lang.Class({
     }
 });
 
-// environmentObjectToEnvp
-//
-// Convert an object containing key-value pairs to an array of
-// strings that can be passed to exec.
-function environmentObjectToEnvp(environment) {
-    if (environment) {
-        return Object.keys(environment)
-                     .map(key => key + '=' + environment[key]);
-    } else {
-        return null;
-    }
-}
-
-
-// environmentAsObject
-//
-// Get all the environment variables as an object, so that we can merge
-// them with new ones.
-function environmentAsObject() {
-    let environment = {};
-    GLib.listenv().forEach(key => environment[key] = GLib.getenv(key));
-    return environment;
-}
-
 // executeCommandForOutput
 //
 // Shell out to some process and get its output. If the process
-// returns a non-zero environment variable, throw.
-//
-// Specify user_environment to override environment variables.
-function executeCommandForOutput(argv, userEnvironment) {
-    let environment = null;
-
-    if (userEnvironment) {
-        environment = environmentAsObject();
-        Object.keys(userEnvironment).forEach(key => {
-            environment[key] = userEnvironment[key];
-        });
-    }
-
-    let envp = environment ? null : environmentObjectToEnvp(environment);
+// returns a non-zero exit status, throw.
+function executeCommandForOutput(argv) {
     let [ok, stdout, stderr, status] = GLib.spawn_sync(null,
                                                        argv,
-                                                       envp,
+                                                       null,
                                                        0,
                                                        null);
 
