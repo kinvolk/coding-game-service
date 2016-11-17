@@ -53,18 +53,9 @@
                 },
                 "responses": {
                     "success": [
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::hook::artifact"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::choice_see_cool"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::choice_see_cool::challenge"
-                        }
+                        "chat::meme::intro::hook::artifact",
+                        "chat::meme::intro::choice_see_cool",
+                        "chat::meme::intro::choice_see_cool::challenge"
                     ]
                 }
             }
@@ -102,32 +93,16 @@
                 },
                 "responses": {
                     "yes": [
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::choice_see_cool::artifact"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::enable-wobbly-windows::comment"
-                        },
-                        {
-                            "type": "event",
-                            "name": "event::intro::enable-wobbly-windows"
-                        },
-                        {
-                            "type": "event",
-                            "name": "listen::intro::wobble-window"
-                        }
+                        "chat::meme::intro::choice_see_cool::artifact",
+                        "chat::meme::intro::tell-goog-key",
+                        "chat::goog::intro::tell-goog-key",
+                        "chat::dank::intro::tell-goog-key",
+                        "event::intro::leave-key-behind",
+                        "chat::goog::intro::tell-goog-key::input"
                     ],
                     "no": [
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::choice_see_cool::again"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::choice_see_cool::challenge"
-                        }
+                        "chat::meme::intro::choice_see_cool::again",
+                        "chat::meme::intro::choice_see_cool::challenge"
                     ]
                 }
             }
@@ -148,11 +123,122 @@
             }
         },
         {
+            "name": "chat::meme::intro::tell-goog-key",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "So here's the thing. Someone left a key behind and I heard that GOOG will unlock the system if you just tell it a password. All you have to do is find it ..."
+            }
+        },
+        {
+            "name": "chat::goog::intro::tell-goog-key",
+            "type": "chat-actor",
+            "data": {
+                "actor": "GOOG",
+                "message": "Yeah there's no way that's going to happen. You tell me the password and I'll just ignore you! I can do what I want!"
+            }
+        },
+        {
+            "name": "chat::goog::intro::tell-goog-key::again",
+            "type": "chat-actor",
+            "data": {
+                "actor": "GOOG",
+                "message": "Wrong! You'll never make me open this thing up"
+            }
+        },
+        {
+            "name": "chat::goog::intro::goog-receive-key::segfault",
+            "type": "chat-actor",
+            "data": {
+                "actor": "GOOG",
+                "message": "Whatever. That's the right key but I'll just call a method to ignore you... Segmentation Fault (Signal 9)."
+            }
+        },
+        {
+            "name": "chat::goog::intro::goog-receive-key::wait-name-error",
+            "type": "wait-for",
+            "data": {
+                "timeout": 5000,
+                "then": [
+                    "chat::goog::intro::goog-receive-key::name-error",
+                    "chat::goog::intro::goog-receive-key::wait-give-in"
+                ]
+            }
+        },
+        {
+            "name": "chat::goog::intro::goog-receive-key::wait-give-in",
+            "type": "wait-for",
+            "data": {
+                "timeout": 5000,
+                "then": [
+                    "chat::goog::intro::goog-receive-key::give-in",
+                    "chat::meme::intro::enable-wobbly-windows::comment",
+                    "event::intro::enable-wobbly-windows",
+                    "listen::intro::wobble-window"
+                ]
+            }
+        },
+        {
+            "name": "chat::goog::intro::goog-receive-key::name-error",
+            "type": "chat-actor",
+            "data": {
+                "actor": "GOOG",
+                "message": "Uh, let me try again. There's a function around here to just pretend this never happened. NameError."
+            }
+        },
+        {
+            "name": "chat::goog::intro::goog-receive-key::give-in",
+            "type": "chat-actor",
+            "data": {
+                "actor": "GOOG",
+                "message": "You've gotta be kidding me! Is there no other way?!"
+            }
+        },
+        {
+            "name": "chat::goog::intro::tell-goog-key::input",
+            "type": "input-user",
+            "data": {
+                "actor": "GOOG",
+                "input": {
+                    "type": "text",
+                    "settings": {
+                        "showmehow_id": "intro::goog_key"
+                    }
+                },
+                "responses": {
+                    "failure": [
+                        "chat::goog::intro::tell-goog-key::again",
+                        "chat::goog::intro::tell-goog-key::input"
+                    ],
+                    "success": [
+                        "chat::goog::intro::goog-receive-key::segfault",
+                        "chat::goog::intro::goog-receive-key::wait-name-error"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::dank::intro::tell-goog-key",
+            "type": "chat-actor",
+            "data": {
+                "actor": "DANK",
+                "message": "DANK here! I found something in a place all of us have access to! Maybe you should come take a look!"
+            }
+        },
+        {
+            "name": "event::intro::leave-key-behind",
+            "type": "copy-file",
+            "data": {
+                "source": "sw.txt",
+                "target": "/home/shared/secret.txt"
+            }
+        },
+        {
             "name": "chat::meme::intro::enable-wobbly-windows::comment",
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "message": "I turned this window into jello"
+                "message": "SYSTEM UNLOCKED! Lets have some fun! I turned this window into jello - check it out!"
             }
         },
         {
@@ -181,30 +267,12 @@
             "data": {
                 "name": "move-window",
                 "received": [
-                    {
-                        "type": "event",
-                        "name": "artifact::intro::wobble-window"
-                    },
-                    {
-                        "type": "event",
-                        "name": "chat::meme::intro::stop-wobble-window-comment"
-                    },
-                    {
-                        "type": "event",
-                        "name": "chat::fruit::intro::stop-wobble-window-comment"
-                    },
-                    {
-                        "type": "event",
-                        "name": "chat::dank::intro::stop-wobble-window-comment"
-                    },
-                    {
-                        "type": "event",
-                        "name": "chat::goog::intro::stop-wobble-window-comment"
-                    },
-                    {
-                        "type": "event",
-                        "name": "listen::intro::stop-wobble-window"
-                    }
+                    "listen::intro::wobble-window::artifact",
+                    "chat::meme::intro::stop-wobble-window-comment",
+                    "chat::fruit::intro::stop-wobble-window-comment",
+                    "chat::dank::intro::stop-wobble-window-comment",
+                    "chat::goog::intro::stop-wobble-window-comment",
+                    "listen::intro::stop-wobble-window"
                 ]
             }
         },
@@ -246,22 +314,13 @@
             "data": {
                 "name": "stop-moving-windows",
                 "received": [
-                    {
-                        "type": "event",
-                        "name": "chat::meme::intro::wobble-windows-comment"
-                    },
-                    {
-                        "type": "event",
-                        "name": "chat::meme::intro::install_programming"
-                    },
-                    {
-                        "type": "event",
-                        "name": "chat::fruit::intro::install_programming::comment"
-                    },
-                    {
-                        "type": "event",
-                        "name": "chat::meme::intro::install_programming::challenge"
-                    }
+                    "chat::meme::intro::wobble-windows-comment",
+                    "event::intro::disable-wobbly-windows",
+                    "chat::meme::intro::install_programming",
+                    "chat::dank::intro::new_splash_paint",
+                    "chat::dank::intro::new_splash_paint::input",
+                    "chat::fruit::intro::install_programming::comment",
+                    "chat::meme::intro::install_programming::challenge"
                 ]
             }
         },
@@ -278,6 +337,66 @@
             "data": {
                 "actor": "MEME",
                 "message": "Things are not as they seem around here"
+            }
+        },
+        {
+            "name": "chat::dank::intro::new_splash_paint",
+            "type": "chat-actor",
+            "data": {
+                "actor": "DANK",
+                "message": "Here's something cool I found! Why don't you try 'newsplash' and see what the paint bucket changes this time?"
+            }
+        },
+        {
+            "name": "chat::dank::intro::new_splash_paint::again",
+            "type": "chat-actor",
+            "data": {
+                "actor": "DANK",
+                "message": "We want a NEW splash, not an old one!"
+            }
+        },
+        {
+            "name": "chat::dank::intro::new_splash_paint::complete",
+            "type": "chat-actor",
+            "data": {
+                "actor": "DANK",
+                "message": "How is that for a difference?"
+            }
+        },
+        {
+            "name": "chat::dank::intro::new_splash_paint::input",
+            "type": "input-user",
+            "data": {
+                "actor": "DANK",
+                "input": {
+                    "type": "text",
+                    "settings": {
+                        "showmehow_id": "intro::change_background_pic"
+                    }
+                },
+                "responses": {
+                    "success": [
+                        "event::intro::new_splash_paint::background",
+                        "chat::dank::intro::new_splash_paint::complete"
+                    ],
+                    "failure": [
+                        "chat::dank::intro::new_splash_paint::again",
+                        "chat::dank::intro::new_splash_paint::input"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "event::intro::new_splash_paint::background",
+            "type": "change-setting",
+            "data": {
+                "schema": "org.gnome.desktop.background",
+                "key": "picture-uri",
+                "variant": "s",
+                "value": {
+                    "type": "internal-file-uri",
+                    "value": "background_pic.jpg"
+                }
             }
         },
         {
@@ -301,32 +420,14 @@
                 },
                 "responses": {
                     "success": [
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::install-programming::artifact"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::intro-complete"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::goog::intro::install_programming::comment"
-                        }
+                        "chat::meme::intro::install-programming::artifact",
+                        "chat::meme::intro::intro-complete",
+                        "chat::goog::intro::install_programming::comment"
                     ],
                     "failure": [
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::install_programming::again"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::fruit::intro::install_programming::again"
-                        },
-                        {
-                            "type": "event",
-                            "name": "chat::meme::intro::install_programming::challenge"
-                        }
+                        "chat::meme::intro::install_programming::again",
+                        "chat::fruit::intro::install_programming::again",
+                        "chat::meme::intro::install_programming::challenge"
                     ]
                 }
             }

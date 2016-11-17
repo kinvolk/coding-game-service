@@ -29,6 +29,8 @@ const System = imports.system;
 // are already on disk if the user sets GJS_PATH appropriately.
 imports.searchPath.push('resource:///com/endlessm/coding-game-service');
 
+const Config = imports.lib.config;
+
 // loadTimelineDescriptors
 //
 // Attempts to load timeline descriptors from a file.
@@ -156,7 +158,7 @@ const CodingGameServiceLog = new Lang.Class({
     },
 
     handleEvent: function(eventType, eventName, eventData) {
-        let timestamp = new Date().toLocaleString();
+        let timestamp = new Date().toString();
         let entry = {
             type: eventType,
             name: eventName,
@@ -255,13 +257,143 @@ const CodingGameServiceLog = new Lang.Class({
         return activeListeningEvents;
     },
 
+    // This function returns pairs of event names and timestamps
+    // for each wait-for event. Those timestamps can be used along
+    // with the timeout member in order to add new timeouts
+    // back to the main loop in case the service is terminated.
+    activeTimeouts: function() {
+        // This is a mapping of event names to timestamps
+        let activeTimeoutEvents = {};
+
+        this._eventLog.filter(function(e) {
+            return e.type === 'wait-for' || e.type === 'wait-for-complete'
+        }).forEach(function(e) {
+            if (e.type === 'wait-for') {
+                // Its okay to clobber an existing value here - that
+                // just means the timeout would have restarted.
+                activeTimeoutEvents[e.name] = e.timestamp;
+            } else if (e.type === 'wait-for-complete') {
+                if (activeTimeoutEvents[e.data.name]) {
+                    delete activeTimeoutEvents[e.data.name];
+                }
+            }
+        });
+
+        return activeTimeoutEvents;
+    },
+
     eventHasOccurred: function(name) {
         return this._eventLog.some(function(e) {
             return e.name === name;
         });
     }
 });
-        
+
+// executeCommandForOutput
+//
+// Shell out to some process and get its output. If the process
+// returns a non-zero exit status, throw.
+function executeCommandForOutput(argv) {
+    try {
+        let [ok, stdout, stderr, status] = GLib.spawn_sync(null,
+                                                           argv,
+                                                           null,
+                                                           GLib.SpawnFlags.SEARCH_PATH,
+                                                           null);
+
+        // Check the exit status to see if the process failed. This will
+        // throw an exception if it did.
+        GLib.spawn_check_exit_status(status);
+
+        return {
+            status: status,
+            stdout: String(stdout),
+            stderr: String(stderr)
+        };
+    } catch (e) {
+        throw new Error('Failed to execute ' + argv.join(' ') + ': ' +
+                        [String(e), String(stdout), String(stderr)].join('\n'));
+    }
+}
+
+// copySourceToTarget
+//
+// This function will copy a file from the coding_files_dir to a given target path.
+// If the user has write permissions for that path (eg, it is within the home
+// directory, we write it there directly. Otherwise, we shell out to pkexec and
+// another script to copy to another (whitelisted) location.
+function copySourceToTarget(source, target) {
+    let targetFile = Gio.File.new_for_path(target);
+
+    // We have permission to copy this file.
+    if (targetFile.has_prefix(Gio.File.new_for_path(GLib.get_home_dir()))) {
+        let sourcePath = GLib.build_filenamev([
+            Config.coding_files_dir,
+            source
+        ]);
+        let sourceFile = Gio.File.new_for_path(sourcePath);
+
+        sourceFile.copy(targetFile, Gio.FileCopyFlags.OVERWRITE, null, null);
+    } else {
+        // We do not have permission to copy this file. Shell out to
+        // the coding-copy-files script through pkexec and take the result
+        // from there.
+        executeCommandForOutput([
+            'pkexec',
+            Config.coding_copy_files_script,
+            source,
+            target
+        ]);
+    }
+}
+
+// resolveGSettingsValue
+//
+// This function examines a value which is intended to be passed to GSettings
+// and checks if any postprocessing should be done on it. For instance, it
+// might refer to a file that is in the internal data dirs, so we need to change
+// the value to a uri to reflect that.
+function resolveGSettingsValue(value) {
+    if (typeof(value) === 'object') {
+        switch(value.type) {
+        case 'internal-file-uri':
+            let path = GLib.build_filenamev([
+                Config.coding_files_dir,
+                value.value
+            ]);
+            return GLib.filename_to_uri(path, null);
+        default:
+            throw new Error('Don\'t know how to handle type ' + value.type);
+        }
+    }
+
+    return value;
+}
+
+// findEventsToDispatchInDecriptors
+//
+// Takes a list of events and finds the corresponding event entries
+// in descriptors so that they can be dispatched. Throws if
+// an event was not able to be found.
+function findEventsToDispatchInDescriptors(findEvents, eventDescriptors) {
+    // We map from events names to event descriptors here to preserve the
+    // ordering
+    let eventDescriptorsToRun = findEvents.map(function(e) {
+        return findInArray(eventDescriptors, function(responseEvent) {
+            return responseEvent.name === e;
+        });
+    });
+
+    // If we can't find them all, throw an internal error here.
+    if (findEvents.length !== eventDescriptorsToRun.length) {
+        throw new Error('Couldn\'t find descriptors for events: ' +
+                        JSON.stringify(findEvents, null, 2) + ', found: ' +
+                        JSON.stringify(eventDescriptorsToRun, null, 2));
+    }
+
+    return eventDescriptorsToRun;
+}
+
 
 const CodingGameServiceErrorDomain = GLib.quark_from_string('coding-game-service-error');
 const CodingGameServiceErrors = {
@@ -288,7 +420,10 @@ const CodingGameService = new Lang.Class({
             'register-artifact': Lang.bind(this, this._registerArtifactEvent),
             'change-setting': Lang.bind(this, this._changeSettingEvent),
             'listen-event': Lang.bind(this, this._listenExternalEvent),
-            'receive-event': Lang.bind(this, this._receiveExternalEvent)
+            'receive-event': Lang.bind(this, this._receiveExternalEvent),
+            'copy-file': Lang.bind(this, this._copyFileEvent),
+            'wait-for': Lang.bind(this, this._waitForEvent),
+            'wait-for-complete': Lang.bind(this, this._waitForEventComplete)
         };
 
         // Log the warnings
@@ -299,6 +434,36 @@ const CodingGameService = new Lang.Class({
         this._listeningEventTriggers = {};
         Object.keys(listeningForTriggers).forEach(Lang.bind(this, function(k) {
             this._startListeningFor(k, listeningForTriggers[k]);
+        }));
+
+        // Re-add any timeouts to the main loop which are currently outstanding.
+        // Note that we don't just re-add the timeout, but look at the timestamp
+        // to determine how much time has passed since the invocation of the
+        // wait-for event and either add it back to the mainloop with a value
+        // which takes that time into account or just fire it on the next iteration
+        let activeTimeouts = this._log.activeTimeouts();
+        Object.keys(activeTimeouts).map(Lang.bind(this, function(name) {
+            let timestamp = activeTimeouts[name];
+            let event = findInArray(this._descriptors.events, function(e) {
+                return e.name === name;
+            });
+
+            // Examine the timestamp to see how much time has
+            // passed since the wait-for event happened. We only get second
+            // level precision here but that's good enough.
+            let delta = Date.now() - Date.parse(timestamp);
+
+            // We will allow a negative delta for now and fire those events
+            // later once we are done with map()
+            return {
+                event: event,
+                remaining: event.data.timeout - delta
+            };
+        })).forEach(Lang.bind(this, function(spec) {
+            // If the event has a negative remaining time value, then
+            // add it with a timeout of zero so that it gets dispatched
+            // on the next main loop iteration
+            this._completeWaitForEventIn(spec.event, Math.max(spec.remaining, 0));
         }));
 
         // If we started for the first time, dispatch the very first mission
@@ -364,27 +529,10 @@ const CodingGameService = new Lang.Class({
                 }
             });
 
-            // Now that we have the events, run each of them
-            let events = respondingTo.data.responses[eventKeyToRun].filter(function(e) {
-                return e.type === 'event';
-            });
-
-            // We map from events names to event descriptors here to preserve the
-            // ordering
-            let eventDescriptorsToRun = events.map(Lang.bind(this, function(e) {
-                return findInArray(this._descriptors.events, function(responseEvent) {
-                    return responseEvent.name === e.name;
-                });
-            }));
-
-            // If we can't find them all, throw an internal error here.
-            if (events.length !== eventDescriptorsToRun.length) {
-                throw new Error('Couldn\'t find descriptors for events: ' +
-                                JSON.stringify(events, null, 2) + ', found: ' +
-                                JSON.stringify(eventDescriptorsToRun, null, 2));
-            }
-
-            eventDescriptorsToRun.forEach(Lang.bind(this, function(e) {
+            let responses = respondingTo.data.responses[eventKeyToRun];
+            let toDispatch = findEventsToDispatchInDescriptors(responses,
+                                                               this._descriptors.events);
+            toDispatch.forEach(Lang.bind(this, function(e) {
                 this._dispatch(e);
             }));
 
@@ -422,11 +570,9 @@ const CodingGameService = new Lang.Class({
 
             // Run the other events that happen when this one was triggered and
             // stop listening for this event now.
-            this._descriptors.events.filter(function(e) {
-                return eventToTrigger.data.received.some(function(r) {
-                    return r.name === e.name;
-                });
-            }).forEach(Lang.bind(this, function(e) {
+            let toDispatch = findEventsToDispatchInDescriptors(eventToTrigger.data.received,
+                                                               this._descriptors.events);
+            toDispatch.forEach(Lang.bind(this, function(e) {
                 this._dispatch(e);
             }));
 
@@ -595,10 +741,24 @@ const CodingGameService = new Lang.Class({
                             event.data.key);
         }
 
+        let value = resolveGSettingsValue(event.data.value);
         let settings = new Gio.Settings({ settings_schema: schema });
         settings.set_value(event.data.key,
-                           new GLib.Variant(event.data.variant,
-                                            event.data.value));
+                           new GLib.Variant(event.data.variant, value));
+        callback(event);
+    },
+
+    _copyFileEvent: function(event, callback) {
+        /* First make sure the file exists */
+        let source = event.data.source;
+        let target = event.data.target;
+
+        let souceDataPath = GLib.build_filenamev([
+            Config.coding_files_dir,
+            source
+        ]);
+
+        copySourceToTarget(source, target);
         callback(event);
     },
 
@@ -620,6 +780,33 @@ const CodingGameService = new Lang.Class({
     _receiveExternalEvent: function(event, callback) {
         this._stopListeningFor(event.data.name);
         callback(event);
+    },
+
+    _completeWaitForEventIn: function(event, timeout) {
+        GLib.timeout_add(GLib.PRIORITY_DEFAULT, timeout, Lang.bind(this, function() {
+            this._dispatch({
+                name: event.name + '::completed',
+                type: 'wait-for-complete',
+                data: {
+                    name: event.name
+                }
+            });
+
+            let toDispatch = findEventsToDispatchInDescriptors(event.data.then,
+                                                               this._descriptors.events);
+            toDispatch.forEach(Lang.bind(this, function(e) {
+                this._dispatch(e);
+            }));
+        }));
+    },
+
+    _waitForEventComplete: function(event, callback) {
+        callback(event);
+    },
+
+    _waitForEvent: function(event, callback) {
+        callback(event);
+        this._completeWaitForEventIn(event, event.data.timeout);
     },
 
     _dispatch: function(event) {
