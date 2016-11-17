@@ -23,10 +23,14 @@ const usage = [
     "",
 ];
 
-if (ARGV.length < 2 || ARGV[0] === "help") {
+let showHelp = ARGV.length === 1 && ARGV[0] === "help";
+if (!showHelp) ARGV.forEach(arg => { if (arg === "--help") showHelp = true });
+
+if (ARGV.length < 2 || showHelp) {
     usage.map(line => print(line));
-    System.exit(0);
+    System.exit(showHelp ? 0 : 1);
 }
+
 switch (ARGV[0]) {
     case "restore":
         DesktopFile.restore(ARGV[1]);
@@ -37,11 +41,8 @@ switch (ARGV[0]) {
     case "set-icon":
         DesktopFile.setIcon(ARGV[1], ARGV[2]);
         break;
-    case undefined:
-    case null:
-        print("No command specified");
-        System.exit(1);
-        break;
     default:
         print("No such command: " + ARGV[0]);
+        usage.map(line => print(line));
+        System.exit(1);
 }
