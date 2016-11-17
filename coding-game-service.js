@@ -263,8 +263,7 @@ const CodingGameServiceLog = new Lang.Class({
     // back to the main loop in case the service is terminated.
     activeTimeouts: function() {
         // This is a mapping of event names to timestamps
-        let activeTimeoutEvents = {
-        };
+        let activeTimeoutEvents = {};
 
         this._eventLog.filter(function(e) {
             return e.type === 'wait-for' || e.type === 'wait-for-complete'
