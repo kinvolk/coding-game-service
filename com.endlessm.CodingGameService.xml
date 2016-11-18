@@ -12,15 +12,7 @@
     <method name="ExternalEvent">
       <arg name="id" direction="in" type="s"/>
     </method>
-    <method name="CurrentlyListeningForEvents">
-      <arg name="events" direction="out" type="a(s)"/>
-    </method> 
-    <signal name="ListenForEvent">
-      <arg name="id" type="s"/>
-    </signal>
-    <signal name="StopListeningFor">
-      <arg name="id" type="s"/>
-    </signal>
+    <property name="CurrentlyListeningForEvents" type="as" access="read"/>
     <property name="CurrentMissionName" type="s" access="read"/>
     <property name="CurrentMissionDesc" type="s" access="read"/>
     <property name="CurrentMissionPoints" type="i" access="read"/>
