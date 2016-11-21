@@ -1,5 +1,8 @@
 <node>
   <interface name="com.endlessm.CodingGameService">
+    <method name="TestDispatchEvent">
+      <arg name="name" direction="in" type="s"/>
+    </method>
     <method name="ChatHistory">
       <arg name="actor" direction="in" type="s"/>
       <arg name="messages" direction="out" type="a(s)"/>

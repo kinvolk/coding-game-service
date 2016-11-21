@@ -400,7 +400,8 @@ const CodingGameServiceErrors = {
     NO_SUCH_EVENT_ERROR: 0,
     NO_SUCH_RESPONSE_ERROR: 1,
     IRRELEVANT_EVENT: 2,
-    INTERNAL_ERROR: 3
+    INTERNAL_ERROR: 3,
+    FORBIDDEN: 4
 };
 const CodingGameService = new Lang.Class({
     Name: 'CodingGameService',
@@ -483,6 +484,28 @@ const CodingGameService = new Lang.Class({
                     name: this._descriptors.start.initial_mission
                 }
             });
+    },
+
+    vfunc_handle_test_dispatch_event: function(method, name) {
+        let enabler = GLib.getenv('CODING_ENABLE_HACKING_MODE');
+        if (enabler !== 'IKNOWWHATIAMDOING') {
+            method.return_error_literal(CodingGameServiceErrorDomain,
+                                        CodingGameServiceErrors.FORBIDDEN,
+                                        'Not allowed to dispatch events at will');
+            return true;
+        }
+        let event = findInArray(this._descriptors.events, function(e) {
+            return e.name === name;
+        });
+        if (event === null) {
+            method.return_error_literal(CodingGameServiceErrorDomain,
+                                        CodingGameServiceErrors.NO_SUCH_EVENT_ERROR,
+                                        'No such event ' + JSON.stringify(name));
+        } else {
+            this._dispatch(event);
+            this.complete_test_dispatch_event(method);
+        }
+        return true;
     },
 
     vfunc_handle_chat_history: function(method, actor) {
