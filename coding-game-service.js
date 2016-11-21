@@ -485,6 +485,21 @@ const CodingGameService = new Lang.Class({
             });
     },
 
+    vfunc_handle_test_dispatch_event: function(method, name) {
+        let event = findInArray(this._descriptors.events, function(e) {
+            return e.name === name;
+        });
+        if (event === null) {
+            method.return_error_literal(CodingGameServiceErrorDomain,
+                                        CodingGameServiceErrors.NO_SUCH_EVENT_ERROR,
+                                        'No such event ' + JSON.stringify(name));
+        } else {
+            this._dispatch(event);
+            this.complete_test_dispatch_event(method);
+        }
+        return true;
+    },
+
     vfunc_handle_chat_history: function(method, actor) {
         try {
             let history = this._log.chatLogForActor(actor).map(function(h) {
