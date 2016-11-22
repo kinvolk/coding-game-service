@@ -423,7 +423,8 @@ const CodingGameService = new Lang.Class({
             'receive-event': Lang.bind(this, this._receiveExternalEvent),
             'copy-file': Lang.bind(this, this._copyFileEvent),
             'wait-for': Lang.bind(this, this._waitForEvent),
-            'wait-for-complete': Lang.bind(this, this._waitForEventComplete)
+            'wait-for-complete': Lang.bind(this, this._waitForEventComplete),
+            'modify-app-grid': Lang.bind(this, this._modifyAppGridEvent)
         };
 
         // Log the warnings
@@ -801,6 +802,59 @@ const CodingGameService = new Lang.Class({
     _waitForEvent: function(event, callback) {
         callback(event);
         this._completeWaitForEventIn(event, event.data.timeout);
+    },
+
+    _modifyAppGridEvent: function(event, callback) {
+        let source = Gio.SettingsSchemaSource.get_default();
+        let schemaName = 'org.gnome.shell';
+        let schema = source.lookup(schemaName, true);
+
+        if (!schema) {
+            // Well now, this should not happen.
+            throw new Error('Cannot process modify-app-grid event for app ' + event.data.app +
+                            ', no such schema ' + schemaName);
+        }
+
+        let app = event.data.app;
+        let where = event.data.where;
+        let action = event.data.action;
+        let orgGnomeShellGsettings = new Gio.Settings({ settings_schema: schema });
+        let gSetting = 'icon-grid-layout';
+        // This is a dict of string arrays, which maps to a{sas}
+        // GVariant type.
+        let allIcons = orgGnomeShellGsettings.get_value (gSetting).deep_unpack();
+
+        if (!(where in allIcons)) {
+            throw new Error('Cannot process modify-app-grid event for app ' + event.data.app +
+                           ', no such folder ' + where);
+        }
+
+        let changed = false;
+
+        if (action.type === 'add') {
+            if (allIcons[where].indexOf(app) < 0) {
+                allIcons[where].splice(action.index, 0, app);
+                changed = true;
+            }
+        } else if (action.type === 'remove') {
+            let appIndex = allIcons[where].indexOf(app);
+
+            if (appIndex > -1) {
+                allIcons[where].splice(appIndex, 1);
+                changed = true;
+            }
+        } else {
+            throw new Error('Cannot process modify-app-grid event for app ' + event.data.app +
+                           ', bad action type ' + action.type);
+        }
+
+        if (changed) {
+            let newIconsVariant = new GLib.Variant('a{sas}', allIcons);
+
+            orgGnomeShellGsettings.set_value (gSetting, newIconsVariant);
+        }
+
+        callback(event);
     },
 
     _dispatch: function(event) {
