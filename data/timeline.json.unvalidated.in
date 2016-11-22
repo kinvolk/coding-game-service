@@ -33,6 +33,29 @@
     },
     "events": [
         {
+            "name": "add-synergy-app",
+            "type": "modify-app-grid",
+            "data": {
+                "app": "synergy.desktop",
+                "where": "desktop",
+                "action": {
+                    "type": "add",
+                    "index": -2
+                }
+            }
+        },
+        {
+            "name": "remove-synergy-app",
+            "type": "modify-app-grid",
+            "data": {
+                "app": "synergy.desktop",
+                "where": "desktop",
+                "action": {
+                    "type": "remove"
+                }
+            }
+        },
+        {
             "name": "chat::meme::intro::hook",
             "type": "chat-actor",
             "data": {
