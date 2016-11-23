@@ -777,17 +777,17 @@ const CodingGameService = new Lang.Class({
 
     _updateCurrentlyListeningForEventsProp: function() {
         let v = new GLib.Variant('as', Object.keys(this._listeningEventTriggers));
-        this.currently_listening_for_events = v;
+        this.currently_listening_for_events = Object.keys(this._listeningEventTriggers);
     },
 
     _startListeningFor: function(name, event) {
         this._listeningEventTriggers[name] = event;
-        this._updateCurrentlyListeningEventsProp();
+        this._updateCurrentlyListeningForEventsProp();
     },
 
     _stopListeningFor: function(name) {
         delete this._listeningEventTriggers[name];
-        this._updateCurrentlyListeningEventsProp();
+        this._updateCurrentlyListeningForEventsProp();
     },
 
     _listenExternalEvent: function(event, callback) {
