@@ -23,8 +23,8 @@ const usage = [
     '',
 ];
 
-let showHelp = ARGV.length === 1 && ARGV[0] === 'help';
-if (!showHelp) ARGV.forEach(arg => { if (arg === '--help') showHelp = true });
+let showHelp = (ARGV.length === 1 && ARGV[0] === 'help')
+    || ARGV.indexOf('--help') !== -1;
 
 if (ARGV.length < 2 || showHelp) {
     usage.map(line => print(line));
