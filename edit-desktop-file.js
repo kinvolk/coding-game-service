@@ -7,24 +7,24 @@
  * Simple script to exercise the desktop file editor.
  */
 
-imports.searchPath.push(".");  // XXX: Kludge.
+imports.searchPath.push('.');  // XXX: Kludge.
 
 const DesktopFile = imports.lib.desktopFile;
 const System = imports.system;
 
 const usage = [
-    "Usage: edit-desktop-file.js <command> <desktop-file-id> [arguments...]",
-    "",
-    "Available commands:",
-    "",
-    "   set-command <id> <command-line> [executable]",
-    "   set-icon <id> <icon-name-or-path>",
-    "   restore <id>",
-    "",
+    'Usage: edit-desktop-file.js <command> <desktop-file-id> [arguments...]',
+    '',
+    'Available commands:',
+    '',
+    '   set-command <id> <command-line> [executable]',
+    '   set-icon <id> <icon-name-or-path>',
+    '   restore <id>',
+    '',
 ];
 
-let showHelp = ARGV.length === 1 && ARGV[0] === "help";
-if (!showHelp) ARGV.forEach(arg => { if (arg === "--help") showHelp = true });
+let showHelp = ARGV.length === 1 && ARGV[0] === 'help';
+if (!showHelp) ARGV.forEach(arg => { if (arg === '--help') showHelp = true });
 
 if (ARGV.length < 2 || showHelp) {
     usage.map(line => print(line));
@@ -32,17 +32,17 @@ if (ARGV.length < 2 || showHelp) {
 }
 
 switch (ARGV[0]) {
-    case "restore":
+    case 'restore':
         DesktopFile.restore(ARGV[1]);
         break;
-    case "set-command":
+    case 'set-command':
         DesktopFile.setCommand(ARGV[1], ARGV[2], ARGV[3]);
         break;
-    case "set-icon":
+    case 'set-icon':
         DesktopFile.setIcon(ARGV[1], ARGV[2]);
         break;
     default:
-        print("No such command: " + ARGV[0]);
+        print('No such command: ' + ARGV[0]);
         usage.map(line => print(line));
         System.exit(1);
 }
