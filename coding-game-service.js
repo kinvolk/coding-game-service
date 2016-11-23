@@ -776,7 +776,6 @@ const CodingGameService = new Lang.Class({
     },
 
     _updateCurrentlyListeningForEventsProp: function() {
-        let v = new GLib.Variant('as', Object.keys(this._listeningEventTriggers));
         this.currently_listening_for_events = Object.keys(this._listeningEventTriggers);
     },
 
