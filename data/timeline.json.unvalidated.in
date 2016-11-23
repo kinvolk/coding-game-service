@@ -421,6 +421,7 @@
                 "responses": {
                     "success": [
                         "chat::meme::intro::install-programming::artifact",
+                        "event::meme::intro::install-programming::insert-terminal-icon",
                         "chat::meme::intro::intro-complete",
                         "chat::goog::intro::install_programming::comment"
                     ],
@@ -469,6 +470,18 @@
             "type": "register-artifact",
             "data": {
                 "name": "artifact::intro::install-programming"
+            }
+        },
+        {
+            "name": "event::meme::intro::install-programming::insert-terminal-icon",
+            "type": "modify-app-grid",
+            "data": {
+                "app": "org.gnome.Terminal.desktop",
+                "where": "desktop",
+                "action": {
+                    "type": "add",
+                    "index": 99999
+                }
             }
         },
         {
