@@ -412,7 +412,10 @@ const CodingGameService = new Lang.Class({
 
         this._descriptors = loadTimelineDescriptors(commandLineFile);
         this._log = new CodingGameServiceLog(Gio.File.new_for_path('game-service.log'));
-        this._chatController = new CodingGameServiceChatController(ChatboxService.CodingChatboxProxy);
+
+        // Log the warnings
+        this._descriptors.warnings.forEach(w => log(w));
+
         this._dispatchTable = {
             'chat-actor': Lang.bind(this, this._dispatchChatEvent),
             'chat-user': Lang.bind(this, this._dispatchChatEvent),
@@ -427,9 +430,12 @@ const CodingGameService = new Lang.Class({
             'wait-for-complete': Lang.bind(this, this._waitForEventComplete),
             'modify-app-grid': Lang.bind(this, this._modifyAppGridEvent)
         };
+    },
 
-        // Log the warnings
-        this._descriptors.warnings.forEach(w => log(w));
+    register: function(connection, object_path) {
+        this.export(connection, object_path);
+
+        this._chatController = new CodingGameServiceChatController(ChatboxService.CodingChatboxProxy);
 
         // Listen for any events which are currently outstanding
         let listeningForTriggers = this._log.activeEventsToListenFor();
@@ -909,7 +915,7 @@ const CodingGameServiceApplication = new Lang.Class({
         this.parent(conn, object_path);
 
         this._skeleton = new CodingGameService(this._commandLineFile);
-        this._skeleton.export(conn, object_path);
+        this._skeleton.register(conn, object_path);
         return true;
     },
 
