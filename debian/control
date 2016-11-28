@@ -27,6 +27,7 @@ Section: non-free/libs
 Architecture: any
 Depends: ${misc:Depends},
          ${shlibs:Depends}
+Recommends: coding-game-service
 Description: Coding Game Service
  A service to manage the Endless Coding game state, library.
 
