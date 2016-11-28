@@ -38,7 +38,6 @@ AM_CONFIG_MACRO_DIR =
 AM_DISTCHECK_CONFIGURE_FLAGS = --enable-introspection
 EXTRA_DIST = \
 	com.endlessm.CodingGameService.xml \
-	com.endlessm.CodingGameService.desktop \
 	com.endlessm.CodingGameService.service.in \
 	com.endlessm.CodingGameService.gresource.xml \
 	data/timeline.json.unvalidated.in \
@@ -145,10 +144,6 @@ files/coding-copy-files.js: files/coding-copy-files.js.in
 	$(AM_V_GEN) mkdir -p files && \
 	$(SED) -e 's,%coding_files_dir%,$(pkgdatadir)/files,g' < $< >$@.tmp && \
 	mv -f $@.tmp $@
-
-# XDG Autostart
-autostartdir = $(sysconfdir)/xdg/autostart
-dist_autostart_DATA = com.endlessm.CodingGameService.desktop
 
 # Polkit policy
 polkit_policydir = $(datadir)/polkit-1/actions
