@@ -400,7 +400,8 @@ const CodingGameServiceErrors = {
     NO_SUCH_EVENT_ERROR: 0,
     NO_SUCH_RESPONSE_ERROR: 1,
     IRRELEVANT_EVENT: 2,
-    INTERNAL_ERROR: 3
+    INTERNAL_ERROR: 3,
+    FORBIDDEN: 4
 };
 const CodingGameService = new Lang.Class({
     Name: 'CodingGameService',
@@ -423,7 +424,8 @@ const CodingGameService = new Lang.Class({
             'receive-event': Lang.bind(this, this._receiveExternalEvent),
             'copy-file': Lang.bind(this, this._copyFileEvent),
             'wait-for': Lang.bind(this, this._waitForEvent),
-            'wait-for-complete': Lang.bind(this, this._waitForEventComplete)
+            'wait-for-complete': Lang.bind(this, this._waitForEventComplete),
+            'modify-app-grid': Lang.bind(this, this._modifyAppGridEvent)
         };
 
         // Log the warnings
@@ -482,6 +484,28 @@ const CodingGameService = new Lang.Class({
                     name: this._descriptors.start.initial_mission
                 }
             });
+    },
+
+    vfunc_handle_test_dispatch_event: function(method, name) {
+        let enabler = GLib.getenv('CODING_ENABLE_HACKING_MODE');
+        if (enabler !== 'IKNOWWHATIAMDOING') {
+            method.return_error_literal(CodingGameServiceErrorDomain,
+                                        CodingGameServiceErrors.FORBIDDEN,
+                                        'Not allowed to dispatch events at will');
+            return true;
+        }
+        let event = findInArray(this._descriptors.events, function(e) {
+            return e.name === name;
+        });
+        if (event === null) {
+            method.return_error_literal(CodingGameServiceErrorDomain,
+                                        CodingGameServiceErrors.NO_SUCH_EVENT_ERROR,
+                                        'No such event ' + JSON.stringify(name));
+        } else {
+            this._dispatch(event);
+            this.complete_test_dispatch_event(method);
+        }
+        return true;
     },
 
     vfunc_handle_chat_history: function(method, actor) {
@@ -801,6 +825,51 @@ const CodingGameService = new Lang.Class({
     _waitForEvent: function(event, callback) {
         callback(event);
         this._completeWaitForEventIn(event, event.data.timeout);
+    },
+
+    _modifyAppGridEvent: function(event, callback) {
+        let source = Gio.SettingsSchemaSource.get_default();
+        let schemaName = 'org.gnome.shell';
+        let schema = source.lookup(schemaName, true);
+
+        if (!schema) {
+            // Well now, this should not happen.
+            throw new Error('Cannot process modify-app-grid event for app ' + event.data.app +
+                            ', no such schema ' + schemaName);
+        }
+
+        let app = event.data.app;
+        let where = event.data.where;
+        let action = event.data.action;
+        let orgGnomeShellGsettings = new Gio.Settings({ settings_schema: schema });
+        let gSetting = 'icon-grid-layout';
+        // This is a dict of string arrays, which maps to a{sas}
+        // GVariant type.
+        let allIcons = orgGnomeShellGsettings.get_value (gSetting).deep_unpack();
+
+        if (!(where in allIcons)) {
+            throw new Error('Cannot process modify-app-grid event for app ' + event.data.app +
+                           ', no such folder ' + where);
+        }
+
+        if (action.type === 'add') {
+            if (allIcons[where].indexOf(app) < 0) {
+                allIcons[where].splice(action.index, 0, app);
+                orgGnomeShellGsettings.set_value(gSetting, new GLib.Variant('a{sas}', allIcons));
+            }
+        } else if (action.type === 'remove') {
+            let appIndex = allIcons[where].indexOf(app);
+
+            if (appIndex > -1) {
+                allIcons[where].splice(appIndex, 1);
+                orgGnomeShellGsettings.set_value(gSetting, new GLib.Variant('a{sas}', allIcons));
+            }
+        } else {
+            throw new Error('Cannot process modify-app-grid event for app ' + event.data.app +
+                           ', bad action type ' + action.type);
+        }
+
+        callback(event);
     },
 
     _dispatch: function(event) {
