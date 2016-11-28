@@ -17,6 +17,7 @@ const ChatboxService = imports.gi.ChatboxService;
 const CodingGameServiceDBUS = imports.gi.CodingGameService;
 const GLib = imports.gi.GLib;
 const Gio = imports.gi.Gio;
+const Mainloop = imports.mainloop;
 
 // This is a hack to cause CodingGameService js resources to get loaded
 const CodingGameServiceResource = imports.gi.CodingGameService.get_resource();  // eslint-disable-line no-unused-vars
@@ -819,6 +820,137 @@ const CodingGameService = new Lang.Class({
         this._completeWaitForEventIn(event, event.data.timeout);
     },
 
+    _strictUint: function(strNum) {
+	let trimmed = strNum.trim();
+
+	if (/^[0-9]+$/.test(trimmed)) {
+	    return parseInt(trimmed, 10);
+	}
+
+	throw new Error('invalid number to parse: ' + strNum);
+    },
+
+    _parseInTimeSpec: function(splittedTimeSpec) {
+	if (splittedTimeSpec.length != 3) {
+	    throw new Error('invalid "in" time spec, expected three fields: "in", a number and a time unit (second(s), minute(s), hour(s))');
+	}
+
+	let time = this._strictUint(splittedTimeSpec[1]);
+	let unit = splittedTimeSpec[2];
+	switch (unit) {
+	case "hour":
+	case "hours":
+	    time *= 60;
+	case "minute":
+	case "minutes":
+	    time *= 60;
+	case "second":
+	case "seconds":
+	    return time;
+	}
+	throw new Error('invalid "in" time spec - unknown time unit ' + unit);
+    },
+
+    _parseAtTimeSpec: function(splittedTimeSpec) {
+	if (splittedTimeSpec.length != 2) {
+	    throw new Error('invalid "at" time spec, expected two fields: "at" and a clock time (2:13, 22:22:22, 4:13PM)');
+	}
+
+	let timeSplitted = splittedTimeSpec[1].split(':');
+	if (!(timeSplitted.length in [2, 3])) {
+	    throw new Error('invalid "at" time spec, expected the time ' + splittedTimeSpec[1] + ' to have one or two colons');
+	}
+	let last = timeSplitted[-1].trim;
+	let amPmRegex = /[ap]m$/i;
+	let isAmPm = amPmRegex.exec(last);
+
+	if (isAmPm !== null) {
+	    timeSplitted[-1] = last.replace(ampm, "");
+	}
+	if (timeSplitted.length == 2) {
+	    timeSplitted.concat("0");
+	}
+
+	let hour = this._strictUint(timeSplitted[0]);
+	let minute = this._strictUint(timeSplitted[1]);
+	let second = this._strictUint(timeSplitted[2]);
+
+	if (minute > 59) {
+	    throw new Error('invalid "at" time spec, minutes cannot be greater than 59');
+	}
+	if (second > 59) {
+	    throw new Error('invalid "at" time spec, seconds cannot be greater than 59');
+	}
+
+	if (isAmPm !== null) {
+	    if (hour > 12) {
+		throw new Error('invalid "at" time spec, hours cannot be greater than 12 for 12-hours clock time');
+	    }
+	    let ampm = isAmPm[0].toLowerCase();
+	    if (ampm === "am" && hour === 12) {
+		hour == 0;
+	    }
+	    if (ampm === "pm" && hour < 12) {
+		hour += 12;
+	    }
+	} else {
+	    if (hour > 24) {
+		throw new Error('invalid "at" time spec, hours cannot be greater than 24 for 24-hours clock time');
+	    }
+	}
+
+	let now = GLib.DateTime.new_now_local ();
+	let triggerTime = GLib.DateTime.new_local (year: now.get_year(),
+						   month: now.get_month(),
+						   day: now.get_day(),
+						   hour: hour,
+						   minute: minute,
+						   seconds: second);
+	if (GLib.DateTime.compare(now, triggerTime) > 0) {
+	    triggerTime = triggerTime.add_days(1);
+	}
+	let diff = triggerTime.difference(now) * 1000000;
+	return diff;
+    }
+
+    _parseTimeSpec: function(timeSpec) {
+	if (timeSpec === undefined) {
+	    timeSpec = "now"
+	}
+
+	let splittedTimeSpec = timeSpec.split(/\s+/);
+	switch (splittedTimeSpec[0]) {
+	case "now":
+	    return 0;
+	case "in":
+	    return this._parseInTimeSpec(splittedTimeSpec);
+	case "at":
+	    return this._parseAtTimeSpec(splittedTimeSpec);
+	}
+        throw new Error('invalid time spec ' + timeSpec);
+    },
+
+    _handleTimedEvent: function(timed, timeoutCallback) {
+	let timeoutIds = timed.when.map(function(timeSpec) {
+	    return this._parseTimeSpec(timeSpec);
+	}).map(function(timeoutInSeconds) {
+	    return Mainloop.timeout_add_seconds (timeoutInSeconds, Lang.bind(this, function() {
+		if (timeoutCallback()) {
+		    // TODO: store the id in the timeout id map for
+		    // cancelling
+		    // TODO: setup if recurring
+		    let id = Mainloop.timeout_add_seconds (24 * 60 * 60, Lang.bind(this, function() {
+			return timeoutCallback();
+		    }))
+		
+		// TODO: handle recurrent case? Would need recomputing the timeout
+		return false;
+	    }));
+	});
+	// TODO: add timeouts to some timeout id map for cancelling
+	// TODO: handle cancels
+    }
+
     _modifyAppGridEvent: function(event, callback) {
         let source = Gio.SettingsSchemaSource.get_default();
         let schemaName = 'org.gnome.shell';
@@ -832,6 +964,7 @@ const CodingGameService = new Lang.Class({
 
         let app = event.data.app;
         let where = event.data.where;
+        let when = event.data.when;
         let action = event.data.action;
         let orgGnomeShellGsettings = new Gio.Settings({ settings_schema: schema });
         let gSetting = 'icon-grid-layout';
