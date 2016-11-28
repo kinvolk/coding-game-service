@@ -43,7 +43,6 @@ Package: coding-game-service
 Section: non-free/libs
 Architecture: any
 Depends: gir1.2-coding-game-service-0 (= ${binary:Version}),
-         libcoding-game-service-0 (= ${binary:Version}),
          gjs,
          ${misc:Depends}
 Description: Coding Game Service
