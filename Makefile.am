@@ -6,6 +6,7 @@ files_DATA = $(arbitrary_files)
 
 # Resource javascript modules
 resource_dist_js_files = \
+	lib/desktopFile.js \
 	lib/validation.js \
 	$(NULL)
 
