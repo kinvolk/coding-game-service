@@ -107,7 +107,7 @@ const CodingGameServiceChatController = new Lang.Class({
         try {
             this._internalChatboxProxy =
                 ChatboxService.CodingChatboxProxy.new_for_bus_sync(Gio.BusType.SESSION,
-                                                                   0,
+                                                                   Gio.DBusProxyFlags.DO_NOT_AUTO_START_AT_CONSTRUCTION,
                                                                    'com.endlessm.Coding.Chatbox',
                                                                    '/com/endlessm/Coding/Chatbox',
                                                                    null);
