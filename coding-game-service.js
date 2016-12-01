@@ -870,9 +870,13 @@ const CodingGameService = new Lang.Class({
     },
 
     _dispatch: function(event) {
-        this._dispatchTable[event.type](event, Lang.bind(this, function(logEvent) {
-            return this._log.handleEvent(logEvent.type, logEvent.name, logEvent.data);
-        }));
+        try {
+            this._dispatchTable[event.type](event, Lang.bind(this, function(logEvent) {
+                return this._log.handleEvent(logEvent.type, logEvent.name, logEvent.data);
+            }));
+        } catch (e) {
+            logError(e, 'Failed to dispatch ' + JSON.stringify(event));
+        }
     }   
 });
 
