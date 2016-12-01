@@ -17,7 +17,7 @@ resource_nondist_js_files = \
 lib/config.js: $(srcdir)/lib/config.js.in
 	$(AM_V_GEN) mkdir -p lib/ && \
 	sed -e 's,%CODING_FILES_DIR%,$(pkgdatadir)/files,g' \
-	    -e 's,%CODING_COPY_FILES_SCRIPT%,$(pkglibexecdir)/coding-copy-files.js,g' \
+	    -e 's,%CODING_COPY_FILES_SCRIPT%,$(pkglibexecdir)/coding-copy-files,g' \
 	$< > $@.tmp && \
 	mv -f $@.tmp $@
 
@@ -138,9 +138,9 @@ com.endlessm.CodingGameService.service: $(srcdir)/com.endlessm.CodingGameService
 	$(AM_V_GEN) sed -e 's|@bindir[@]|${bindir}|g' $< > $@
 
 # Script for placing files in the shared dir 
-pkglibexec_SCRIPTS = files/coding-copy-files.js
+pkglibexec_SCRIPTS = files/coding-copy-files
 
-files/coding-copy-files.js: files/coding-copy-files.js.in
+files/coding-copy-files: files/coding-copy-files.js.in
 	$(AM_V_GEN) mkdir -p files && \
 	$(SED) -e 's,%coding_files_dir%,$(pkgdatadir)/files,g' < $< >$@.tmp && \
 	mv -f $@.tmp $@ && \
