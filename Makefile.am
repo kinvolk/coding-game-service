@@ -143,7 +143,8 @@ pkglibexec_SCRIPTS = files/coding-copy-files.js
 files/coding-copy-files.js: files/coding-copy-files.js.in
 	$(AM_V_GEN) mkdir -p files && \
 	$(SED) -e 's,%coding_files_dir%,$(pkgdatadir)/files,g' < $< >$@.tmp && \
-	mv -f $@.tmp $@
+	mv -f $@.tmp $@ && \
+	chmod +x $@
 
 # Polkit policy
 polkit_policydir = $(datadir)/polkit-1/actions
