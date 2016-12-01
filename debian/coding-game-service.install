@@ -1,1 +1,2 @@
 debian/tmp/usr/bin/coding-game-service
+debian/tmp/usr/lib/*/com.endlessm.CodingGameService/coding-copy-files.js
