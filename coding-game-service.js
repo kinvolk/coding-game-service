@@ -195,6 +195,7 @@ const CodingGameServiceLog = new Lang.Class({
     chatLogForActor: function(actor) {
         return this._eventLog.filter(function(e) {
             return (e.type === 'chat-actor' ||
+                    e.type === 'chat-actor-attachment' ||
                     e.type === 'chat-user' ||
                     e.type == 'input-user') && e.data.actor === actor;
         }).map(function(e) {
@@ -202,6 +203,7 @@ const CodingGameServiceLog = new Lang.Class({
                 timestamp: e.timestamp,
                 actor: e.data.actor,
                 message: e.data.message,
+                attachment: e.data.attachment,
                 name: e.name,
                 input: e.data.input,
                 type: e.type
@@ -435,6 +437,7 @@ const CodingGameService = new Lang.Class({
 
         this._dispatchTable = {
             'chat-actor': Lang.bind(this, this._dispatchChatEvent),
+            'chat-actor-attachment': Lang.bind(this, this._dispatchChatAttachmentEvent),
             'chat-user': Lang.bind(this, this._dispatchChatEvent),
             'input-user': Lang.bind(this, this._dispatchInputBubbleEvent),
             'start-mission': Lang.bind(this, this._startMissionEvent),
@@ -667,6 +670,18 @@ const CodingGameService = new Lang.Class({
             // No sense sending the chat message, just create a log entry
             callback(event);
         }
+    },
+
+    _dispatchChatAttachmentEvent: function(event, callback) {
+        // Creates a log entry and then sends the attachment to the client
+        event.data.attachment.path = resolvePath(event.data.attachment.path);
+        let entry = callback(event);
+        this._chatController.sendChatMessage({
+            timestamp: entry.timestamp,
+            actor: entry.data.actor,
+            attachment: entry.data.attachment,
+            name: entry.name
+        });
     },
 
     _registerArtifactEvent: function(event, callback) {
