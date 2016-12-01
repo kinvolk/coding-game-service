@@ -145,6 +145,7 @@ const CodingGameServiceLog = new Lang.Class({
             logContents = this._logFile.load_contents(null)[1];
         } catch (e if e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) {
             // ignore errors when the file does not exist
+            return;
         } catch (e) {
             logError(e, 'Unable to load game service log');
             return;
