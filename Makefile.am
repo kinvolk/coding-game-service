@@ -163,6 +163,6 @@ CLEANFILES += \
 	$(gdbus_codegen_built_sources) \
 	$(polkit_policy_DATA) \
 	data/timeline.json \
-	files/coding-copy-files.js \
+	files/coding-copy-files \
 	lib/config.js \
 	$(NULL)
