@@ -295,12 +295,17 @@ const CodingGameServiceLog = new Lang.Class({
 // Shell out to some process and get its output. If the process
 // returns a non-zero exit status, throw.
 function executeCommandForOutput(argv) {
+    let stdout, stderr;
+    stdout = stderr = '';
+
     try {
-        let [ok, stdout, stderr, status] = GLib.spawn_sync(null,
-                                                           argv,
-                                                           null,
-                                                           GLib.SpawnFlags.SEARCH_PATH,
-                                                           null);
+        let [ok, procStdOut, procStdErr, status] = GLib.spawn_sync(null,
+                                                                   argv,
+                                                                   null,
+                                                                   GLib.SpawnFlags.SEARCH_PATH,
+                                                                   null);
+        stdout = procStdOut;
+        stderr = procStdErr;
 
         // Check the exit status to see if the process failed. This will
         // throw an exception if it did.
@@ -308,8 +313,8 @@ function executeCommandForOutput(argv) {
 
         return {
             status: status,
-            stdout: String(stdout),
-            stderr: String(stderr)
+            stdout: String(procStdOut),
+            stderr: String(procStdErr)
         };
     } catch (e) {
         throw new Error('Failed to execute ' + argv.join(' ') + ': ' +
