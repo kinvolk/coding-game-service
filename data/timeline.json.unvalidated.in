@@ -26,6 +26,20 @@
                     "points": 52
                 }
             ]
+        },
+        {
+            "name": "bashrc",
+            "short_desc": "Your system's configuration",
+            "long_desc": "It is time to find out where all those hidden toggles are. Pay attention to the clues that you're given and find out what you need to edit to get ahead.",
+            "start_events": [
+                "bashrc::chat::meme::send_bashrc"
+            ],
+            "artifacts": [
+                {
+                    "name": "artifact::openbashrc",
+                    "points": 106
+                }
+            ]
         }
     ],
     "start": {
@@ -423,7 +437,8 @@
                         "chat::meme::intro::install-programming::artifact",
                         "event::meme::intro::install-programming::insert-terminal-icon",
                         "chat::meme::intro::intro-complete",
-                        "chat::goog::intro::install_programming::comment"
+                        "chat::goog::intro::install_programming::comment",
+                        "intro::start-bashrc-mission"
                     ],
                     "failure": [
                         "chat::meme::intro::install_programming::again",
@@ -486,6 +501,24 @@
             "data": {
                 "actor": "MEME",
                 "message": "Buckle up Dorothy, because Kansas is going bye-bye!\nSee you in the 'Coding Fun' app on your desktop!"
+            }
+        },
+        {
+            "name": "intro::start-bashrc-mission",
+            "type": "start-mission",
+            "data": {
+                "name": "bashrc"
+            }
+        },
+        {
+            "name": "bashrc::chat::meme::send_bashrc",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "MEME",
+                "attachment": {
+                    "desc": "Your Shell's Configuration",
+                    "path": "~/.bashrc"
+                }
             }
         }
     ]
