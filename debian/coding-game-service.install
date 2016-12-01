@@ -1,2 +1,4 @@
 debian/tmp/usr/bin/coding-game-service
 debian/tmp/usr/lib/*/com.endlessm.CodingGameService/coding-copy-files
+debian/tmp/usr/share/polkit-1/actions/*
+debian/tmp/usr/share/com.endlessm.CodingGameService/files/*
