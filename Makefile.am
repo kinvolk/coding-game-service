@@ -6,7 +6,10 @@ files_DATA = $(arbitrary_files)
 
 # Resource javascript modules
 resource_dist_js_files = \
+	lib/communicator.js \
 	lib/desktopFile.js \
+	lib/log.js \
+	lib/service.js \
 	lib/validation.js \
 	lib/shellAppStore.js \
 	$(NULL)
