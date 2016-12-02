@@ -17,6 +17,13 @@ const Descriptors = {
     warnings: [],
     events: [
         {
+            name: 'start-mission::none',
+            type: 'start-mission',
+            data: {
+                name: 'none'
+            }
+        },
+        {
             name: 'none::event',
             type: 'chat-actor',
             data: {
@@ -26,7 +33,7 @@ const Descriptors = {
         },
     ],
     start: {
-        initial_mission: 'none'
+        initial_event: 'start-mission::none'
     },
     missions: [
         {
