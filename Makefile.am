@@ -25,6 +25,11 @@ lib/config.js: $(srcdir)/lib/config.js.in
 	$< > $@.tmp && \
 	mv -f $@.tmp $@
 
+# Mocks
+javascript_mocks = \
+	mocks/constructors.js \
+	$(NULL)
+
 # Tests
 javascript_tests = \
 	tests/js/testCodingGameService.js \
@@ -36,6 +41,7 @@ all_dist_js_files = \
 	bin/coding-game-validator.js \
 	bin/coding-game-service.js \
 	bin/edit-desktop-file.js \
+	$(javascript_mocks) \
 	$(javascript_tests) \
 	$(resource_dist_js_files) \
 	$(NULL)
