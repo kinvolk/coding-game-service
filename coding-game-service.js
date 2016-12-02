@@ -228,7 +228,7 @@ function resolvePath(path) {
 const CodingGameService = new Lang.Class({
     Name: 'CodingGameService',
 
-    _init: function(commandLineFile, service) {
+    _init: function(commandLineFile, service, chatController) {
         this.parent();
 
         this._descriptors = loadTimelineDescriptors(commandLineFile);
@@ -237,6 +237,7 @@ const CodingGameService = new Lang.Class({
                                                                          'game-service.log']))
         this._log = new Log.CodingGameServiceLog(logFileForPath);
         this._service = service;
+        this._chatController = chatController;
 
         this._service.connectHandlers({
             dispatchEventByName: Lang.bind(this, this.dispatchEventByName),
@@ -268,8 +269,6 @@ const CodingGameService = new Lang.Class({
 
     register: function(connection, object_path) {
         this.export(connection, object_path);
-
-        this._chatController = new Communicator.CodingGameServiceChatController(ChatboxService.CodingChatboxProxy);
 
         // Listen for any events which are currently outstanding
         let listeningForTriggers = this._log.activeEventsToListenFor();
@@ -719,7 +718,10 @@ const CodingGameServiceApplication = new Lang.Class({
         this.parent(conn, object_path);
 
         this._skeleton = new Service.DBUSService(conn, object_path);
-        this._service = new CodingGameService(this._commandLineFile, this._skeleton);
+        this._chatController = new Communicator.CodingGameServiceChatController(ChatboxService.CodingChatboxProxy);
+        this._service = new CodingGameService(this._commandLineFile,
+                                              this._skeleton,
+                                              this._chatController);
         return true;
     },
 
