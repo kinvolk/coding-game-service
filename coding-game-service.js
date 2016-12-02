@@ -228,7 +228,7 @@ function resolvePath(path) {
 const CodingGameService = new Lang.Class({
     Name: 'CodingGameService',
 
-    _init: function(descriptors, service, chatController) {
+    _init: function(descriptors, service, chatController, effectsManager) {
         this.parent();
 
         this._descriptors = descriptors;
@@ -238,6 +238,7 @@ const CodingGameService = new Lang.Class({
         this._log = new Log.CodingGameServiceLog(logFileForPath);
         this._service = service;
         this._chatController = chatController;
+        this._effectsManager = effectsManager;
 
         this._service.connectHandlers({
             dispatchEventByName: Lang.bind(this, this.dispatchEventByName),
@@ -264,7 +265,6 @@ const CodingGameService = new Lang.Class({
             'wait-for-complete': Lang.bind(this, this._waitForEventComplete),
             'modify-app-grid': Lang.bind(this, this._modifyAppGridEvent)
         };
-        this._shellProxy = new ShellAppStore.ShellAppStore();
     },
 
     register: function(connection, object_path) {
@@ -587,8 +587,9 @@ const CodingGameService = new Lang.Class({
 
         let value = resolveGSettingsValue(event.data.value);
         let settings = new Gio.Settings({ settings_schema: schema });
-        settings.set_value(event.data.key,
-                           new GLib.Variant(event.data.variant, value));
+        this._effectsManager.changeGSettingsValue(settings,
+                                                  event.data.key,
+                                                  new GLib.Variant(event.data.variant, value));
         callback(event);
     },
 
@@ -631,7 +632,7 @@ const CodingGameService = new Lang.Class({
     },
 
     _completeWaitForEventIn: function(event, timeout) {
-        GLib.timeout_add(GLib.PRIORITY_DEFAULT, timeout, Lang.bind(this, function() {
+        this._effectsManager.performEventIn(event, timeout, Lang.bind(this, function() {
             this._dispatch({
                 name: event.name + '::completed',
                 type: 'wait-for-complete',
@@ -663,11 +664,11 @@ const CodingGameService = new Lang.Class({
         if (action === 'add-app') {
             let app = event.data.app;
 
-            this._shellProxy.proxy.AddApplicationRemote(app);
+            this._effectsManager.addApplication(app);
         } else if (action === 'remove-app') {
             let app = event.data.app;
 
-            this._shellProxy.proxy.RemoveApplicationRemote(app);
+            this._effectsManager.removeApplication(app);
         } else {
             throw new Error('Cannot process modify-app-grid event for app ' + event.data.app +
                            ', bad action type ' + action.type);
@@ -721,7 +722,8 @@ const CodingGameServiceApplication = new Lang.Class({
         this._chatController = new Communicator.CodingGameServiceChatController(ChatboxService.CodingChatboxProxy);
         this._service = new CodingGameService(loadTimelineDescriptors(this._commandLineFile),
                                               this._skeleton,
-                                              this._chatController);
+                                              this._chatController,
+                                              new Communicator.ExternalEffects());
         return true;
     },
 
