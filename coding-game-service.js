@@ -228,10 +228,10 @@ function resolvePath(path) {
 const CodingGameService = new Lang.Class({
     Name: 'CodingGameService',
 
-    _init: function(commandLineFile, service, chatController) {
+    _init: function(descriptors, service, chatController) {
         this.parent();
 
-        this._descriptors = loadTimelineDescriptors(commandLineFile);
+        this._descriptors = descriptors;
         let logFileForPath = Gio.File.new_for_path(GLib.build_filenamev([GLib.get_user_config_dir(),
                                                                          'com.endlessm.CodingGameService',
                                                                          'game-service.log']))
@@ -719,7 +719,7 @@ const CodingGameServiceApplication = new Lang.Class({
 
         this._skeleton = new Service.DBUSService(conn, object_path);
         this._chatController = new Communicator.CodingGameServiceChatController(ChatboxService.CodingChatboxProxy);
-        this._service = new CodingGameService(this._commandLineFile,
+        this._service = new CodingGameService(loadTimelineDescriptors(this._commandLineFile),
                                               this._skeleton,
                                               this._chatController);
         return true;
