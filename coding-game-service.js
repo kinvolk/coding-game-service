@@ -719,10 +719,9 @@ const CodingGameServiceApplication = new Lang.Class({
         this.parent(conn, object_path);
 
         this._skeleton = new Service.DBUSService(conn, object_path);
-        this._chatController = new Communicator.CodingGameServiceChatController(ChatboxService.CodingChatboxProxy);
         this._service = new CodingGameService(loadTimelineDescriptors(this._commandLineFile),
                                               this._skeleton,
-                                              this._chatController,
+                                              new Communicator.CodingGameServiceChatController(ChatboxService.CodingChatboxProxy),
                                               new Communicator.ExternalEffects());
         return true;
     },
