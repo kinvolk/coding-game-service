@@ -106,69 +106,6 @@ function findInArray(array, callback) {
     return result[0];
 }
 
-// executeCommandForOutput
-//
-// Shell out to some process and get its output. If the process
-// returns a non-zero exit status, throw.
-function executeCommandForOutput(argv) {
-    let stdout, stderr;
-    stdout = stderr = '';
-
-    try {
-        let [ok, procStdOut, procStdErr, status] = GLib.spawn_sync(null,
-                                                                   argv,
-                                                                   null,
-                                                                   GLib.SpawnFlags.SEARCH_PATH,
-                                                                   null);
-        stdout = procStdOut;
-        stderr = procStdErr;
-
-        // Check the exit status to see if the process failed. This will
-        // throw an exception if it did.
-        GLib.spawn_check_exit_status(status);
-
-        return {
-            status: status,
-            stdout: String(procStdOut),
-            stderr: String(procStdErr)
-        };
-    } catch (e) {
-        throw new Error('Failed to execute ' + argv.join(' ') + ': ' +
-                        [String(e), String(stdout), String(stderr)].join('\n'));
-    }
-}
-
-// copySourceToTarget
-//
-// This function will copy a file from the coding_files_dir to a given target path.
-// If the user has write permissions for that path (eg, it is within the home
-// directory, we write it there directly. Otherwise, we shell out to pkexec and
-// another script to copy to another (whitelisted) location.
-function copySourceToTarget(source, target) {
-    let targetFile = Gio.File.new_for_path(target);
-
-    // We have permission to copy this file.
-    if (targetFile.has_prefix(Gio.File.new_for_path(GLib.get_home_dir()))) {
-        let sourcePath = GLib.build_filenamev([
-            Config.coding_files_dir,
-            source
-        ]);
-        let sourceFile = Gio.File.new_for_path(sourcePath);
-
-        sourceFile.copy(targetFile, Gio.FileCopyFlags.OVERWRITE, null, null);
-    } else {
-        // We do not have permission to copy this file. Shell out to
-        // the coding-copy-files script through pkexec and take the result
-        // from there.
-        executeCommandForOutput([
-            'pkexec',
-            Config.coding_copy_files_script,
-            source,
-            target
-        ]);
-    }
-}
-
 // resolveGSettingsValue
 //
 // This function examines a value which is intended to be passed to GSettings
@@ -598,12 +535,7 @@ const CodingGameService = new Lang.Class({
         let source = event.data.source;
         let target = event.data.target;
 
-        let souceDataPath = GLib.build_filenamev([
-            Config.coding_files_dir,
-            source
-        ]);
-
-        copySourceToTarget(source, target);
+        this._effectsManager.copySourceToTarget(source, target);
         callback(event);
     },
 
