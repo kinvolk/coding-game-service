@@ -32,6 +32,7 @@ imports.searchPath.push('resource:///com/endlessm/coding-game-service');
 const Communicator = imports.lib.communicator;
 const Config = imports.lib.config;
 const Log = imports.lib.log;
+const Service = imports.lib.service;
 const ShellAppStore = imports.lib.shellAppStore;
 
 // loadTimelineDescriptors
@@ -223,19 +224,11 @@ function resolvePath(path) {
     return file.get_path();
 }
 
-const CodingGameServiceErrorDomain = GLib.quark_from_string('coding-game-service-error');
-const CodingGameServiceErrors = {
-    NO_SUCH_EVENT_ERROR: 0,
-    NO_SUCH_RESPONSE_ERROR: 1,
-    IRRELEVANT_EVENT: 2,
-    INTERNAL_ERROR: 3,
-    FORBIDDEN: 4
-};
+
 const CodingGameService = new Lang.Class({
     Name: 'CodingGameService',
-    Extends: CodingGameServiceDBUS.CodingGameServiceSkeleton,
 
-    _init: function(commandLineFile) {
+    _init: function(commandLineFile, service) {
         this.parent();
 
         this._descriptors = loadTimelineDescriptors(commandLineFile);
@@ -243,6 +236,14 @@ const CodingGameService = new Lang.Class({
                                                                          'com.endlessm.CodingGameService',
                                                                          'game-service.log']))
         this._log = new Log.CodingGameServiceLog(logFileForPath);
+        this._service = service;
+
+        this._service.connectHandlers({
+            dispatchEventByName: Lang.bind(this, this.dispatchEventByName),
+            fetchChatHistory: Lang.bind(this, this.fetchChatHistory),
+            receiveChatResponse: Lang.bind(this, this.receiveChatResponse),
+            receiveExternalEvent: Lang.bind(this, this.receiveExternalEvent)
+        });
 
         // Log the warnings
         this._descriptors.warnings.forEach(w => log(w));
@@ -274,12 +275,9 @@ const CodingGameService = new Lang.Class({
         let listeningForTriggers = this._log.activeEventsToListenFor();
         this._listeningEventTriggers = {};
 
-        // Freeze notifications to avoid bus traffic here
-        this.freeze_notify();
-        Object.keys(listeningForTriggers).forEach(Lang.bind(this, function(k) {
-            this._startListeningFor(k, listeningForTriggers[k]);
-        }));
-        this.thaw_notify();
+        // Update all the triggers once
+        this._listeningEventTriggers = listeningForTriggers;
+        this._updateCurrentlyListeningForEventsProp();
 
         // Re-add any timeouts to the main loop which are currently outstanding.
         // Note that we don't just re-add the timeout, but look at the timestamp
@@ -320,133 +318,93 @@ const CodingGameService = new Lang.Class({
             this._startFirstMission();
     },
 
-    vfunc_handle_test_dispatch_event: function(method, name) {
+    dispatchEventByName: function(name) {
         let enabler = GLib.getenv('CODING_ENABLE_HACKING_MODE');
         if (enabler !== 'IKNOWWHATIAMDOING') {
-            method.return_error_literal(CodingGameServiceErrorDomain,
-                                        CodingGameServiceErrors.FORBIDDEN,
-                                        'Not allowed to dispatch events at will');
-            return true;
+            throw new Service.ServiceError(Service.ServiceErrors.FORBIDDEN,
+                                           'Not allowed to dispatch events at will');
         }
+
         let event = findInArray(this._descriptors.events, function(e) {
             return e.name === name;
         });
+
         if (event === null) {
-            method.return_error_literal(CodingGameServiceErrorDomain,
-                                        CodingGameServiceErrors.NO_SUCH_EVENT_ERROR,
-                                        'No such event ' + JSON.stringify(name));
-        } else {
-            this._dispatch(event);
-            this.complete_test_dispatch_event(method);
+            throw new Service.ServiceError(Service.ServiceErrors.NO_SUCH_EVENT_ERROR,
+                                           'No such event ' + JSON.stringify(name));
         }
-        return true;
+
+        this._dispatch(event);
     },
 
-    vfunc_handle_chat_history: function(method, actor) {
-        try {
-            let history = this._log.chatLogForActor(actor).map(function(h) {
-                return [JSON.stringify(h)];
-            });
-            this.complete_chat_history(method, GLib.Variant.new('a(s)', history));
-        } catch(e) {
-            method.return_error_literal(CodingGameServiceErrorDomain,
-                                        CodingGameServiceErrors.INTERNAL_ERROR,
-                                        String(e));
-        }
-
-        return true;
+    fetchChatHistory: function(actor) {
+        return this._log.chatLogForActor(actor).map(function(h) {
+            return [JSON.stringify(h)];
+        });
     },
 
-    vfunc_handle_chat_response: function(method, id, contents, response) {
-        try {
-            let respondingTo = findInArray(this._descriptors.events, function(e) {
-                return (e.type === 'chat-actor' || e.type === 'input-user') && e.name === id;
-            });
+    receiveChatResponse: function(id, contents, response) {
+        let respondingTo = findInArray(this._descriptors.events, function(e) {
+            return (e.type === 'chat-actor' || e.type === 'input-user') && e.name === id;
+        });
 
-            if (!respondingTo) {
-                method.return_error_literal(CodingGameServiceErrorDomain,
-                                            CodingGameServiceErrors.NO_SUCH_EVENT_ERROR,
-                                            'No such event ' + JSON.stringify(id));
-                return true;
-            }
-
-            let eventKeyToRun = findInArray(Object.keys(respondingTo.data.responses), function(r) {
-                return r === response;
-            });
-
-            if (!eventKeyToRun) {
-                method.return_error_literal(CodingGameServiceErrorDomain,
-                                            CodingGameServiceErrors.NO_SUCH_RESPONSE_ERROR,
-                                            'No such response ' + JSON.stringify(response));
-                return true;
-            }
-
-            this._dispatch({
-                name: id + '::response',
-                type: 'chat-user',
-                data: {
-                    name: id,
-                    actor: respondingTo.data.actor,
-                    message: contents
-                }
-            });
-
-            let responses = respondingTo.data.responses[eventKeyToRun];
-            let toDispatch = findEventsToDispatchInDescriptors(responses,
-                                                               this._descriptors.events);
-            toDispatch.forEach(Lang.bind(this, function(e) {
-                this._dispatch(e);
-            }));
-
-            this.complete_chat_response(method);
-        } catch(e) {
-            method.return_error_literal(CodingGameServiceErrorDomain,
-                                        CodingGameServiceErrors.INTERNAL_ERROR,
-                                        String(e));
-            logError(e);
+        if (!respondingTo) {
+            throw new Service.ServiceError(Service.ServiceErrors.NO_SUCH_EVENT_ERROR,
+                                           'No such event ' + JSON.stringify(id));
         }
 
-        return true;
+        let eventKeyToRun = findInArray(Object.keys(respondingTo.data.responses), function(r) {
+            return r === response;
+        });
+
+        if (!eventKeyToRun) {
+            throw new Service.ServiceError(Service.ServiceErrors.NO_SUCH_RESPONSE_ERROR,
+                                           'No such response ' + JSON.stringify(id));
+        }
+
+        this._dispatch({
+            name: id + '::response',
+            type: 'chat-user',
+            data: {
+                name: id,
+                actor: respondingTo.data.actor,
+                message: contents
+            }
+        });
+
+        let responses = respondingTo.data.responses[eventKeyToRun];
+        let toDispatch = findEventsToDispatchInDescriptors(responses,
+                                                           this._descriptors.events);
+        toDispatch.forEach(Lang.bind(this, function(e) {
+            this._dispatch(e);
+        }));
     },
 
-    vfunc_handle_external_event: function(method, id) {
-        try {
-            let eventToTrigger = this._listeningEventTriggers[id];
+    receiveExternalEvent: function(id) {
+        let eventToTrigger = this._listeningEventTriggers[id];
 
-            if (!eventToTrigger) {
-                method.return_error_literal(CodingGameServiceErrorDomain,
-                                            CodingGameServiceErrors.IRRELEVANT_EVENT,
-                                            'Not listening for event ' + id);
-                return true;
-            }
-
-            // Process an internal event to note that we received the event here
-            // which will cause us to stop listening for it and log it.
-            this._dispatch({
-                name: eventToTrigger.name + '::receive',
-                type: 'receive-event',
-                data: {
-                    name: id
-                }
-            });
-
-            // Run the other events that happen when this one was triggered and
-            // stop listening for this event now.
-            let toDispatch = findEventsToDispatchInDescriptors(eventToTrigger.data.received,
-                                                               this._descriptors.events);
-            toDispatch.forEach(Lang.bind(this, function(e) {
-                this._dispatch(e);
-            }));
-
-            this.complete_external_event(method);
-        } catch (e) {
-            logError(e);
-            method.return_error_literal(CodingGameServiceErrorDomain,
-                                        CodingGameServiceErrors.INTERNAL_ERROR,
-                                        String(e));
+        if (!eventToTrigger) {
+            throw new Service.ServiceError(Service.ServiceErrors.IRRELEVANT_EVENT,
+                                           'Not listening for event ' + id);
         }
 
-        return true;
+        // Process an internal event to note that we received the event here
+        // which will cause us to stop listening for it and log it.
+        this._dispatch({
+            name: eventToTrigger.name + '::receive',
+            type: 'receive-event',
+            data: {
+                name: id
+            }
+        });
+
+        // Run the other events that happen when this one was triggered and
+        // stop listening for this event now.
+        let toDispatch = findEventsToDispatchInDescriptors(eventToTrigger.data.received,
+                                                           this._descriptors.events);
+        toDispatch.forEach(Lang.bind(this, function(e) {
+            this._dispatch(e);
+        }));
     },
 
     vfunc_handle_reset_game: function(method) {
@@ -518,17 +476,18 @@ const CodingGameService = new Lang.Class({
         // keep the notion of events and artifacts separate and does not
         // require us to encode the idea of "passing" or "failing" an
         // event (instead we merely move from one event to another)
-        if (this.current_mission) {
+        let currentMission = this._service.currentMission();
+
+        if (this._service.currentMission) {
             let missionSpec = findInArray(this._descriptors.missions, Lang.bind(this, function(m) {
-                return m.name == this.current_mission;
+                return m.name == currentMission;
             }));
             let achievedArtifact = findInArray(missionSpec.artifacts, function(a) {
                 return a.name === event.data.name;
             });
 
             if (achievedArtifact) {
-                this.current_mission_points += achievedArtifact.points;
-                this.current_mission_num_tasks++;
+                this._service.completeTaskWithPoints(achievedArtifact.points);
             }
         }
 
@@ -575,15 +534,17 @@ const CodingGameService = new Lang.Class({
             return total + a.points;
         }, 0);
 
-        this.current_mission = missionSpec.name;
-        this.current_mission_name = missionSpec.short_desc;
-        this.current_mission_desc = missionSpec.long_desc;
-        this.current_mission_num_tasks_available = Object.keys(completedEvents).length;
-        this.current_mission_num_tasks = Object.keys(completedEvents).filter(function(k) {
-            return completedEvents[k] !== null;
-        }).length;
-        this.current_mission_points = totalAccruedPoints;
-        this.current_mission_available_points = totalAvailablePoints;
+        this._service.setGameManagerState({
+            currentMission: missionSpec.name,
+            currentMissionName: missionSpec.short_desc,
+            currentMissionDesc: missionSpec.long_desc,
+            currentMissionNumTasksAvailable: Object.keys(completedEvents).length,
+            currentMissionNumTasks: Object.keys(completedEvents).filter(function(k) {
+                return completedEvents[k] !== null;
+            }).length,
+            currentMissionPoints: totalAccruedPoints,
+            currentMissionPointsAvailable: totalAvailablePoints
+        });
 
         // Now, if our starting event has not yet occured, trigger it
         missionSpec.start_events.forEach(Lang.bind(this, function(start_event) {
@@ -647,7 +608,7 @@ const CodingGameService = new Lang.Class({
     },
 
     _updateCurrentlyListeningForEventsProp: function() {
-        this.currently_listening_for_events = Object.keys(this._listeningEventTriggers);
+        this._service.listeningForEvents(Object.keys(this._listeningEventTriggers));
     },
 
     _startListeningFor: function(name, event) {
@@ -757,8 +718,8 @@ const CodingGameServiceApplication = new Lang.Class({
     vfunc_dbus_register: function(conn, object_path) {
         this.parent(conn, object_path);
 
-        this._skeleton = new CodingGameService(this._commandLineFile);
-        this._skeleton.register(conn, object_path);
+        this._skeleton = new Service.DBUSService(conn, object_path);
+        this._service = new CodingGameService(this._commandLineFile, this._skeleton);
         return true;
     },
 
