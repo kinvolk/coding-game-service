@@ -707,11 +707,12 @@
                 "name": "bashrc::event::open_bashrc",
                 "received": [
                     "bashrc::register_artifact",
-                    "bashrc::chat::meme::open_bashrc"
+                    "bashrc::chat::meme::open_bashrc",
                     "bashrc::start-mission::terminalintro"
                 ]
             }
         },
+        {
             "name": "bashrc::register_artifact",
             "type": "register-artifact",
             "data": {
@@ -810,6 +811,16 @@
             "data": {
                 "actor": "MEME",
                 "message": "Now that you've learned how to use showmehow, why not try the navigation lesson?"
+            }
+        },
+        {
+            "name": "listen::terminalintro::showmehow-navigation",
+            "type": "listen-event",
+            "data": {
+                "name": "showmehow-navigation",
+                "received": [
+                    "terminalintro::start-mission::terminaltasks"
+                ]
             }
         },
         {
