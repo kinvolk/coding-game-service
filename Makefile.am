@@ -27,8 +27,9 @@ lib/config.js: $(srcdir)/lib/config.js.in
 
 # All javascript modules
 all_dist_js_files = \
-	coding-game-validator.js \
-	coding-game-service.js \
+	bin/coding-game-validator.js \
+	bin/coding-game-service.js \
+	bin/edit-desktop-file.js \
 	$(resource_dist_js_files) \
 	$(NULL)
 
@@ -96,11 +97,11 @@ bin_SCRIPTS = \
 	coding-game-validator \
 	$(NULL)
 
-coding-game-service: $(srcdir)/coding-game-service.js
+coding-game-service: $(srcdir)/bin/coding-game-service.js
 	cp $< $@
 	chmod +x $@
 
-coding-game-validator: $(srcdir)/coding-game-validator.js
+coding-game-validator: $(srcdir)/bin/coding-game-validator.js
 	cp $< $@
 	chmod +x $@
 
