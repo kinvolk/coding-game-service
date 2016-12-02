@@ -76,6 +76,7 @@ const createExternalEffects = function() {
     spyOn(effects, 'performEventIn').and.callThrough();
     spyOn(effects, 'changeGSettingsValue');
     spyOn(effects, 'copySourceToTarget');
+    return effects;
 }
 const createLogFileWithStructure = function(structure) {
     let [logFile, logFileStream] = Gio.File.new_tmp("game-service-log-XXXXXX");
