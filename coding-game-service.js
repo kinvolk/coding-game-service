@@ -407,11 +407,8 @@ function findEventsToDispatchInDescriptors(findEvents, eventDescriptors) {
 //
 // Takes a path and expands a leading '~' into the user's home directory/
 function resolvePath(path) {
-    if (path.startsWith("~")) {
-        return GLib.build_pathv("/", [GLib.get_home_dir(), path.slice(1)]);
-    }
-
-    return path;
+    let file = Gio.File.parse_name(path);
+    return file.get_path();
 }
 
 const CodingGameServiceErrorDomain = GLib.quark_from_string('coding-game-service-error');
