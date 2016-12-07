@@ -5,5 +5,6 @@
     <file>lib/validation.js</file>
     <file>lib/config.js</file>
     <file>lib/desktopFile.js</file>
+    <file>lib/shellAppStore.js</file>
   </gresource>
 </gresources>

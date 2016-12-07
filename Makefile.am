@@ -8,6 +8,7 @@ files_DATA = $(arbitrary_files)
 resource_dist_js_files = \
 	lib/desktopFile.js \
 	lib/validation.js \
+	lib/shellAppStore.js \
 	$(NULL)
 
 resource_nondist_js_files = \

@@ -30,6 +30,7 @@ const System = imports.system;
 imports.searchPath.push('resource:///com/endlessm/coding-game-service');
 
 const Config = imports.lib.config;
+const ShellAppStore = imports.lib.shellAppStore;
 
 // loadTimelineDescriptors
 //
@@ -111,9 +112,9 @@ const CodingGameServiceChatController = new Lang.Class({
                                                                    'com.endlessm.Coding.Chatbox',
                                                                    '/com/endlessm/Coding/Chatbox',
                                                                    null);
-         } catch (e) {
-             logError(e, 'Error occurred in connecting to com.endlesssm.Coding.Chatbox');
-         }
+        } catch (e) {
+            logError(e, 'Error occurred in connecting to com.endlesssm.Coding.Chatbox');
+        }
     },
 
     sendChatMessage: function(message) {
@@ -436,6 +437,7 @@ const CodingGameService = new Lang.Class({
             'wait-for-complete': Lang.bind(this, this._waitForEventComplete),
             'modify-app-grid': Lang.bind(this, this._modifyAppGridEvent)
         };
+        this._shellProxy = new ShellAppStore.ShellAppStore();
     },
 
     register: function(connection, object_path) {
@@ -839,42 +841,16 @@ const CodingGameService = new Lang.Class({
     },
 
     _modifyAppGridEvent: function(event, callback) {
-        let source = Gio.SettingsSchemaSource.get_default();
-        let schemaName = 'org.gnome.shell';
-        let schema = source.lookup(schemaName, true);
-
-        if (!schema) {
-            // Well now, this should not happen.
-            throw new Error('Cannot process modify-app-grid event for app ' + event.data.app +
-                            ', no such schema ' + schemaName);
-        }
-
-        let app = event.data.app;
-        let where = event.data.where;
         let action = event.data.action;
-        let orgGnomeShellGsettings = new Gio.Settings({ settings_schema: schema });
-        let gSetting = 'icon-grid-layout';
-        // This is a dict of string arrays, which maps to a{sas}
-        // GVariant type.
-        let allIcons = orgGnomeShellGsettings.get_value (gSetting).deep_unpack();
 
-        if (!(where in allIcons)) {
-            throw new Error('Cannot process modify-app-grid event for app ' + event.data.app +
-                           ', no such folder ' + where);
-        }
+        if (action === 'add-app') {
+            let app = event.data.app;
 
-        if (action.type === 'add') {
-            if (allIcons[where].indexOf(app) < 0) {
-                allIcons[where].splice(action.index, 0, app);
-                orgGnomeShellGsettings.set_value(gSetting, new GLib.Variant('a{sas}', allIcons));
-            }
-        } else if (action.type === 'remove') {
-            let appIndex = allIcons[where].indexOf(app);
+            this._shellProxy.proxy.AddApplicationRemote(app);
+        } else if (action === 'remove-app') {
+            let app = event.data.app;
 
-            if (appIndex > -1) {
-                allIcons[where].splice(appIndex, 1);
-                orgGnomeShellGsettings.set_value(gSetting, new GLib.Variant('a{sas}', allIcons));
-            }
+            this._shellProxy.proxy.RemoveApplicationRemote(app);
         } else {
             throw new Error('Cannot process modify-app-grid event for app ' + event.data.app +
                            ', bad action type ' + action.type);
