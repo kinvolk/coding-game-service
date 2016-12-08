@@ -73,6 +73,8 @@ function loadTimelineDescriptors(cmdlineFile) {
         try {
             let contents = file.load_contents(null)[1];
             descriptors = JSON.parse(contents);
+        } catch (e if e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) {
+            continue;
         } catch (e) {
             // Add the warnings anyway even if we weren't successful, since
             // the developer might still be interested in them.
