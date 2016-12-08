@@ -73,6 +73,8 @@ function loadTimelineDescriptors(cmdlineFile) {
         try {
             let contents = file.load_contents(null)[1];
             descriptors = JSON.parse(contents);
+        } catch (e if e.matches(Gio.IOErrorEnum, Gio.IOErrorEnum.NOT_FOUND)) {
+            continue;
         } catch (e) {
             // Add the warnings anyway even if we weren't successful, since
             // the developer might still be interested in them.
@@ -195,6 +197,7 @@ const CodingGameServiceLog = new Lang.Class({
     chatLogForActor: function(actor) {
         return this._eventLog.filter(function(e) {
             return (e.type === 'chat-actor' ||
+                    e.type === 'chat-actor-attachment' ||
                     e.type === 'chat-user' ||
                     e.type == 'input-user') && e.data.actor === actor;
         }).map(function(e) {
@@ -202,6 +205,7 @@ const CodingGameServiceLog = new Lang.Class({
                 timestamp: e.timestamp,
                 actor: e.data.actor,
                 message: e.data.message,
+                attachment: e.data.attachment,
                 name: e.name,
                 input: e.data.input,
                 type: e.type
@@ -401,6 +405,13 @@ function findEventsToDispatchInDescriptors(findEvents, eventDescriptors) {
     return eventDescriptorsToRun;
 }
 
+// resolvePath
+//
+// Takes a path and expands a leading '~' into the user's home directory/
+function resolvePath(path) {
+    let file = Gio.File.parse_name(path);
+    return file.get_path();
+}
 
 const CodingGameServiceErrorDomain = GLib.quark_from_string('coding-game-service-error');
 const CodingGameServiceErrors = {
@@ -425,6 +436,7 @@ const CodingGameService = new Lang.Class({
 
         this._dispatchTable = {
             'chat-actor': Lang.bind(this, this._dispatchChatEvent),
+            'chat-actor-attachment': Lang.bind(this, this._dispatchChatAttachmentEvent),
             'chat-user': Lang.bind(this, this._dispatchChatEvent),
             'input-user': Lang.bind(this, this._dispatchInputBubbleEvent),
             'start-mission': Lang.bind(this, this._startMissionEvent),
@@ -659,6 +671,18 @@ const CodingGameService = new Lang.Class({
         }
     },
 
+    _dispatchChatAttachmentEvent: function(event, callback) {
+        // Creates a log entry and then sends the attachment to the client
+        event.data.attachment.path = resolvePath(event.data.attachment.path);
+        let entry = callback(event);
+        this._chatController.sendChatMessage({
+            timestamp: entry.timestamp,
+            actor: entry.data.actor,
+            attachment: entry.data.attachment,
+            name: entry.name
+        });
+    },
+
     _registerArtifactEvent: function(event, callback) {
         // If we have a current mission, update the number of points
         // based on the fact that we ran a new event. Note that the points
@@ -860,9 +884,13 @@ const CodingGameService = new Lang.Class({
     },
 
     _dispatch: function(event) {
-        this._dispatchTable[event.type](event, Lang.bind(this, function(logEvent) {
-            return this._log.handleEvent(logEvent.type, logEvent.name, logEvent.data);
-        }));
+        try {
+            this._dispatchTable[event.type](event, Lang.bind(this, function(logEvent) {
+                return this._log.handleEvent(logEvent.type, logEvent.name, logEvent.data);
+            }));
+        } catch (e) {
+            logError(e, 'Failed to dispatch ' + JSON.stringify(event));
+        }
     }   
 });
 
