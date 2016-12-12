@@ -32,7 +32,8 @@
             "short_desc": "Your system's configuration",
             "long_desc": "It is time to find out where all those hidden toggles are. Pay attention to the clues that you're given and find out what you need to edit to get ahead.",
             "start_events": [
-                "bashrc::chat::meme::send_bashrc"
+                "bashrc::chat::meme::send_bashrc",
+                "listen::bashrc::open_bashrc"
             ],
             "artifacts": [
                 {
@@ -517,8 +518,35 @@
                 "actor": "MEME",
                 "attachment": {
                     "desc": "Your Shell's Configuration",
-                    "path": "~/.bashrc"
+                    "path": "~/.bashrc",
+                    "open_event": "bashrc::event::open_bashrc"
                 }
+            }
+        },
+        {
+            "name": "listen::bashrc::open_bashrc",
+            "type": "listen-event",
+            "data": {
+                "name": "bashrc::event::open_bashrc",
+                "received": [
+                    "bashrc::register_artifact",
+                    "bashrc::chat::meme::open_bashrc"
+                ]
+            }
+        },
+        {
+            "name": "bashrc::register_artifact",
+            "type": "register-artifact",
+            "data": {
+                "name": "artifact::openbashrc"
+            }
+        },
+        {
+            "name": "bashrc::chat::meme::open_bashrc",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "With great powers come great responsibility."
             }
         }
     ]
