@@ -133,13 +133,22 @@ const CodingGameServiceChatController = new Lang.Class({
     }
 });
 
+// getGameServiceLogFile
+//
+// Find the game-service.log file on disk and create a GFile to
+// reference its path.
+function getGameServiceLogFile() {
+    return Gio.File.new_for_path(GLib.build_filenamev([GLib.get_user_config_dir(),
+                                 'com.endlessm.CodingGameService',
+                                 'game-service.log']));
+}
+
+
 const CodingGameServiceLog = new Lang.Class({
     Name: 'CodingGameServiceLog',
 
     _init: function() {
-        this._logFile = Gio.File.new_for_path(GLib.build_filenamev([GLib.get_user_config_dir(),
-                                                                    'com.endlessm.CodingGameService',
-                                                                    'game-service.log'])),
+        this._logFile = getGameServiceLogFile();
         this._eventLog = [];
 
         let logContents = '';
@@ -429,7 +438,7 @@ const CodingGameService = new Lang.Class({
         this.parent();
 
         this._descriptors = loadTimelineDescriptors(commandLineFile);
-        this._log = new CodingGameServiceLog(Gio.File.new_for_path('game-service.log'));
+        this._log = new CodingGameServiceLog();
 
         // Log the warnings
         this._descriptors.warnings.forEach(w => log(w));
@@ -639,6 +648,27 @@ const CodingGameService = new Lang.Class({
         }
 
         return true;
+    },
+
+    vfunc_handle_reset_game: function(method) {
+        try {
+            // Delete game-service.log and then reload the log in memory
+            getGameServiceLogFile().delete(null);
+            this._log = new CodingGameServiceLog();
+
+            // Dispatch the very first mission again
+            this._dispatch({
+                type: 'start-mission',
+                data: {
+                    name: this._descriptors.start.initial_mission
+                }
+            });
+        } catch (e) {
+            logError(e);
+            method.return_error_literal(CodingGameServiceErrorDomain,
+                                        CodingGameServiceErrors.INTERNAL_ERROR,
+                                        String(e));
+        }
     },
 
     _dispatchInputBubbleEvent: function(event, callback) {
