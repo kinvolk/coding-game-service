@@ -180,7 +180,7 @@
             "long_desc": "Use clases and objects to learn the foundations of programming for a user interface",
             "start_events": [
                 "chat::meme::python_classes::intro",
-                "chat::meme::python_functions::enter_code",
+                "chat::meme::python_classes::enter_code",
                 "chat::meme::python_classes::intro::attachment",
                 "chat::meme::python_classes::challenge"
             ],
@@ -1354,6 +1354,14 @@
             "data": {
                 "actor": "MEME",
                 "message": "Another python file. This time, it is going to contain some classes and objects and you'll need to add the right methods to the class in ordre to get things to work."
+            }
+        },
+        {
+            "name": "chat::meme::python_classes::enter_code",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Can you tell me what the output of this file is once you implement the missing methods?"
             }
         },
         {
