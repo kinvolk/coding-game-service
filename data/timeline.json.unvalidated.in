@@ -1219,7 +1219,7 @@
                 "actor": "MEME",
                 "attachment": {
                     "desc": "Some functions",
-                    "path": "python-functions-fs/functions.py"
+                    "path": "functions.py"
                 }
             }
         },
@@ -1371,7 +1371,7 @@
                 "actor": "MEME",
                 "attachment": {
                     "desc": "Some functions",
-                    "path": "python-functions-fs/classes.py"
+                    "path": "classes.py"
                 }
             }
         },
