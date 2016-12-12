@@ -140,6 +140,7 @@
             "long_desc": "Use functions to create composable programs and encourage reusable code",
             "start_events": [
                 "chat::meme::python_functions::intro",
+                "chat::meme::python_functions::enter_code",
                 "chat::meme::python_functions::intro::attachment",
                 "chat::meme::python_functions::challenge"
             ],
@@ -179,6 +180,7 @@
             "long_desc": "Use clases and objects to learn the foundations of programming for a user interface",
             "start_events": [
                 "chat::meme::python_classes::intro",
+                "chat::meme::python_functions::enter_code",
                 "chat::meme::python_classes::intro::attachment",
                 "chat::meme::python_classes::challenge"
             ],
@@ -1200,6 +1202,14 @@
             "data": {
                 "actor": "MEME",
                 "message": "Now its time to edit your first Python file. I'm going to send you something and you'll need to call the right functions in order to solve the problem I'm going to give you"
+            }
+        },
+        {
+            "name": "chat::meme::python_functions::enter_code",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Can you tell me what the output of this file is once you run it with the code: '5 2 8 4 9 1'?"
             }
         },
         {
