@@ -823,16 +823,6 @@
             }
         },
         {
-            "name": "listen::terminalintro::showmehow-navigation",
-            "type": "listen-event",
-            "data": {
-                "name": "showmehow-navigation",
-                "received": [
-                    "terminalintro::start-mission::terminaltasks"
-                ]
-            }
-        },
-        {
             "name": "terminalintro::start-mission::terminaltasks",
             "type": "start-mission",
             "data": {
