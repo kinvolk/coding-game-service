@@ -209,7 +209,7 @@ TESTS_ENVIRONMENT = \
 
 # Don't specify the resource:/// URIs here, because the tests load modules from
 # the local directory, not from the GResource
-EOS_JS_COVERAGE_FILES := $(shell find $(top_srcdir)/js -name '*.js' | $(SED) s,^$(top_srcdir)/,,)
+EOS_JS_COVERAGE_FILES := $(patsubst $(top_srcdir)/%,%,$(wildcard js/*.js))
 
 @EOS_COVERAGE_RULES@
 
