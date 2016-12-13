@@ -12,20 +12,24 @@
                 {
                     "name": "artifact::intro::hook",
                     "desc": "Started Endless Coding",
+                    "icon": "text-editor-symbolic",
                     "points": 52
                 },
                 {
                     "name": "artifact::intro::choice_see_cool::challenge",
                     "desc": "Chose to see something cool",
+                    "icon": "text-editor-symbolic",
                     "points": 52
                 },
                 {
                     "name": "artifact::intro::wobble-window",
                     "desc": "Discovered a new way of looking at things",
+                    "icon": "text-editor-symbolic",
                     "points": 52
                 },
                 {
                     "name": "artifact::intro::install-programming",
+                    "icon": "text-editor-symbolic",
                     "desc": "Installed the terminal",
                     "points": 52
                 }
@@ -43,6 +47,7 @@
                 {
                     "name": "artifact::openbashrc",
                     "desc": "Looked at your shell configuration",
+                    "icon": "text-editor-symbolic",
                     "points": 106
                 }
             ]
@@ -60,11 +65,13 @@
                 {
                     "name": "artifact::terminalintro::showmehow",
                     "desc": "Learned how to use showmehow",
+                    "icon": "text-editor-symbolic",
                     "points": 12
                 },
                 {
                     "name": "artifact::terminalintro::navigation",
                     "desc": "Navigated filesystem in terminal",
+                    "icon": "text-editor-symbolic",
                     "points": 46
                 }
             ]
@@ -80,11 +87,13 @@
                 {
                     "name": "artifact::terminaltasks::textprocessing",
                     "desc": "Processed text in the terminal",
+                    "icon": "text-editor-symbolic",
                     "points": 120
                 },
                 {
                     "name": "artifact::terminaltasks::settings",
                     "desc": "Changed settings in the terminal",
+                    "icon": "text-editor-symbolic",
                     "points": 141
                 }
             ]
@@ -101,16 +110,19 @@
                 {
                     "name": "artifact::yoursystem::found_etc",
                     "desc": "Found out about /etc",
+                    "icon": "text-editor-symbolic",
                     "points": 131
                 },
                 {
                     "name": "artifact::yoursystem::found_logs",
                     "desc": "Found out about where logs are stored",
+                    "icon": "text-editor-symbolic",
                     "points": 124
                 },
                 {
                     "name": "artifact::yoursystem::found_configs",
                     "desc": "Found out about where configuration is stored",
+                    "icon": "text-editor-symbolic",
                     "points": 200
                 }
             ]
@@ -127,26 +139,31 @@
                 {
                     "name": "artifact::python::add_numbers",
                     "desc": "Simple arithmetic with python",
+                    "icon": "text-editor-symbolic",
                     "points": 10
                 },
                 {
                     "name": "artifact::python::print_string",
+                    "icon": "text-editor-symbolic",
                     "desc": "Wrote your first python program",
                     "points": 10
                 },
                 {
                     "name": "artifact::python::string_format",
                     "desc": "Formatted a string with python",
+                    "icon": "text-editor-symbolic",
                     "points": 30
                 },
                 {
                     "name": "artifact::python::split_string",
                     "desc": "Turned a string into a list with python",
+                    "icon": "text-editor-symbolic",
                     "points": 64
                 },
                 {
                     "name": "artifact::python::join_string",
                     "desc": "Created a string out of a list with python",
+                    "icon": "text-editor-symbolic",
                     "points": 32
                 }
             ]
@@ -165,6 +182,7 @@
                 {
                     "name": "artifact::python_functions::found_answer",
                     "desc": "Solved the python functions problem",
+                    "icon": "text-editor-symbolic",
                     "points": 20
                 }
             ]
@@ -181,16 +199,19 @@
                 {
                     "name": "artifact::python::convert_list",
                     "desc": "Used list comprehensions to map a list",
+                    "icon": "text-editor-symbolic",
                     "points": 20
                 },
                 {
                     "name": "artifact::python::filter_list",
                     "desc": "Used list comprehensions to filter a list",
+                    "icon": "text-editor-symbolic",
                     "points": 50
                 },
                 {
                     "name": "artifact::python::dict_comprehension",
                     "desc": "Built environment variable map",
+                    "icon": "text-editor-symbolic",
                     "points": 30
                 }
             ]
@@ -209,6 +230,7 @@
                 {
                     "name": "artifact::python_classes::found_answer",
                     "desc": "Solved the Object-Orientated python problem",
+                    "icon": "text-editor-symbolic",
                     "points": 20
                 }
             ]
@@ -225,16 +247,19 @@
                 {
                     "name": "artifact::python::create_gi_binding",
                     "desc": "Created GObject-Introspection binding with python",
+                    "icon": "text-editor-symbolic",
                     "points": 10
                 },
                 {
                     "name": "artifact::python::instantiate_gi_class",
                     "desc": "Instantiated GObject-Introspection bound class",
+                    "icon": "text-editor-symbolic",
                     "points": 10
                 },
                 {
                     "name": "artifact::python::send_gnotification",
                     "desc": "Sent system notifications with python",
+                    "icon": "text-editor-symbolic",
                     "points": 10
                 }
             ]
