@@ -11,18 +11,22 @@
             "artifacts": [
                 {
                     "name": "artifact::intro::hook",
+                    "desc": "Started Endless Coding",
                     "points": 52
                 },
                 {
                     "name": "artifact::intro::choice_see_cool::challenge",
+                    "desc": "Chose to see something cool",
                     "points": 52
                 },
                 {
                     "name": "artifact::intro::wobble-window",
+                    "desc": "Discovered a new way of looking at things",
                     "points": 52
                 },
                 {
-                    "name": "artifact:intro::install-programming",
+                    "name": "artifact::intro::install-programming",
+                    "desc": "Installed the terminal",
                     "points": 52
                 }
             ]
@@ -38,6 +42,7 @@
             "artifacts": [
                 {
                     "name": "artifact::openbashrc",
+                    "desc": "Looked at your shell configuration",
                     "points": 106
                 }
             ]
@@ -54,10 +59,12 @@
             "artifacts": [
                 {
                     "name": "artifact::terminalintro::showmehow",
+                    "desc": "Learned how to use showmehow",
                     "points": 12
                 },
                 {
                     "name": "artifact::terminalintro::navigation",
+                    "desc": "Navigated filesystem in terminal",
                     "points": 46
                 }
             ]
@@ -72,10 +79,12 @@
             "artifacts": [
                 {
                     "name": "artifact::terminaltasks::textprocessing",
+                    "desc": "Processed text in the terminal",
                     "points": 120
                 },
                 {
                     "name": "artifact::terminaltasks::settings",
+                    "desc": "Changed settings in the terminal",
                     "points": 141
                 }
             ]
@@ -91,14 +100,17 @@
             "artifacts": [
                 {
                     "name": "artifact::yoursystem::found_etc",
+                    "desc": "Found out about /etc",
                     "points": 131
                 },
                 {
                     "name": "artifact::yoursystem::found_logs",
+                    "desc": "Found out about where logs are stored",
                     "points": 124
                 },
                 {
                     "name": "artifact::yoursystem::found_configs",
+                    "desc": "Found out about where configuration is stored",
                     "points": 200
                 }
             ]
@@ -114,22 +126,27 @@
             "artifacts": [
                 {
                     "name": "artifact::python::add_numbers",
+                    "desc": "Simple arithmetic with python",
                     "points": 10
                 },
                 {
                     "name": "artifact::python::print_string",
+                    "desc": "Wrote your first python program",
                     "points": 10
                 },
                 {
                     "name": "artifact::python::string_format",
+                    "desc": "Formatted a string with python",
                     "points": 30
                 },
                 {
                     "name": "artifact::python::split_string",
+                    "desc": "Turned a string into a list with python",
                     "points": 64
                 },
                 {
                     "name": "artifact::python::join_string",
+                    "desc": "Created a string out of a list with python",
                     "points": 32
                 }
             ]
@@ -147,6 +164,7 @@
             "artifacts": [
                 {
                     "name": "artifact::python_functions::found_answer",
+                    "desc": "Solved the python functions problem",
                     "points": 20
                 }
             ]
@@ -162,14 +180,17 @@
             "artifacts": [
                 {
                     "name": "artifact::python::convert_list",
+                    "desc": "Used list comprehensions to map a list",
                     "points": 20
                 },
                 {
                     "name": "artifact::python::filter_list",
+                    "desc": "Used list comprehensions to filter a list",
                     "points": 50
                 },
                 {
                     "name": "artifact::python::dict_comprehension",
+                    "desc": "Built environment variable map",
                     "points": 30
                 }
             ]
@@ -187,6 +208,7 @@
             "artifacts": [
                 {
                     "name": "artifact::python_classes::found_answer",
+                    "desc": "Solved the Object-Orientated python problem",
                     "points": 20
                 }
             ]
@@ -202,14 +224,17 @@
             "artifacts": [
                 {
                     "name": "artifact::python::create_gi_binding",
+                    "desc": "Created GObject-Introspection binding with python",
                     "points": 10
                 },
                 {
                     "name": "artifact::python::instantiate_gi_class",
+                    "desc": "Instantiated GObject-Introspection bound class",
                     "points": 10
                 },
                 {
                     "name": "artifact::python::send_gnotification",
+                    "desc": "Sent system notifications with python",
                     "points": 10
                 }
             ]
