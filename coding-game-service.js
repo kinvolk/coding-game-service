@@ -654,7 +654,7 @@ const CodingGameService = new Lang.Class({
             // Dispatch the very first mission again
             this._startFirstMission();
         } catch (e) {
-            logError(e);
+            logError(e, 'Could not reset game');
             method.return_error_literal(CodingGameServiceErrorDomain,
                                         CodingGameServiceErrors.INTERNAL_ERROR,
                                         String(e));
