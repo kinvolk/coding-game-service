@@ -29,6 +29,7 @@ const System = imports.system;
 // are already on disk if the user sets GJS_PATH appropriately.
 imports.searchPath.push('resource:///com/endlessm/coding-game-service');
 
+const Controller = imports.lib.controller;
 const Communicator = imports.lib.communicator;
 const Config = imports.lib.config;
 const Log = imports.lib.log;
