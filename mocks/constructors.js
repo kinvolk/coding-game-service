@@ -69,6 +69,12 @@ const ExternalEffectsStub = new Lang.Class({
     },
 
     copySourceToTarget: function(settings, key, value) {
+    },
+
+    addApplication: function(app) {
+    },
+
+    removeApplication: function(app) {
     }
 });
 const createExternalEffects = function() {
@@ -76,6 +82,8 @@ const createExternalEffects = function() {
     spyOn(effects, 'performEventIn').and.callThrough();
     spyOn(effects, 'changeGSettingsValue');
     spyOn(effects, 'copySourceToTarget');
+    spyOn(effects, 'addApplication');
+    spyOn(effects, 'removeApplication');
     return effects;
 }
 const createLogFileWithStructure = function(structure) {
