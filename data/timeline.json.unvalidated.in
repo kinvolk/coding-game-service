@@ -14,7 +14,7 @@
                     "points": 52
                 },
                 {
-                    "name": "artifact::choice_see_cool::challenge",
+                    "name": "artifact::intro::choice_see_cool::challenge",
                     "points": 52
                 },
                 {
@@ -303,7 +303,7 @@
             "name": "chat::meme::intro::choice_see_cool::artifact",
             "type": "register-artifact",
             "data": {
-                "name": "artifact::intro::hook"
+                "name": "artifact::intro::choice_see_cool::challenge"
             }
         },
         {
