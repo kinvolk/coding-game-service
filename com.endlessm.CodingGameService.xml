@@ -18,6 +18,7 @@
     <method name="ResetGame">
     </method>
     <property name="CurrentlyListeningForEvents" type="as" access="read"/>
+    <property name="CurrentMissionStageNum" type="i" access="read"/>
     <property name="CurrentMissionName" type="s" access="read"/>
     <property name="CurrentMissionDesc" type="s" access="read"/>
     <property name="CurrentMissionPoints" type="i" access="read"/>
