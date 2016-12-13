@@ -513,12 +513,7 @@ const CodingGameService = new Lang.Class({
         if (activeMission)
             this._startMission(activeMission);
         else
-            this._dispatch({
-                type: 'start-mission',
-                data: {
-                    name: this._descriptors.start.initial_mission
-                }
-            });
+            this._startFirstMission();
     },
 
     vfunc_handle_test_dispatch_event: function(method, name) {
@@ -657,12 +652,7 @@ const CodingGameService = new Lang.Class({
             this._log = new CodingGameServiceLog();
 
             // Dispatch the very first mission again
-            this._dispatch({
-                type: 'start-mission',
-                data: {
-                    name: this._descriptors.start.initial_mission
-                }
-            });
+            this._startFirstMission();
         } catch (e) {
             logError(e);
             method.return_error_literal(CodingGameServiceErrorDomain,
@@ -739,6 +729,15 @@ const CodingGameService = new Lang.Class({
         }
 
         callback(event);
+    },
+
+    _startFirstMission: function() {
+        this._dispatch({
+            type: 'start-mission',
+            data: {
+                name: this._descriptors.start.initial_mission
+            }
+        });
     },
 
     _startMission: function(name) {
