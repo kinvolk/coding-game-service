@@ -139,8 +139,8 @@ const CodingGameServiceChatController = new Lang.Class({
 // reference its path.
 function getGameServiceLogFile() {
     return Gio.File.new_for_path(GLib.build_filenamev([GLib.get_user_config_dir(),
-                                 'com.endlessm.CodingGameService',
-                                 'game-service.log']));
+                                                      'com.endlessm.CodingGameService',
+                                                      'game-service.log']));
 }
 
 
