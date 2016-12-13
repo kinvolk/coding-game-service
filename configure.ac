@@ -10,6 +10,9 @@ AC_INIT([com.endlessm.CodingGameService],
 AM_INIT_AUTOMAKE([1.12 dist-xz no-dist-gzip foreign tar-ustar subdir-objects parallel-tests])
 AM_SILENT_RULES([yes])
 
+# Custom macros
+AC_CONFIG_MACRO_DIRS([m4])
+
 # Set up libtool
 LT_INIT
 
