@@ -26,6 +26,6 @@
     <property name="CurrentMissionNumTasks" type="i" access="read"/>
     <property name="CurrentMissionNumTasksAvailable" type="i" access="read"/>
     <property name="CurrentMissionAvailablePoints" type="i" access="read"/>
-    <property name="EarnedArtifacts" type="as" access="read"/>
+    <property name="EarnedArtifacts" type="aa{sv}" access="read"/>
   </interface>
 <node>
