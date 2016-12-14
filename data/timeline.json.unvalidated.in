@@ -47,6 +47,7 @@
             "short_desc": "The Terminal. The System",
             "long_desc": "See what lies behind the curtains in the terminal. Complete the exercises in showmehow and learn more about this new world.",
             "start_events": [
+                "terminalintro::setting::showmehow::add-showmehow",
                 "listen::terminalintro::showmehow-showmehow",
                 "terminalintro::chat::meme::open_terminal",
                 "terminalintro::chat::meme::open_terminal::choice"
@@ -67,6 +68,7 @@
             "short_desc": "Tricks that you couldn't do anywhere else",
             "long_desc": "Here's where you start your mastery. Start learning tricks that you couldn't possibly do anywhere else and show your friends who'se boss",
             "start_events": [
+                "terminalintro::setting::showmehow::add-textprocessing",
                 "listen::terminaltasks::showmehow-textprocessing"
             ],
             "artifacts": [
@@ -108,6 +110,7 @@
             "short_desc": "Get started with Python",
             "long_desc": "Get started with Python",
             "start_events": [
+                "terminalintro::setting::showmehow::add-python",
                 "chat::meme::showmehow_python",
                 "listen::showmehow_python::add_numbers"
             ],
@@ -155,6 +158,7 @@
             "short_desc": "Data Structures in Python",
             "long_desc": "Organise data in your programs and solve the puzzles by using functional structures",
             "start_events": [
+                "terminalintro::setting::showmehow::add-python-lists",
                 "chat::meme::python_lists::intro",
                 "listen::python_lists::convert_list"
             ],
@@ -194,6 +198,7 @@
             "short_desc": "Accessing System Functionality with Python",
             "long_desc": "Use the GObject-Introspection Framework on your system to access all sorts of system level functionality.",
             "start_events": [
+                "terminalintro::setting::showmehow::add-python-gi",
                 "chat::meme::showmehow_python_gi::intro",
                 "listen::showmehow_python_gi::create_gi_binding"
             ],
@@ -735,6 +740,19 @@
             }
         },
         {
+            "name": "terminalintro::setting::showmehow::add-showmehow",
+            "type": "change-setting",
+            "data": {
+                "schema": "com.endlessm.showmehow",
+                "key": "unlocked-lessons",
+                "variant": "as",
+                "value": {
+                    "type": "append-to-list-unique",
+                    "value": ["showmehow", "joke", "playsong", "readfile", "breakit", "navigation"]
+                }
+            }
+        },
+        {
             "name": "terminalintro::chat::meme::open_terminal",
             "type": "chat-actor",
             "data": {
@@ -841,13 +859,39 @@
             }
         },
         {
+            "name": "terminaltasks::setting::showmehow::add-textprocessing",
+            "type": "change-setting",
+            "data": {
+                "schema": "com.endlessm.showmehow",
+                "key": "unlocked-lessons",
+                "value": {
+                    "type": "append-to-list-unique",
+                    "value": ["textprocessing"]
+                }
+            }
+        },
+        {
             "name": "listen::terminaltasks::showmehow-textprocessing",
             "type": "listen-event",
             "data": {
                 "name": "showmehow-textprocessing",
                 "received": [
+                    "terminaltasks::setting::showmehow::add-ps",
                     "listen::terminaltasks::showmehow-ps"
                 ]
+            }
+        },
+        {
+            "name": "terminaltasks::setting::showmehow::add-ps",
+            "type": "change-setting",
+            "data": {
+                "schema": "com.endlessm.showmehow",
+                "key": "unlocked-lessons",
+                "variant": "as",
+                "value": {
+                    "type": "append-to-list-unique",
+                    "value": ["ps"]
+                }
             }
         },
         {
@@ -856,8 +900,22 @@
             "data": {
                 "name": "showmehow-ps",
                 "received": [
+                    "terminaltasks::setting::showmehow::add-settings",
                     "listen::terminaltasks::showmehow-settings"
                 ]
+            }
+        },
+        {
+            "name": "terminaltasks::setting::showmehow::add-settings",
+            "type": "change-setting",
+            "data": {
+                "schema": "com.endlessm.showmehow",
+                "key": "unlocked-lessons",
+                 "variant": "as",
+                "value": {
+                    "type": "append-to-list-unique",
+                    "value": ["changesetting"]
+                }
             }
         },
         {
@@ -1096,6 +1154,19 @@
             }
         },
         {
+            "name": "terminaltasks::setting::showmehow::add-python",
+            "type": "change-setting",
+            "data": {
+                "schema": "com.endlessm.showmehow",
+                "key": "unlocked-lessons",
+                "variant": "as",
+                "value": {
+                    "type": "append-to-list-unique",
+                    "value": ["python"]
+                }
+            }
+        },
+        {
             "name": "listen::showmehow_python::add_numbers",
             "type": "listen-event",
             "data": {
@@ -1274,6 +1345,19 @@
             }
         },
         {
+            "name": "terminaltasks::setting::showmehow::add-python-lists",
+            "type": "change-setting",
+            "data": {
+                "schema": "com.endlessm.showmehow",
+                "key": "unlocked-lessons",
+                "variant": "as",
+                "value": {
+                    "type": "append-to-list-unique",
+                    "value": ["python_lists"]
+                }
+            }
+        },
+        {
             "name": "listen::python_lists::convert_list",
             "type": "listen-event",
             "data": {
@@ -1407,6 +1491,19 @@
             "type": "start-mission",
             "data": {
                 "name": "showmehow_python_gi"
+            }
+        },
+        {
+            "name": "terminaltasks::setting::showmehow::add-python-gi",
+            "type": "change-setting",
+            "data": {
+                "schema": "com.endlessm.showmehow",
+                "key": "unlocked-lessons",
+                "variant": "as",
+                "value": {
+                    "type": "append-to-list-unique",
+                    "value": ["python_gi"]
+                }
             }
         },
         {
