@@ -886,7 +886,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "message": "Now its time to find the system configuration files. They're known in oldspeak as 'Editable Text Configuration' files. What directory do you think we can find them in?"
+                "message": "Now it is time to find the system configuration files. They're known in oldspeak as 'Editable Text Configuration' files. What directory do you think we can find them in?"
             }
         },
         {
