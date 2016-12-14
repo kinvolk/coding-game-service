@@ -76,8 +76,7 @@ def multiply_by_self(number):
     the function is not a part of it. Because this is such a
     common convention, it is actually a part of the language in Python -
     anything on the same indent level or above is considered to be
-    in 'scope' and accessible to any code that is currently running
-    right now.
+    in 'scope' and accessible to any code that is currently running.
 
     The main rule is that you can see 'outside' your scope, but
     you can't see 'inside' another one. So code running outside
