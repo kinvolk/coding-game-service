@@ -5,7 +5,7 @@ arbitrary_files = \
 	files/test.txt \
 	files/classes.py \
 	files/functions.py \
-	$(NULL) \
+	$(NULL)
 
 filesdir = $(pkgdatadir)/files
 files_DATA = $(arbitrary_files)
