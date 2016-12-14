@@ -69,11 +69,11 @@ const ExternalEffectsStub = new Lang.Class({
     },
 
     fetchGSettingsValue: function(settings, key, variant) {
-        // Essentially, we just have some known variants
+        // Essentially, we just have some known data
         // that we will want to test with here
         switch (variant) {
             case 'as':
-                return new GLib.Variant('as', []);
+                return [];
             default:
                 throw new Error('Don\'t know how to handle variant type ' + variant);
         }
