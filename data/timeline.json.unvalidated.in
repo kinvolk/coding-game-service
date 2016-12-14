@@ -65,7 +65,7 @@
         {
             "name": "terminaltasks",
             "short_desc": "Tricks that you couldn't do anywhere else",
-            "long_desc": "Here's where you start your mastery. Start learning tricks that you couldn't possibly do anywhere else and show your friends who is boss",
+            "long_desc": "Here's where you start your mastery. Start learning tricks that you couldn't possibly do anywhere else and show your friends who's the boss",
             "start_events": [
                 "listen::terminaltasks::showmehow-textprocessing"
             ],
