@@ -1353,7 +1353,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "message": "Another python file. This time, it is going to contain some classes and objects and you'll need to add the right methods to the class in ordre to get things to work."
+                "message": "Another python file. This time, it is going to contain some classes and objects and you'll need to add the right methods to the class in order to get things to work."
             }
         },
         {
