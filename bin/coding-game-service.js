@@ -128,16 +128,16 @@ const CodingGameServiceApplication = new Lang.Class({
 
     vfunc_dbus_register: function(conn, object_path) {
         this.parent(conn, object_path);
-        let logFileForPath = Gio.File.new_for_path(GLib.build_filenamev([GLib.get_user_config_dir(),
-                                                                         'com.endlessm.CodingGameService',
-                                                                         'game-service.log']))
+        let logFile = Gio.File.new_for_path(GLib.build_filenamev([GLib.get_user_config_dir(),
+                                                                  'com.endlessm.CodingGameService',
+                                                                  'game-service.log']));
 
         this._skeleton = new Service.DBUSService(conn, object_path);
         this._controller = new Controller.CodingGameController(loadTimelineDescriptors(this._commandLineFile),
                                                                this._skeleton,
                                                                new Communicator.CodingGameServiceChatController(ChatboxService.CodingChatboxProxy),
                                                                new Communicator.ExternalEffects(),
-                                                               logFileForPath);
+                                                               logFile);
         return true;
     },
 
