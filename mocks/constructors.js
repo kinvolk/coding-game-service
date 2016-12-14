@@ -68,6 +68,17 @@ const ExternalEffectsStub = new Lang.Class({
     changeGSettingsValue: function(settings, key, value) {
     },
 
+    fetchGSettingsValue: function(settings, key, variant) {
+        // Essentially, we just have some known variants
+        // that we will want to test with here
+        switch (variant) {
+            case 'as':
+                return new GLib.Variant('as', []);
+            default:
+                throw new Error('Don\'t know how to handle variant type ' + variant);
+        }
+    },
+
     copySourceToTarget: function(settings, key, value) {
     },
 
