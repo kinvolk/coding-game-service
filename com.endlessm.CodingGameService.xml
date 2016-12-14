@@ -21,6 +21,7 @@
     <property name="CurrentMissionStageNum" type="i" access="read"/>
     <property name="CurrentMissionName" type="s" access="read"/>
     <property name="CurrentMissionDesc" type="s" access="read"/>
+    <property name="CurrentMissionHint" type="s" access="read"/>
     <property name="CurrentMissionPoints" type="i" access="read"/>
     <property name="CurrentMissionNumTasks" type="i" access="read"/>
     <property name="CurrentMissionNumTasksAvailable" type="i" access="read"/>

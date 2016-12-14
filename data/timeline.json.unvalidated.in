@@ -4,6 +4,7 @@
             "name": "intro",
             "short_desc": "Down the rabbit hole",
             "long_desc": "Why don't you answer the questions and see where the rabbit hole leads",
+            "hint": "Just follow the prompts and search beyond your user account",
             "start_events": [
                 "chat::meme::intro::hook",
                 "chat::meme::intro::hook::challenge"
@@ -39,6 +40,7 @@
             "name": "bashrc",
             "short_desc": "Your system's configuration",
             "long_desc": "It is time to find out where all those hidden toggles are. Pay attention to the clues that you're given and find out what you need to edit to get ahead.",
+            "hint": "A system configuration file is just like any other file, right?",
             "start_events": [
                 "bashrc::chat::meme::send_bashrc",
                 "listen::bashrc::open_bashrc"
@@ -56,6 +58,7 @@
             "name": "terminalintro",
             "short_desc": "The Terminal. The System",
             "long_desc": "See what lies behind the curtains in the terminal. Complete the exercises in showmehow and learn more about this new world.",
+            "hint": "Use 'showmehow' to start learning things",
             "start_events": [
                 "listen::terminalintro::showmehow-showmehow",
                 "terminalintro::chat::meme::open_terminal",
@@ -80,6 +83,7 @@
             "name": "terminaltasks",
             "short_desc": "Tricks that you couldn't do anywhere else",
             "long_desc": "Here's where you start your mastery. Start learning tricks that you couldn't possibly do anywhere else and show your friends who's the boss",
+            "hint": "Pipes (|) are key here",
             "start_events": [
                 "listen::terminaltasks::showmehow-textprocessing"
             ],
@@ -102,6 +106,7 @@
             "name": "yoursystem",
             "short_desc": "Uncover the wraps on your filesystem",
             "long_desc": "Look in all the nooks and crannies in your system",
+            "hint": "Try starting with / and going down",
             "start_events": [
                 "chat::meme::yoursystem::find_etc",
                 "chat::meme::yoursystem::find_etc::response"
@@ -131,6 +136,7 @@
             "name": "python",
             "short_desc": "Get started with Python",
             "long_desc": "Get started with Python",
+            "hint": "Remember to balance your brackets!",
             "start_events": [
                 "chat::meme::showmehow_python",
                 "listen::showmehow_python::add_numbers"
@@ -172,6 +178,7 @@
             "name": "python_functions",
             "short_desc": "Organise your code into functions",
             "long_desc": "Use functions to create composable programs and encourage reusable code",
+            "hint": "Walk through what needs to be done in your head and see if you can order the functions",
             "start_events": [
                 "chat::meme::python_functions::intro",
                 "chat::meme::python_functions::enter_code",
@@ -191,6 +198,7 @@
             "name": "python_lists",
             "short_desc": "Data Structures in Python",
             "long_desc": "Organise data in your programs and solve the puzzles by using functional structures",
+            "hint": "Think of lists as big chunks of data. If you apply the same operation to everything, how does the chunk change?",
             "start_events": [
                 "chat::meme::python_lists::intro",
                 "listen::python_lists::convert_list"
@@ -220,6 +228,7 @@
             "name": "python_classes",
             "short_desc": "Object Oriented Programming",
             "long_desc": "Use clases and objects to learn the foundations of programming for a user interface",
+            "hint": "Object Oriented Programming is meant to model the real world. Think about how this would work in reality",
             "start_events": [
                 "chat::meme::python_classes::intro",
                 "chat::meme::python_classes::enter_code",
@@ -239,6 +248,7 @@
             "name": "showmehow_python_gi",
             "short_desc": "Accessing System Functionality with Python",
             "long_desc": "Use the GObject-Introspection Framework on your system to access all sorts of system level functionality.",
+            "hint": "As soon as you import something with GObject-Introspection, you can use it like anything else",
             "start_events": [
                 "chat::meme::showmehow_python_gi::intro",
                 "listen::showmehow_python_gi::create_gi_binding"
