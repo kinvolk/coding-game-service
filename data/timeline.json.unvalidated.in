@@ -1201,7 +1201,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "message": "Now its time to edit your first Python file. I'm going to send you something and you'll need to call the right functions in order to solve the problem I'm going to give you"
+                "message": "Now it is time to edit your first Python file. I'm going to send you something and you'll need to call the right functions in order to solve the problem I'm going to give you"
             }
         },
         {
