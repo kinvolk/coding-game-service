@@ -26,8 +26,8 @@ function walkTimelineForEventSequence(timeline) {
 
         // If we haven't seen this event before, descend down
         // see what the responses are
-        if (Object.keys(seenEvents).indexOf(name) === -1) {
-            seenEvents[name] = null;
+        if (seenEvents.indexOf(name) === -1) {
+            seenEvents.push(name);
             let event = Controller.findInArray(timeline.events, e => e.name === name);
 
             // If we couldn't find the event, we have an invalid timeline
@@ -89,7 +89,7 @@ function walkTimelineForEventSequence(timeline) {
     // Get the starting events first
     eventSequence = [addTriggerEvent(timeline.start.initial_event)];
 
-    return [Object.keys(seenEvents), eventSequence];
+    return [seenEvents, eventSequence];
 };
 
 describe('Default Game Service Controller Timeline', function () {
