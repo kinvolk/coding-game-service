@@ -275,11 +275,13 @@
                 "input": {
                     "type": "choice",
                     "settings": {
-                        "yes": {
-                            "text": "Sure, why not"
-                        },
-                        "no": {
-                            "text": "Go away"
+                        "choices": {
+                            "yes": {
+                                "text": "Sure, why not"
+                            },
+                            "no": {
+                                "text": "Go away"
+                            }
                         }
                     }
                 },
