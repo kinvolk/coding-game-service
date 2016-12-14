@@ -3,12 +3,14 @@ Priority: standard
 Maintainer: Sam Spilsbury <sam@endlessm.com>
 Build-Depends: autotools-dev,
                debhelper (>= 9),
+               eos-node-modules-dev (>= 1.0.0),
                gobject-introspection,
                jasmine-gjs (>= 2.2.0),
                eos-shell-common,
                libgirepository1.0-dev,
                libglib2.0-dev,
-               pkg-config
+               pkg-config,
+               python-lcov-cobertura (>= 1.5)
 Standards-Version: 3.9.4
 Section: non-free/libs
 Homepage: http://www.endlessm.com
