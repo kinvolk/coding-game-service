@@ -444,7 +444,7 @@
             "data": {
                 "schema": "org.gnome.shell",
                 "key": "wobbly-effect",
-                "variant": "b",
+                "variant_type": "b",
                 "value": true
             }
         },
@@ -454,7 +454,7 @@
             "data": {
                 "schema": "org.gnome.shell",
                 "key": "wobbly-effect",
-                "variant": "b",
+                "variant_type": "b",
                 "value": false
             }
         },
@@ -589,7 +589,7 @@
             "data": {
                 "schema": "org.gnome.desktop.background",
                 "key": "picture-uri",
-                "variant": "s",
+                "variant_type": "s",
                 "value": {
                     "type": "internal-file-uri",
                     "value": "background_pic.jpg"
@@ -745,7 +745,7 @@
             "data": {
                 "schema": "com.endlessm.showmehow",
                 "key": "unlocked-lessons",
-                "variant": "as",
+                "variant_type": "as",
                 "value": {
                     "type": "append-to-list-unique",
                     "value": ["showmehow", "joke", "playsong", "readfile", "breakit", "navigation"]
@@ -887,7 +887,7 @@
             "data": {
                 "schema": "com.endlessm.showmehow",
                 "key": "unlocked-lessons",
-                "variant": "as",
+                "variant_type": "as",
                 "value": {
                     "type": "append-to-list-unique",
                     "value": ["ps"]
@@ -911,7 +911,7 @@
             "data": {
                 "schema": "com.endlessm.showmehow",
                 "key": "unlocked-lessons",
-                 "variant": "as",
+                 "variant_type": "as",
                 "value": {
                     "type": "append-to-list-unique",
                     "value": ["changesetting"]
@@ -1159,7 +1159,7 @@
             "data": {
                 "schema": "com.endlessm.showmehow",
                 "key": "unlocked-lessons",
-                "variant": "as",
+                "variant_type": "as",
                 "value": {
                     "type": "append-to-list-unique",
                     "value": ["python"]
@@ -1350,7 +1350,7 @@
             "data": {
                 "schema": "com.endlessm.showmehow",
                 "key": "unlocked-lessons",
-                "variant": "as",
+                "variant_type": "as",
                 "value": {
                     "type": "append-to-list-unique",
                     "value": ["python_lists"]
@@ -1499,7 +1499,7 @@
             "data": {
                 "schema": "com.endlessm.showmehow",
                 "key": "unlocked-lessons",
-                "variant": "as",
+                "variant_type": "as",
                 "value": {
                     "type": "append-to-list-unique",
                     "value": ["python_gi"]
