@@ -40,7 +40,7 @@ javascript_tests = \
 # All javascript modules
 all_dist_js_files = \
 	bin/coding-game-validator.js \
-	bin/coding-game-service.js \
+	bin/coding-game-service.js.in \
 	bin/edit-desktop-file.js \
 	$(javascript_mocks) \
 	$(javascript_tests) \
@@ -91,16 +91,14 @@ resource_files = \
 	data/timeline.json \
 	$(NULL)
 
-coding-game-service-resources.h: $(srcdir)/com.endlessm.CodingGameService.gresource.xml $(resource_files)
-	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(srcdir) --sourcedir=$(builddir) --generate --c-name coding_game_service $<
-coding-game-service-resources.c: $(srcdir)/com.endlessm.CodingGameService.gresource.xml $(resource_files)
-	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(srcdir) --sourcedir=$(builddir) --generate --c-name coding_game_service $<
+resourcedir = $(pkgdatadir)
+resource_DATA = com.endlessm.CodingGameService.gresource
 
-resources_built_sources = coding-game-service-resources.c coding-game-service-resources.h
+com.endlessm.CodingGameService.gresource: $(srcdir)/com.endlessm.CodingGameService.gresource.xml $(resource_files)
+	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(srcdir) --sourcedir=$(builddir) $<
 
 # Generate the CodingGameService GDBus Skeleton library
-libcoding_game_service_1_0_la_SOURCES = $(resources_built_sources) \
-					$(gdbus_codegen_built_sources) \
+libcoding_game_service_1_0_la_SOURCES = $(gdbus_codegen_built_sources) \
 					$(NULL)
 libcoding_game_service_1_0_la_CFLAGS = $(CODING_GAME_SERVICE_CFLAGS)
 libcoding_game_service_1_0_la_LIBADD = $(CODING_GAME_SERVICE_LIBS)
@@ -114,8 +112,8 @@ bin_SCRIPTS = \
 	coding-game-validator \
 	$(NULL)
 
-coding-game-service: $(srcdir)/bin/coding-game-service.js
-	cp $< $@
+coding-game-service: $(srcdir)/bin/coding-game-service.js.in
+	$(AM_V_GEN) sed -e 's,%PKGDATADIR%,$(pkgdatadir),g' $< > $@.tmp && mv -f $@.tmp $@
 	chmod +x $@
 
 coding-game-validator: $(srcdir)/bin/coding-game-validator.js
@@ -220,9 +218,9 @@ AM_LDFLAGS = @EOS_C_COVERAGE_LDFLAGS@
 CLEANFILES += \
 	$(bin_SCRIPTS) \
 	$(service_DATA) \
-	$(resources_built_sources) \
 	$(gdbus_codegen_built_sources) \
 	$(polkit_policy_DATA) \
+	com.endlessm.CodingGameService.gresource \
 	data/timeline.json \
 	files/coding-copy-files \
 	lib/config.js \

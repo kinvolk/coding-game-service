@@ -18,20 +18,21 @@ const CodingGameServiceDBUS = imports.gi.CodingGameService;
 const GLib = imports.gi.GLib;
 const Gio = imports.gi.Gio;
 
-// This is a hack to cause CodingGameService js resources to get loaded
-const CodingGameServiceResource = imports.gi.CodingGameService.get_resource();  // eslint-disable-line no-unused-vars
-
 const Lang = imports.lang;
 const System = imports.system;
+
+// Load our resource
+Gio.Resource.load(GLib.build_filenamev(['%PKGDATADIR%',
+                                        'com.endlessm.CodingGameService.gresource']))._register();
 
 // Put ourself in the search path. Note that we have the least priority.
 // This will allow us to run locally against non-packed files that
 // are already on disk if the user sets GJS_PATH appropriately.
 imports.searchPath.push('resource:///com/endlessm/coding-game-service');
 
+const Config = imports.lib.config;
 const Controller = imports.lib.controller;
 const Communicator = imports.lib.communicator;
-const Config = imports.lib.config;
 const Log = imports.lib.log;
 const Service = imports.lib.service;
 const ShellAppStore = imports.lib.shellAppStore;
