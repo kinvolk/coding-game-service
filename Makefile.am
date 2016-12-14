@@ -6,7 +6,11 @@ files_DATA = $(arbitrary_files)
 
 # Resource javascript modules
 resource_dist_js_files = \
+	lib/controller.js \
+	lib/communicator.js \
 	lib/desktopFile.js \
+	lib/log.js \
+	lib/service.js \
 	lib/validation.js \
 	lib/shellAppStore.js \
 	$(NULL)
@@ -22,10 +26,24 @@ lib/config.js: $(srcdir)/lib/config.js.in
 	$< > $@.tmp && \
 	mv -f $@.tmp $@
 
+# Mocks
+javascript_mocks = \
+	mocks/constructors.js \
+	$(NULL)
+
+# Tests
+javascript_tests = \
+	tests/js/testCodingGameService.js \
+	tests/js/testCodingGameServiceTimeline.js \
+	$(NULL)
+
 # All javascript modules
 all_dist_js_files = \
-	coding-game-validator.js \
-	coding-game-service.js \
+	bin/coding-game-validator.js \
+	bin/coding-game-service.js.in \
+	bin/edit-desktop-file.js \
+	$(javascript_mocks) \
+	$(javascript_tests) \
 	$(resource_dist_js_files) \
 	$(NULL)
 
@@ -34,9 +52,11 @@ all_js_files = \
 	$(resource_nondist_js_files) \
 	$(NULL)
 
-
 AM_CONFIG_MACRO_DIR =
 AM_DISTCHECK_CONFIGURE_FLAGS = --enable-introspection
+if EOS_ENABLE_COVERAGE
+AM_DISTCHECK_CONFIGURE_FLAGS += --enable-coverage --with-coverage-dir=@EOS_COVERAGE_DIR@
+endif EOS_ENABLE_COVERAGE
 EXTRA_DIST = \
 	com.endlessm.CodingGameService.xml \
 	com.endlessm.CodingGameService.service.in \
@@ -45,6 +65,7 @@ EXTRA_DIST = \
 	com.endlessm.Coding.policy.in \
 	files/coding-copy-files.js.in \
 	lib/config.js.in \
+	jasmine.json \
 	$(all_dist_js_files) \
 	$(arbitrary_files) \
 	$(NULL)
@@ -70,16 +91,14 @@ resource_files = \
 	data/timeline.json \
 	$(NULL)
 
-coding-game-service-resources.h: $(srcdir)/com.endlessm.CodingGameService.gresource.xml $(resource_files)
-	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(srcdir) --sourcedir=$(builddir) --generate --c-name coding_game_service $<
-coding-game-service-resources.c: $(srcdir)/com.endlessm.CodingGameService.gresource.xml $(resource_files)
-	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(srcdir) --sourcedir=$(builddir) --generate --c-name coding_game_service $<
+resourcedir = $(pkgdatadir)
+resource_DATA = com.endlessm.CodingGameService.gresource
 
-resources_built_sources = coding-game-service-resources.c coding-game-service-resources.h
+com.endlessm.CodingGameService.gresource: $(srcdir)/com.endlessm.CodingGameService.gresource.xml $(resource_files)
+	$(AM_V_GEN) glib-compile-resources --target=$@ --sourcedir=$(srcdir) --sourcedir=$(builddir) $<
 
 # Generate the CodingGameService GDBus Skeleton library
-libcoding_game_service_1_0_la_SOURCES = $(resources_built_sources) \
-					$(gdbus_codegen_built_sources) \
+libcoding_game_service_1_0_la_SOURCES = $(gdbus_codegen_built_sources) \
 					$(NULL)
 libcoding_game_service_1_0_la_CFLAGS = $(CODING_GAME_SERVICE_CFLAGS)
 libcoding_game_service_1_0_la_LIBADD = $(CODING_GAME_SERVICE_LIBS)
@@ -93,11 +112,11 @@ bin_SCRIPTS = \
 	coding-game-validator \
 	$(NULL)
 
-coding-game-service: $(srcdir)/coding-game-service.js
-	cp $< $@
+coding-game-service: $(srcdir)/bin/coding-game-service.js.in
+	$(AM_V_GEN) sed -e 's,%PKGDATADIR%,$(pkgdatadir),g' $< > $@.tmp && mv -f $@.tmp $@
 	chmod +x $@
 
-coding-game-validator: $(srcdir)/coding-game-validator.js
+coding-game-validator: $(srcdir)/bin/coding-game-validator.js
 	cp $< $@
 	chmod +x $@
 
@@ -156,13 +175,52 @@ com.endlessm.Coding.policy: com.endlessm.Coding.policy.in
 	$(SED) -e 's,%pkglibexecdir%,$(pkglibexecdir),' < $< >$@.tmp && \
 	mv -f $@.tmp $@
 
+#  Run tests when running 'make check'
+TESTS = \
+	$(javascript_tests) \
+	run_coverage.coverage \
+	$(NULL)
+LOG_COMPILER = gtester
+AM_LOG_FLAGS = -k --verbose
+
+TEST_EXTENSIONS = .js .coverage
+
+JS_LOG_DRIVER = env AM_TAP_AWK='$(AWK)' $(SHELL) $(top_srcdir)/tap-driver.sh
+JS_LOG_DRIVER_FLAGS = --comments
+JS_LOG_COMPILER = jasmine
+AM_JS_LOG_FLAGS = --tap --no-config @JASMINE_REPORT_ARGUMENT@
+
+# Use locally built versions of CodingGameService-1.0.gir, JS modules, and
+# libraries. We clobber GJS_PATH and include the js directory and the
+# $(top_srcdir) for including test helper files.
+# (May need to change to AM_TESTS_ENVIRONMENT in a later version of Automake)
+TESTS_ENVIRONMENT = \
+	export GJS_PATH="$(top_srcdir):$(top_srcdir)/js"; \
+	export GI_TYPELIB_PATH="$(top_builddir)$${GI_TYPELIB_PATH:+:$$GI_TYPELIB_PATH}"; \
+	export LD_LIBRARY_PATH="$(top_builddir)/.libs$${LD_LIBRARY_PATH:+:$$LD_LIBRARY_PATH}"; \
+	export G_TEST_SRCDIR="$(abs_srcdir)/tests"; \
+	export G_TEST_BUILDDIR="$(abs_builddir)/tests"; \
+	export LC_ALL=C; \
+	$(NULL)
+
+# # # COVERAGE # # #
+
+# Don't specify the resource:/// URIs here, because the tests load modules from
+# the local directory, not from the GResource
+EOS_JS_COVERAGE_FILES := $(patsubst $(top_srcdir)/%,%,$(wildcard js/*.js))
+
+@EOS_COVERAGE_RULES@
+
+AM_JS_LOG_FLAGS += @EOS_JS_COVERAGE_LOG_FLAGS@
+AM_LDFLAGS = @EOS_C_COVERAGE_LDFLAGS@
+
 # Things to get rid of later
 CLEANFILES += \
 	$(bin_SCRIPTS) \
 	$(service_DATA) \
-	$(resources_built_sources) \
 	$(gdbus_codegen_built_sources) \
 	$(polkit_policy_DATA) \
+	com.endlessm.CodingGameService.gresource \
 	data/timeline.json \
 	files/coding-copy-files \
 	lib/config.js \
