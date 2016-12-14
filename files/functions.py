@@ -149,7 +149,7 @@ def capitalise_vowels(string):
 def main():
     """The main function that does everything
 
-    The main function usually always evaluates the command line arguments
+    The main function usually evaluates the command line arguments
     passed to the program and then runs functions within the program
     to compute a result.
     """
