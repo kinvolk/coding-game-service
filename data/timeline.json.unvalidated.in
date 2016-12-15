@@ -89,6 +89,7 @@
             "hint": "Pipes (|) are key here",
             "start_events": [
                 "terminaltasks::setting::showmehow::add-textprocessing",
+                "chat::meme::terminaltasks::intro",
                 "listen::terminaltasks::showmehow-textprocessing"
             ],
             "artifacts": [
@@ -935,6 +936,14 @@
                     "type": "append-to-list-unique",
                     "value": ["textprocessing"]
                 }
+            }
+        },
+        {
+            "name": "chat::meme::terminaltasks::intro",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Now that you're working your way around terminal, lets try some stuff that you can't do anywhere else."
             }
         },
         {
