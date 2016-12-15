@@ -6,6 +6,8 @@
             "long_desc": "Why don't you answer the questions and see where the rabbit hole leads",
             "hint": "Just follow the prompts and search beyond your user account",
             "start_events": [
+                "chat::change::where_to_go",
+                "chat::change::where_to_go::input",
                 "chat::meme::intro::hook",
                 "chat::meme::intro::hook::challenge"
             ],
@@ -1646,6 +1648,62 @@
                 "received": [
                     "artifact::python::send_gnotification"
                 ]
+            }
+        },
+        {
+            "name": "chat::change::where_to_go",
+            "type": "chat-actor",
+            "data": {
+                "actor": "CHANGE",
+                "message": "What would you like to do next?"
+            }
+        },
+        {
+            "name": "chat::change::where_to_go::input",
+            "type": "input-user",
+            "data": {
+                "actor": "CHANGE",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "intro": {
+                                "text": "Introduction"
+                            },
+                            "showmehow": {
+                                "text": "Showmehow - Terminal"
+                            },
+                            "showmehow_python": {
+                                "text": "Showmehow - Python"
+                            },
+                            "python_functions": {
+                                "text": "Python Functions"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "intro": [
+                        "start-mission::intro",
+                        "chat::change::where_to_go",
+                        "chat::change::where_to_go::input"
+                    ],
+                    "showmehow": [
+                        "terminalintro::start-mission::terminaltasks",
+                        "chat::change::where_to_go",
+                        "chat::change::where_to_go::input"
+                    ],
+                    "showmehow_python": [
+                        "yoursystem::start-mission::python",
+                        "chat::change::where_to_go",
+                        "chat::change::where_to_go::input"
+                    ],
+                    "python_functions": [
+                        "showmehow_python::start-mission::python_functions",
+                        "chat::change::where_to_go",
+                        "chat::change::where_to_go::input"
+                    ]
+                }
             }
         }
     ]
