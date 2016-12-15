@@ -74,6 +74,10 @@ const ExternalEffectsStub = new Lang.Class({
         switch (variant) {
             case 'as':
                 return [];
+            case 'b':
+                return true;
+            case 's':
+                return 'example';
             default:
                 throw new Error('Don\'t know how to handle variant type ' + variant);
         }
