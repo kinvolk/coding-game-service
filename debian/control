@@ -5,6 +5,7 @@ Build-Depends: autotools-dev,
                debhelper (>= 9),
                gobject-introspection,
                jasmine-gjs (>= 2.2.0),
+               eos-shell-common,
                libgirepository1.0-dev,
                libglib2.0-dev,
                pkg-config
