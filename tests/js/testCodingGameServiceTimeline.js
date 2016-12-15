@@ -98,7 +98,7 @@ describe('Default Game Service Controller Timeline', function () {
     defaultTimeline.warnings = [];
     let [seenEvents, eventSequence] = walkTimelineForEventSequence(defaultTimeline);
     beforeAll(function () {
-        GLib.setenv('G_SETTINGS_BACKEND', 'memory', true);
+        GLib.setenv('GSETTINGS_BACKEND', 'memory', true);
         externalService = Mocks.createExternalService();
         chatController = Mocks.createChatController();
         externalEffects = Mocks.createExternalEffects();
