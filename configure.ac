@@ -45,7 +45,7 @@ AC_SUBST([JASMINE_REPORT_ARGUMENT])
 
 # Code Coverage
 # -------------
-EOS_COVERAGE_REPORT([c js])
+EOS_COVERAGE_REPORT([js])
 
 # Substitute variables
 AC_CONFIG_FILES([Makefile])

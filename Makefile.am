@@ -212,7 +212,6 @@ EOS_JS_COVERAGE_FILES := $(patsubst $(top_srcdir)/%,%,$(wildcard lib/*.js))
 @EOS_COVERAGE_RULES@
 
 AM_JS_LOG_FLAGS += @EOS_JS_COVERAGE_LOG_FLAGS@
-AM_LDFLAGS = @EOS_C_COVERAGE_LDFLAGS@
 
 # Things to get rid of later
 CLEANFILES += \
