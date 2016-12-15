@@ -928,6 +928,7 @@
             "data": {
                 "schema": "com.endlessm.showmehow",
                 "key": "unlocked-lessons",
+                "variant_type": "as",
                 "value": {
                     "type": "append-to-list-unique",
                     "value": ["textprocessing"]
