@@ -8,6 +8,13 @@ arbitrary_files = \
 	files/line.pde \
 	files/classes.py \
 	files/functions.py \
+	files/processing.png \
+	files/line.png \
+	files/circle.png \
+	files/circle_key.png \
+	files/line_key.png \
+	files/martian.png \
+	files/martian_colors.png \
 	$(NULL)
 
 filesdir = $(pkgdatadir)/files
