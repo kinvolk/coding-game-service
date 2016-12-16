@@ -1294,15 +1294,15 @@
                         "chat::meme::processing::chat_confirm_line",
                         "chat::meme::processing::chat_explain_parameters",
                         "chat::meme::processing::show_line_parameters",
-                        "chat::meme::processing::chat_tweak_line_parameters"
+                        "chat::meme::processing::chat_tweak_line_parameters",
+                        "chat::meme::processing::chat_move_to_circle",
+                        "chat::meme::processing::chat_move_to_circle::response"
                     ],
                     "no": [
                         "chat::meme::processing::chat_retry_line",
                         "chat::meme::processing::chat_check_line",
                         "chat::meme::processing::show_sketch_code",
-                        "chat::meme::processing::chat_check_line::response",
-                        "chat::meme::processing::chat_move_to_circle",
-                        "chat::meme::processing::chat_move_to_circle::response"
+                        "chat::meme::processing::chat_check_line::response"
                     ]
                 }
             }
