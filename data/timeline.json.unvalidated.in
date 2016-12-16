@@ -2572,6 +2572,9 @@
                             "showmehow": {
                                 "text": "Showmehow - Terminal"
                             },
+                            "processing": {
+                                "text": "Processing"
+                            },
                             "showmehow_python": {
                                 "text": "Showmehow - Python"
                             },
@@ -2586,6 +2589,9 @@
                         "start-mission::intro",
                         "chat::change::where_to_go",
                         "chat::change::where_to_go::input"
+                    ],
+                    "processing": [
+                        "terminaltasks::start-mission::processing"
                     ],
                     "showmehow": [
                         "bashrc::start-mission::terminalintro",
