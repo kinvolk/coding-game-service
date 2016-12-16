@@ -205,6 +205,7 @@
                 "chat::meme::python_functions::intro",
                 "chat::meme::python_functions::enter_code",
                 "chat::meme::python_functions::intro::attachment",
+                "chat::meme::python_functions::how_to_run_file",
                 "chat::meme::python_functions::challenge"
             ],
             "artifacts": [
@@ -2254,6 +2255,14 @@
                     "desc": "Some functions",
                     "path": "functions.py"
                 }
+            }
+        },
+        {
+            "name": "chat::meme::python_functions::how_to_run_file",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "You can run this file by using the <span font_family='monospace'>python</span> command in the terminal. Copy the contents of this file to a new one called 'functions.py', then navigate to that directory in the terminal and run it with: <span font_family='monospace'>python functions.py 5 2 8 4 9 1</span>"
             }
         },
         {
