@@ -12,6 +12,9 @@
       <arg name="content" direction="in" type="s"/>
       <arg name="result" direction="in" type="s"/>
     </method>
+    <method name="OpenAttachment">
+      <arg name="id" direction="in" type="s"/>
+    </method>
     <method name="ExternalEvent">
       <arg name="id" direction="in" type="s"/>
     </method>

@@ -78,6 +78,18 @@ function walkTimelineForEventSequence(timeline) {
                         subsequence: event.data.then.map(addTriggerEvent)
                     });
                     break;
+                case 'chat-actor-attachment':
+                    if (event.data.attachment.open_event) {
+                        sequencePoints.push({
+                            type: 'open-attachment',
+                            event: name,
+                            response: {
+                                evaluate: {}
+                            },
+                            subsequence: event.data.attachment.open_event.map(addTriggerEvent)
+                        });
+                    }
+                    break;
                 default:
                     break;
             }
@@ -143,6 +155,16 @@ describe('Default Game Service Controller Timeline', function () {
                         controller.receiveChatResponse(sequencePoint.event,
                                                        'A response',
                                                        sequencePoint.response);
+                    });
+                    sequencePoint.subsequence.forEach(function(subsequencePoint) {
+                        subsequencePoint.forEach(sequencePointTestCaseGenerator);
+                    });
+                });
+                break;
+            case 'open-attachment':
+                describe(sequencePoint.event + ' opened attachment', function() {
+                    beforeAll(function() {
+                        controller.receiveOpenAttachment(sequencePoint.event);
                     });
                     sequencePoint.subsequence.forEach(function(subsequencePoint) {
                         subsequencePoint.forEach(sequencePointTestCaseGenerator);

@@ -44,8 +44,7 @@
             "long_desc": "It is time to find out where all those hidden toggles are. Pay attention to the clues that you're given and find out what you need to edit to get ahead.",
             "hint": "A system configuration file is just like any other file, right?",
             "start_events": [
-                "bashrc::chat::meme::send_bashrc",
-                "listen::bashrc::open_bashrc"
+                "bashrc::chat::meme::send_bashrc"
             ],
             "artifacts": [
                 {
@@ -768,20 +767,12 @@
                 "attachment": {
                     "desc": "Your Shell's Configuration",
                     "path": "~/.bashrc",
-                    "open_event": "bashrc::event::open_bashrc"
+                    "open_event": [
+                        "bashrc::register_artifact",
+                        "bashrc::chat::meme::open_bashrc",
+                        "bashrc::start-mission::terminalintro"
+                    ]
                 }
-            }
-        },
-        {
-            "name": "listen::bashrc::open_bashrc",
-            "type": "listen-event",
-            "data": {
-                "name": "bashrc::event::open_bashrc",
-                "received": [
-                    "bashrc::register_artifact",
-                    "bashrc::chat::meme::open_bashrc",
-                    "bashrc::start-mission::terminalintro"
-                ]
             }
         },
         {
