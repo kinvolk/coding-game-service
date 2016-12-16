@@ -1061,6 +1061,7 @@
             "name": "chat::meme::processing::ask_familiar_processing::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1170,6 +1171,7 @@
             "name": "chat::meme::processing::chat_check_print::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1268,6 +1270,7 @@
             "name": "chat::meme::processing::chat_check_line::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1365,6 +1368,7 @@
             "name": "chat::meme::processing::chat_move_to_circle::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1437,6 +1441,7 @@
             "name": "chat::meme::processing::chat_check_circle::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1522,6 +1527,7 @@
             "name": "chat::meme::processing::chat_move_to_advanced::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1623,6 +1629,7 @@
             "name": "chat::meme::processing::chat_move_to_colors::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1703,6 +1710,7 @@
             "name": "chat::meme::processing::chat_check_martian_colors::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1812,6 +1820,7 @@
             "name": "chat::meme::processing::chat_move_to_stroke::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
