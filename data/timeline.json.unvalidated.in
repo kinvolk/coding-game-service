@@ -1077,7 +1077,10 @@
                 },
                 "responses": {
                     "yes": [
-                        "chat::meme::processing::chat_advanced_tutorial"
+                        "chat::meme::processing::chat_advanced_tutorial",
+                        "chat::meme::processing::code_martian",
+                        "chat::meme::processing::chat_martian_example",
+                        "chat::meme::processing::show_martian_example"
                     ],
                     "no": [
                         "chat::meme::processing::chat_beginner_tutorial",
