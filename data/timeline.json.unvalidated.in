@@ -2344,7 +2344,7 @@
             "name": "listen::python_lists::convert_list",
             "type": "listen-event",
             "data": {
-                "name": "showmehow-python-lists-convert-list",
+                "name": "showmehow-python-convert-list",
                 "received": [
                     "listen::python_lists::filter_list",
                     "artifact::python::convert_list"
