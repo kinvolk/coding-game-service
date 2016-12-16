@@ -953,7 +953,7 @@
                 "variant_type": "as",
                 "value": {
                     "type": "append-to-list-unique",
-                    "value": ["textprocessing"]
+                    "value": ["text"]
                 }
             }
         },
