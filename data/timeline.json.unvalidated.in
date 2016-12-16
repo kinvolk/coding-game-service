@@ -869,7 +869,8 @@
                         "terminalintro::chat::meme::open_terminal::where"
                     ],
                     "afraid": [
-                        "terminalintro::chat::meme::open_terminal::afraid"
+                        "terminalintro::chat::meme::open_terminal::afraid",
+                        "terminalintro::chat::meme::open_terminal::where"
                     ]
                 }
             }
