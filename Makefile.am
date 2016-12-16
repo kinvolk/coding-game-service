@@ -1,5 +1,11 @@
 # Arbitrary files
-arbitrary_files = files/sw.txt files/background_pic.jpg files/test.txt
+arbitrary_files = \
+	files/sw.txt \
+	files/background_pic.jpg \
+	files/test.txt \
+	files/classes.py \
+	files/functions.py \
+	$(NULL)
 
 filesdir = $(pkgdatadir)/files
 files_DATA = $(arbitrary_files)
