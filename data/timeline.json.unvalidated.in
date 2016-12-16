@@ -30,7 +30,7 @@
                     "points": 52
                 },
                 {
-                    "name": "artifact::intro::install-programming",
+                    "name": "artifact::intro::install-terminal",
                     "icon": "text-editor-symbolic",
                     "desc": "Installed the terminal",
                     "points": 52
@@ -695,7 +695,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "message": "You think I can teach you something cool? Try this: install-programming"
+                "message": "You think I can teach you something cool? Try this: install-terminal"
             }
         },
         {
@@ -711,8 +711,8 @@
                 },
                 "responses": {
                     "success": [
-                        "chat::meme::intro::install-programming::artifact",
-                        "event::meme::intro::install-programming::insert-terminal-icon",
+                        "chat::meme::intro::install-terminal::artifact",
+                        "event::meme::intro::install-terminal::insert-terminal-icon",
                         "chat::meme::intro::intro-complete",
                         "chat::goog::intro::install_programming::comment",
                         "intro::start-bashrc-mission"
@@ -730,7 +730,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "message": "'install-programming' EXACTLY. I haven't got all day!"
+                "message": "'install-terminal' EXACTLY. I haven't got all day!"
             }
         },
         {
@@ -758,14 +758,14 @@
             }
         },
         {
-            "name": "chat::meme::intro::install-programming::artifact",
+            "name": "chat::meme::intro::install-terminal::artifact",
             "type": "register-artifact",
             "data": {
-                "name": "artifact::intro::install-programming"
+                "name": "artifact::intro::install-terminal"
             }
         },
         {
-            "name": "event::meme::intro::install-programming::insert-terminal-icon",
+            "name": "event::meme::intro::install-terminal::insert-terminal-icon",
             "type": "modify-app-grid",
             "data": {
                 "action": "add-app",
