@@ -971,9 +971,18 @@
             "data": {
                 "name": "showmehow-textprocessing",
                 "received": [
+                    "chat::meme::terminaltasks::ps",
                     "terminaltasks::setting::showmehow::add-ps",
                     "listen::terminaltasks::showmehow-ps"
                 ]
+            }
+        },
+        {
+            "name": "chat::meme::terminaltasks::ps",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "You can also see what is going on in your system using the terminal. Try the 'ps' lesson."
             }
         },
         {
@@ -995,9 +1004,19 @@
             "data": {
                 "name": "showmehow-ps",
                 "received": [
+                    "chat::meme::terminaltasks::settings",
                     "terminaltasks::setting::showmehow::add-settings",
                     "listen::terminaltasks::showmehow-settings"
                 ]
+            }
+        },
+        
+        {
+            "name": "chat::meme::terminaltasks::settings",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "With the terminal you can also change settings on your system. Check out the 'settings' lesson on showmehow."
             }
         },
         {
