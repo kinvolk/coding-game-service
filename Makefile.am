@@ -3,6 +3,9 @@ arbitrary_files = \
 	files/sw.txt \
 	files/background_pic.jpg \
 	files/test.txt \
+	files/processing.desktop \
+	files/martian.pde \
+	files/line.pde \
 	files/classes.py \
 	files/functions.py \
 	$(NULL)
