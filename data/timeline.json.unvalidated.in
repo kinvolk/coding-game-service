@@ -2425,7 +2425,7 @@
             "data": {
                 "actor": "MEME",
                 "attachment": {
-                    "desc": "Some functions",
+                    "desc": "Object Oriented Programming in Python",
                     "path": "classes.py"
                 }
             }
