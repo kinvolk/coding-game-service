@@ -2600,7 +2600,9 @@
                         "chat::change::where_to_go::input"
                     ],
                     "processing": [
-                        "terminaltasks::start-mission::processing"
+                        "terminaltasks::start-mission::processing",
+                        "chat::change::where_to_go",
+                        "chat::change::where_to_go::input"
                     ],
                     "showmehow": [
                         "bashrc::start-mission::terminalintro",
