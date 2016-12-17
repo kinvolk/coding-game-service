@@ -1573,7 +1573,6 @@
                         "chat::ada::processing::chat_explain_martian_rgb",
                         "chat::ada::processing::code_rgb",
                         "chat::ada::processing::chat_tweak_color",
-                        "chat::ada::processing::chat_confirm_martian_colors",
                         "chat::ada::processing::chat_move_to_stroke",
                         "chat::ada::processing::chat_move_to_stroke::response"
                     ],
