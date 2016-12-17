@@ -6,7 +6,7 @@
             "long_desc": "But maybe it might if you just wait a little longer...",
             "hint": "You're patient, right?",
             "start_events": [
-                "chat::meme::nothing_here::wait-intro",
+                "chat::ada::nothing_here::wait-intro",
                 "chat::change::where_to_go",
                 "chat::change::where_to_go::input"
             ],
@@ -25,8 +25,8 @@
             "long_desc": "Why don't you answer the questions and see where the rabbit hole leads",
             "hint": "Just follow the prompts and search beyond your user account",
             "start_events": [
-                "chat::meme::intro::hook",
-                "chat::meme::intro::hook::challenge"
+                "chat::ada::intro::hook",
+                "chat::ada::intro::hook::challenge"
             ],
             "artifacts": [
                 {
@@ -61,7 +61,7 @@
             "long_desc": "It is time to find out where all those hidden toggles are. Pay attention to the clues that you're given and find out what you need to edit to get ahead.",
             "hint": "A system configuration file is just like any other file, right?",
             "start_events": [
-                "bashrc::chat::meme::send_bashrc"
+                "bashrc::chat::ada::send_bashrc"
             ],
             "artifacts": [
                 {
@@ -80,8 +80,8 @@
             "start_events": [
                 "terminalintro::setting::showmehow::add-showmehow",
                 "listen::terminalintro::showmehow-showmehow",
-                "terminalintro::chat::meme::open_terminal",
-                "terminalintro::chat::meme::open_terminal::choice"
+                "terminalintro::chat::ada::open_terminal",
+                "terminalintro::chat::ada::open_terminal::choice"
             ],
             "artifacts": [
                 {
@@ -105,7 +105,7 @@
             "hint": "Pipes (|) are key here",
             "start_events": [
                 "terminaltasks::setting::showmehow::add-textprocessing",
-                "chat::meme::terminaltasks::intro",
+                "chat::ada::terminaltasks::intro",
                 "listen::terminaltasks::showmehow-textprocessing"
             ],
             "artifacts": [
@@ -129,8 +129,8 @@
             "long_desc": "You can create some drawings with code using the processing app",
             "hint": "If you get stuck, you can always ask for a sample file",
             "start_events": [
-                "chat::meme::processing::ask_familiar_processing",
-                "chat::meme::processing::ask_familiar_processing::response"
+                "chat::ada::processing::ask_familiar_processing",
+                "chat::ada::processing::ask_familiar_processing::response"
             ],
             "artifacts": [
                 {
@@ -147,8 +147,8 @@
             "long_desc": "Look in all the nooks and crannies in your system",
             "hint": "Try starting with / and going down",
             "start_events": [
-                "chat::meme::yoursystem::find_etc",
-                "chat::meme::yoursystem::find_etc::response"
+                "chat::ada::yoursystem::find_etc",
+                "chat::ada::yoursystem::find_etc::response"
             ],
             "artifacts": [
                 {
@@ -178,7 +178,7 @@
             "hint": "Remember to balance your brackets!",
             "start_events": [
                 "python::setting::showmehow::add-python",
-                "chat::meme::showmehow_python",
+                "chat::ada::showmehow_python",
                 "listen::showmehow_python::add_numbers"
             ],
             "artifacts": [
@@ -220,11 +220,11 @@
             "long_desc": "Use functions to create composable programs and encourage reusable code",
             "hint": "Walk through what needs to be done in your head and see if you can order the functions",
             "start_events": [
-                "chat::meme::python_functions::intro",
-                "chat::meme::python_functions::enter_code",
-                "chat::meme::python_functions::intro::attachment",
-                "chat::meme::python_functions::how_to_run_file",
-                "chat::meme::python_functions::challenge"
+                "chat::ada::python_functions::intro",
+                "chat::ada::python_functions::enter_code",
+                "chat::ada::python_functions::intro::attachment",
+                "chat::ada::python_functions::how_to_run_file",
+                "chat::ada::python_functions::challenge"
             ],
             "artifacts": [
                 {
@@ -242,7 +242,7 @@
             "hint": "Think of lists as big chunks of data. If you apply the same operation to everything, how does the chunk change?",
             "start_events": [
                 "python::setting::showmehow::add-python-lists",
-                "chat::meme::python_lists::intro",
+                "chat::ada::python_lists::intro",
                 "listen::python_lists::convert_list"
             ],
             "artifacts": [
@@ -272,10 +272,10 @@
             "long_desc": "Use clases and objects to learn the foundations of programming for a user interface",
             "hint": "Object Oriented Programming is meant to model the real world. Think about how this would work in reality",
             "start_events": [
-                "chat::meme::python_classes::intro",
-                "chat::meme::python_classes::enter_code",
-                "chat::meme::python_classes::intro::attachment",
-                "chat::meme::python_classes::challenge"
+                "chat::ada::python_classes::intro",
+                "chat::ada::python_classes::enter_code",
+                "chat::ada::python_classes::intro::attachment",
+                "chat::ada::python_classes::challenge"
             ],
             "artifacts": [
                 {
@@ -293,7 +293,7 @@
             "hint": "As soon as you import something with GObject-Introspection, you can use it like anything else",
             "start_events": [
                 "python::setting::showmehow::add-python-gi",
-                "chat::meme::showmehow_python_gi::intro",
+                "chat::ada::showmehow_python_gi::intro",
                 "listen::showmehow_python_gi::create_gi_binding"
             ],
             "artifacts": [
@@ -330,19 +330,19 @@
             }
         },
         {
-            "name": "chat::meme::nothing_here::wait-intro",
+            "name": "chat::ada::nothing_here::wait-intro",
             "type": "wait-for",
             "data": {
                 "timeout": 100000,
                 "then": [
-                    "chat::meme::nothing_here::artifact",
+                    "chat::ada::nothing_here::artifact",
                     "start-mission::intro",
-                    "chat::meme::intro::hook::challenge"
+                    "chat::ada::intro::hook::challenge"
                 ]
             }
         },
         {
-            "name": "chat::meme::nothing_here::artifact",
+            "name": "chat::ada::nothing_here::artifact",
             "type": "register-artifact",
             "data": {
                 "name": "artifact::nothing_here::patience"
@@ -356,18 +356,18 @@
             }
         },
         {
-            "name": "chat::meme::intro::hook",
+            "name": "chat::ada::intro::hook",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Hey you"
             }
         },
         {
-            "name": "chat::meme::intro::hook::challenge",
+            "name": "chat::ada::intro::hook::challenge",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "text",
                     "settings": {
@@ -376,33 +376,33 @@
                 },
                 "responses": {
                     "success": [
-                        "chat::meme::intro::hook::artifact",
-                        "chat::meme::intro::choice_see_cool",
-                        "chat::meme::intro::choice_see_cool::challenge"
+                        "chat::ada::intro::hook::artifact",
+                        "chat::ada::intro::choice_see_cool",
+                        "chat::ada::intro::choice_see_cool::challenge"
                     ]
                 }
             }
         },
         {
-            "name": "chat::meme::intro::hook::artifact",
+            "name": "chat::ada::intro::hook::artifact",
             "type": "register-artifact",
             "data": {
                 "name": "artifact::intro::hook"
             }
         },
         {
-            "name": "chat::meme::intro::choice_see_cool",
+            "name": "chat::ada::intro::choice_see_cool",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Wanna see something cool?"
             }
         },
         {
-            "name": "chat::meme::intro::choice_see_cool::challenge",
+            "name": "chat::ada::intro::choice_see_cool::challenge",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -418,40 +418,40 @@
                 },
                 "responses": {
                     "yes": [
-                        "chat::meme::intro::choice_see_cool::artifact",
-                        "chat::meme::intro::tell-goog-key",
+                        "chat::ada::intro::choice_see_cool::artifact",
+                        "chat::ada::intro::tell-goog-key",
                         "chat::goog::intro::tell-goog-key",
                         "chat::dank::intro::tell-goog-key",
                         "event::intro::leave-key-behind",
                         "chat::goog::intro::tell-goog-key::input"
                     ],
                     "no": [
-                        "chat::meme::intro::choice_see_cool::again",
-                        "chat::meme::intro::choice_see_cool::challenge"
+                        "chat::ada::intro::choice_see_cool::again",
+                        "chat::ada::intro::choice_see_cool::challenge"
                     ]
                 }
             }
         },
         {
-            "name": "chat::meme::intro::choice_see_cool::artifact",
+            "name": "chat::ada::intro::choice_see_cool::artifact",
             "type": "register-artifact",
             "data": {
                 "name": "artifact::intro::choice_see_cool::challenge"
             }
         },
         {
-            "name": "chat::meme::intro::choice_see_cool::again",
+            "name": "chat::ada::intro::choice_see_cool::again",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Sure you don't?"
             }
         },
         {
-            "name": "chat::meme::intro::tell-goog-key",
+            "name": "chat::ada::intro::tell-goog-key",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "So here's the thing. Someone left a key behind and I heard that GOOG will unlock the system if you just tell it a password. All you have to do is find it ..."
             }
         },
@@ -497,7 +497,7 @@
                 "timeout": 5000,
                 "then": [
                     "chat::goog::intro::goog-receive-key::give-in",
-                    "chat::meme::intro::enable-wobbly-windows::comment",
+                    "chat::ada::intro::enable-wobbly-windows::comment",
                     "event::intro::enable-wobbly-windows",
                     "listen::intro::wobble-window"
                 ]
@@ -559,10 +559,10 @@
             }
         },
         {
-            "name": "chat::meme::intro::enable-wobbly-windows::comment",
+            "name": "chat::ada::intro::enable-wobbly-windows::comment",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "SYSTEM UNLOCKED! Let's have some fun! I turned this window into jello - check it out!"
             }
         },
@@ -593,7 +593,7 @@
                 "name": "move-window",
                 "received": [
                     "listen::intro::wobble-window::artifact",
-                    "chat::meme::intro::stop-wobble-window-comment",
+                    "chat::ada::intro::stop-wobble-window-comment",
                     "chat::fruit::intro::stop-wobble-window-comment",
                     "chat::dank::intro::stop-wobble-window-comment",
                     "chat::goog::intro::stop-wobble-window-comment",
@@ -602,10 +602,10 @@
             }
         },
         {
-            "name": "chat::meme::intro::stop-wobble-window-comment",
+            "name": "chat::ada::intro::stop-wobble-window-comment",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Aaaack! Stop it!"
             }
         },
@@ -639,13 +639,13 @@
             "data": {
                 "name": "stop-moving-windows",
                 "received": [
-                    "chat::meme::intro::wobble-windows-comment",
+                    "chat::ada::intro::wobble-windows-comment",
                     "event::intro::disable-wobbly-windows",
-                    "chat::meme::intro::install_programming",
+                    "chat::ada::intro::install_programming",
                     "chat::dank::intro::new_splash_paint",
                     "chat::dank::intro::new_splash_paint::input",
                     "chat::fruit::intro::install_programming::comment",
-                    "chat::meme::intro::install_programming::challenge"
+                    "chat::ada::intro::install_programming::challenge"
                 ]
             }
         },
@@ -657,10 +657,10 @@
             }
         },
         {
-            "name": "chat::meme::intro::wobble-windows-comment",
+            "name": "chat::ada::intro::wobble-windows-comment",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Things are not as they seem around here"
             }
         },
@@ -725,18 +725,18 @@
             }
         },
         {
-            "name": "chat::meme::intro::install_programming",
+            "name": "chat::ada::intro::install_programming",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "You think I can teach you something cool? Try this: install-terminal"
             }
         },
         {
-            "name": "chat::meme::intro::install_programming::challenge",
+            "name": "chat::ada::intro::install_programming::challenge",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "text",
                     "settings": {
@@ -745,25 +745,25 @@
                 },
                 "responses": {
                     "success": [
-                        "chat::meme::intro::install-terminal::artifact",
-                        "event::meme::intro::install-terminal::insert-terminal-icon",
-                        "chat::meme::intro::intro-complete",
+                        "chat::ada::intro::install-terminal::artifact",
+                        "event::ada::intro::install-terminal::insert-terminal-icon",
+                        "chat::ada::intro::intro-complete",
                         "chat::goog::intro::install_programming::comment",
                         "intro::start-bashrc-mission"
                     ],
                     "failure": [
-                        "chat::meme::intro::install_programming::again",
+                        "chat::ada::intro::install_programming::again",
                         "chat::fruit::intro::install_programming::again",
-                        "chat::meme::intro::install_programming::challenge"
+                        "chat::ada::intro::install_programming::challenge"
                     ]
                 }
             }
         },
         {
-            "name": "chat::meme::intro::install_programming::again",
+            "name": "chat::ada::intro::install_programming::again",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "'install-terminal' EXACTLY. I haven't got all day!"
             }
         },
@@ -792,14 +792,14 @@
             }
         },
         {
-            "name": "chat::meme::intro::install-terminal::artifact",
+            "name": "chat::ada::intro::install-terminal::artifact",
             "type": "register-artifact",
             "data": {
                 "name": "artifact::intro::install-terminal"
             }
         },
         {
-            "name": "event::meme::intro::install-terminal::insert-terminal-icon",
+            "name": "event::ada::intro::install-terminal::insert-terminal-icon",
             "type": "modify-app-grid",
             "data": {
                 "action": "add-app",
@@ -807,10 +807,10 @@
             }
         },
         {
-            "name": "chat::meme::intro::intro-complete",
+            "name": "chat::ada::intro::intro-complete",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Buckle up Dorothy, because Kansas is going bye-bye!\nSee you in the 'Coding Fun' app on your desktop!"
             }
         },
@@ -822,16 +822,16 @@
             }
         },
         {
-            "name": "bashrc::chat::meme::send_bashrc",
+            "name": "bashrc::chat::ada::send_bashrc",
             "type": "chat-actor-attachment",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "attachment": {
                     "desc": "Your Shell's Configuration",
                     "path": "~/.bashrc",
                     "open_event": [
                         "bashrc::register_artifact",
-                        "bashrc::chat::meme::open_bashrc",
+                        "bashrc::chat::ada::open_bashrc",
                         "bashrc::start-mission::terminalintro"
                     ]
                 }
@@ -845,10 +845,10 @@
             }
         },
         {
-            "name": "bashrc::chat::meme::open_bashrc",
+            "name": "bashrc::chat::ada::open_bashrc",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "With great powers come great responsibility."
             }
         },
@@ -873,18 +873,18 @@
             }
         },
         {
-            "name": "terminalintro::chat::meme::open_terminal",
+            "name": "terminalintro::chat::ada::open_terminal",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Go on, click that icon. I know you want to."
             }
         },
         {
-            "name": "terminalintro::chat::meme::open_terminal::choice",
+            "name": "terminalintro::chat::ada::open_terminal::choice",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -900,28 +900,28 @@
                 },
                 "responses": {
                     "where": [
-                        "terminalintro::chat::meme::open_terminal::where"
+                        "terminalintro::chat::ada::open_terminal::where"
                     ],
                     "afraid": [
-                        "terminalintro::chat::meme::open_terminal::afraid",
-                        "terminalintro::chat::meme::open_terminal::where"
+                        "terminalintro::chat::ada::open_terminal::afraid",
+                        "terminalintro::chat::ada::open_terminal::where"
                     ]
                 }
             }
         },
         {
-            "name": "terminalintro::chat::meme::open_terminal::where",
+            "name": "terminalintro::chat::ada::open_terminal::where",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Its on your desktop!"
             }
         },
         {
-            "name": "terminalintro::chat::meme::open_terminal::afraid",
+            "name": "terminalintro::chat::ada::open_terminal::afraid",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "I promise nothing bad will happen!"
             }
         },
@@ -931,7 +931,7 @@
             "data": {
                 "name": "showmehow-showmehow",
                 "received": [
-                    "terminalintro::chat::meme::open_terminal::showmehow-navigation",
+                    "terminalintro::chat::ada::open_terminal::showmehow-navigation",
                     "listen::terminalintro::showmehow-navigation",
                     "artifact::terminalintro::showmehow"
                 ]
@@ -945,10 +945,10 @@
             }
         },
         {
-            "name": "terminalintro::chat::meme::open_terminal::showmehow-navigation",
+            "name": "terminalintro::chat::ada::open_terminal::showmehow-navigation",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Now that you've learned how to use showmehow, why not try the navigation lesson?"
             }
         },
@@ -993,10 +993,10 @@
             }
         },
         {
-            "name": "chat::meme::terminaltasks::intro",
+            "name": "chat::ada::terminaltasks::intro",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Now that you're working your way around terminal, let's try some stuff that you can't do anywhere else."
             }
         },
@@ -1006,17 +1006,17 @@
             "data": {
                 "name": "showmehow-textprocessing",
                 "received": [
-                    "chat::meme::terminaltasks::ps",
+                    "chat::ada::terminaltasks::ps",
                     "terminaltasks::setting::showmehow::add-ps",
                     "listen::terminaltasks::showmehow-ps"
                 ]
             }
         },
         {
-            "name": "chat::meme::terminaltasks::ps",
+            "name": "chat::ada::terminaltasks::ps",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "You can also see what is going on in your system using the terminal. Try the 'ps' lesson."
             }
         },
@@ -1039,7 +1039,7 @@
             "data": {
                 "name": "showmehow-ps",
                 "received": [
-                    "chat::meme::terminaltasks::settings",
+                    "chat::ada::terminaltasks::settings",
                     "terminaltasks::setting::showmehow::add-settings",
                     "listen::terminaltasks::showmehow-settings"
                 ]
@@ -1047,10 +1047,10 @@
         },
         
         {
-            "name": "chat::meme::terminaltasks::settings",
+            "name": "chat::ada::terminaltasks::settings",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "With the terminal you can also change settings on your system. Check out the 'settings' lesson on showmehow."
             }
         },
@@ -1085,18 +1085,18 @@
             }
         },
         {
-            "name": "chat::meme::processing::ask_familiar_processing",
+            "name": "chat::ada::processing::ask_familiar_processing",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "I'm your Processing tutor. This is a great tool for creating interactive drawings with code. Are you already familiar with Processing?"
             }
         },
         {
-            "name": "chat::meme::processing::ask_familiar_processing::response",
+            "name": "chat::ada::processing::ask_familiar_processing::response",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1112,104 +1112,104 @@
                 },
                 "responses": {
                     "yes": [
-                        "chat::meme::processing::chat_advanced_tutorial",
-                        "chat::meme::processing::code_martian",
-                        "chat::meme::processing::chat_martian_example",
-                        "chat::meme::processing::show_martian_example"
+                        "chat::ada::processing::chat_advanced_tutorial",
+                        "chat::ada::processing::code_martian",
+                        "chat::ada::processing::chat_martian_example",
+                        "chat::ada::processing::show_martian_example"
                     ],
                     "no": [
-                        "chat::meme::processing::chat_beginner_tutorial",
-                        "chat::meme::processing::click_icon"
+                        "chat::ada::processing::chat_beginner_tutorial",
+                        "chat::ada::processing::click_icon"
                     ]
                 }
             }
         },
         {
-          "name": "chat::meme::processing::chat_beginner_tutorial",
+          "name": "chat::ada::processing::chat_beginner_tutorial",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "Great, let's get started! Click the icon below to start Sketch."
           }
         },
         {
-            "name": "chat::meme::processing::click_icon",
+            "name": "chat::ada::processing::click_icon",
             "type": "chat-actor-attachment",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "attachment": {
                     "desc": "Processing",
                     "path": "processing.desktop",
                     "open_event": [
-                        "chat::meme::processing::chat_show_interface",
-                        "chat::meme::processing::show_processing_interface"
+                        "chat::ada::processing::chat_show_interface",
+                        "chat::ada::processing::show_processing_interface"
                     ]
                 }
             }
         },
         {
-            "name": "chat::meme::processing::chat_show_interface",
+            "name": "chat::ada::processing::chat_show_interface",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "The image below explains the main interface areas in the app."
             }
         },
         {
-            "name": "chat::meme::processing::show_processing_interface",
+            "name": "chat::ada::processing::show_processing_interface",
             "type": "chat-actor-attachment",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "attachment": {
                     "desc": "Processing interface",
                     "path": "processing.png",
                     "open_event": [
-                        "chat::meme::processing::chat_first_code",
-                        "chat::meme::processing::code_print_console",
-                        "chat::meme::processing::chat_explain_comments",
-                        "chat::meme::processing::chat_check_print",
-                        "chat::meme::processing::chat_check_print::response"
+                        "chat::ada::processing::chat_first_code",
+                        "chat::ada::processing::code_print_console",
+                        "chat::ada::processing::chat_explain_comments",
+                        "chat::ada::processing::chat_check_print",
+                        "chat::ada::processing::chat_check_print::response"
                     ]
                 }
             }
         },
         {
-            "name": "chat::meme::processing::chat_first_code",
+            "name": "chat::ada::processing::chat_first_code",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Now, let's write our first code. In the Text editor, type the code below, and then click on the play button to run your code."
             }
         },
         {
-            "name": "chat::meme::processing::code_print_console",
+            "name": "chat::ada::processing::code_print_console",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "<span font_family='monospace'>print(\"Hello, Mars!\");   // prints a message in the Console</span>"
             }
         },
         {
-            "name": "chat::meme::processing::chat_explain_comments",
+            "name": "chat::ada::processing::chat_explain_comments",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "By the way, the text that comes after \"//\" is called a \"comment\" because it describes what that piece of code actually does. You can copy that too, but it’s not necessary for the code to run properly."
             }
         },
         {
-            "name": "chat::meme::processing::chat_check_print",
+            "name": "chat::ada::processing::chat_check_print",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "After you hit play, the message \"Hello, Mars\" should appear in the Console. Did you see the message?"
             }
         },
         {
-            "name": "chat::meme::processing::chat_check_print::response",
+            "name": "chat::ada::processing::chat_check_print::response",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1225,90 +1225,90 @@
                 },
                 "responses": {
                     "yes": [
-                        "chat::meme::processing::chat_confirm_print",
-                        "chat::meme::processing::chat_line_code",
-                        "chat::meme::processing::code_line",
-                        "chat::meme::processing::chat_line_example",
-                        "chat::meme::processing::show_line_example",
-                        "chat::meme::processing::chat_check_line",
-                        "chat::meme::processing::chat_check_line::response"
+                        "chat::ada::processing::chat_confirm_print",
+                        "chat::ada::processing::chat_line_code",
+                        "chat::ada::processing::code_line",
+                        "chat::ada::processing::chat_line_example",
+                        "chat::ada::processing::show_line_example",
+                        "chat::ada::processing::chat_check_line",
+                        "chat::ada::processing::chat_check_line::response"
                     ],
                     "no": [
-                        "chat::meme::processing::chat_retry_print",
-                        "chat::meme::processing::chat_check_print",
-                        "chat::meme::processing::chat_check_print::response"
+                        "chat::ada::processing::chat_retry_print",
+                        "chat::ada::processing::chat_check_print",
+                        "chat::ada::processing::chat_check_print::response"
                     ]
                 }
             }
         },
         {
-          "name": "chat::meme::processing::chat_retry_print",
+          "name": "chat::ada::processing::chat_retry_print",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "Hm.. make sure you type the exact code below in the Text editor field, and then press play. Don't forget the semicolon!"
           }
         },
         {
-          "name": "chat::meme::processing::chat_confirm_print",
+          "name": "chat::ada::processing::chat_confirm_print",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "Great! Now let's start drawing. How about we start with a simple line?"
           }
         },
         {
-          "name": "chat::meme::processing::chat_line_code",
+          "name": "chat::ada::processing::chat_line_code",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "Type the below code into the Text editor, and then press play."
           }
         },
         {
-            "name": "chat::meme::processing::code_line",
+            "name": "chat::ada::processing::code_line",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n line(90,150,80,160);   // draws a line \n \n print(\"Hello, Mars!\");   // prints a message in the Console</span>"
             }
         },
         {
-          "name": "chat::meme::processing::chat_line_example",
+          "name": "chat::ada::processing::chat_line_example",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "After you hit play, you should see something like this:"
           }
         },
         {
-            "name": "chat::meme::processing::show_line_example",
+            "name": "chat::ada::processing::show_line_example",
             "type": "chat-actor-attachment",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "attachment": {
                     "desc": "Screenshot of line in Processing",
                     "path": "line.png",
                     "open_event": [
-                        "chat::meme::processing::chat_check_line",
-                        "chat::meme::processing::chat_check_line::response"
+                        "chat::ada::processing::chat_check_line",
+                        "chat::ada::processing::chat_check_line::response"
                     ]
                 }
             }
         },
         {
-            "name": "chat::meme::processing::chat_check_line",
+            "name": "chat::ada::processing::chat_check_line",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Did your line appear in the Sketch window?"
             }
         },
         {
-            "name": "chat::meme::processing::chat_check_line::response",
+            "name": "chat::ada::processing::chat_check_line::response",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1324,35 +1324,35 @@
                 },
                 "responses": {
                     "yes": [
-                        "chat::meme::processing::chat_confirm_line",
-                        "chat::meme::processing::chat_explain_parameters",
-                        "chat::meme::processing::show_line_parameters",
-                        "chat::meme::processing::chat_tweak_line_parameters",
-                        "chat::meme::processing::chat_move_to_circle",
-                        "chat::meme::processing::chat_move_to_circle::response"
+                        "chat::ada::processing::chat_confirm_line",
+                        "chat::ada::processing::chat_explain_parameters",
+                        "chat::ada::processing::show_line_parameters",
+                        "chat::ada::processing::chat_tweak_line_parameters",
+                        "chat::ada::processing::chat_move_to_circle",
+                        "chat::ada::processing::chat_move_to_circle::response"
                     ],
                     "no": [
-                        "chat::meme::processing::chat_retry_line",
-                        "chat::meme::processing::chat_check_line",
-                        "chat::meme::processing::show_sketch_code",
-                        "chat::meme::processing::chat_check_line::response"
+                        "chat::ada::processing::chat_retry_line",
+                        "chat::ada::processing::chat_check_line",
+                        "chat::ada::processing::show_sketch_code",
+                        "chat::ada::processing::chat_check_line::response"
                     ]
                 }
             }
         },
         {
-            "name": "chat::meme::processing::chat_retry_line",
+            "name": "chat::ada::processing::chat_retry_line",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Hm.. click the below icon to open a file containing the completed code. Compare the two to see if you missed something!"
             }
         },
         {
-            "name": "chat::meme::processing::show_sketch_code",
+            "name": "chat::ada::processing::show_sketch_code",
             "type": "chat-actor-attachment",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "attachment": {
                     "desc": "The completed code of the line",
                     "path": "line.pde"
@@ -1360,26 +1360,26 @@
             }
         },
         {
-            "name": "chat::meme::processing::chat_confirm_line",
+            "name": "chat::ada::processing::chat_confirm_line",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "That's a nice line!"
             }
         },
         {
-            "name": "chat::meme::processing::chat_explain_parameters",
+            "name": "chat::ada::processing::chat_explain_parameters",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "The numbers—also called \"parameters\"—in the \"line()\" code tell Processing exactly where to draw the line."
             }
         },
         {
-            "name": "chat::meme::processing::show_line_parameters",
+            "name": "chat::ada::processing::show_line_parameters",
             "type": "chat-actor-attachment",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "attachment": {
                     "desc": "Visual explanation of line parameters in Sketch",
                     "path": "line_key.png"
@@ -1387,26 +1387,26 @@
             }
         },
         {
-            "name": "chat::meme::processing::chat_tweak_line_parameters",
+            "name": "chat::ada::processing::chat_tweak_line_parameters",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Feel free to tweak the line's parameters, press play, and see what happens! (Be sure to keep the values under 200 or else the line will go off screen.)"
             }
         },
         {
-            "name": "chat::meme::processing::chat_move_to_circle",
+            "name": "chat::ada::processing::chat_move_to_circle",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Click here when you're ready to move on."
             }
         },
         {
-            "name": "chat::meme::processing::chat_move_to_circle::response",
+            "name": "chat::ada::processing::chat_move_to_circle::response",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1419,67 +1419,67 @@
                 },
                 "responses": {
                     "yes": [
-                        "chat::meme::processing::chat_circle_code",
-                        "chat::meme::processing::code_circle",
-                        "chat::meme::processing::chat_circle_example",
-                        "chat::meme::processing::show_circle_example"
+                        "chat::ada::processing::chat_circle_code",
+                        "chat::ada::processing::code_circle",
+                        "chat::ada::processing::chat_circle_example",
+                        "chat::ada::processing::show_circle_example"
                         
                     ]
                 }
             }
         },
         {
-          "name": "chat::meme::processing::chat_circle_code",
+          "name": "chat::ada::processing::chat_circle_code",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "Cool! Now let's try something new. Add the below code to your Text editor to draw a circle. The highlighted code shows the new code we're adding."
           }
         },
         {
-            "name": "chat::meme::processing::code_circle",
+            "name": "chat::ada::processing::code_circle",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n line(90,150,80,160);   // draws a line \n ellipse(100,70,60,60);   // draws a circle \n \n print(\"Hello, Mars!\");   // prints a message in the Console</span>"
             }
         },
         {
-          "name": "chat::meme::processing::chat_circle_example",
+          "name": "chat::ada::processing::chat_circle_example",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "After you hit play, you should see something like this:"
           }
         },
         {
-            "name": "chat::meme::processing::show_circle_example",
+            "name": "chat::ada::processing::show_circle_example",
             "type": "chat-actor-attachment",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "attachment": {
                     "desc": "Screenshot of circle in Processing",
                     "path": "circle.png",
                     "open_event": [
-                        "chat::meme::processing::chat_check_circle",
-                        "chat::meme::processing::chat_check_circle::response"
+                        "chat::ada::processing::chat_check_circle",
+                        "chat::ada::processing::chat_check_circle::response"
                     ]
                 }
             }
         },
         {
-            "name": "chat::meme::processing::chat_check_circle",
+            "name": "chat::ada::processing::chat_check_circle",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Did your circle appear in the Sketch window?"
             }
         },
         {
-            "name": "chat::meme::processing::chat_check_circle::response",
+            "name": "chat::ada::processing::chat_check_circle::response",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1495,50 +1495,50 @@
                 },
                 "responses": {
                     "yes": [
-                        "chat::meme::processing::chat_confirm_circle",
-                        "chat::meme::processing::chat_explain_circle",
-                        "chat::meme::processing::show_circle_parameters",
-                        "chat::meme::processing::chat_tweak_circle_parameters",
-                        "chat::meme::processing::chat_move_to_advanced",
-                        "chat::meme::processing::chat_move_to_advanced::response"
+                        "chat::ada::processing::chat_confirm_circle",
+                        "chat::ada::processing::chat_explain_circle",
+                        "chat::ada::processing::show_circle_parameters",
+                        "chat::ada::processing::chat_tweak_circle_parameters",
+                        "chat::ada::processing::chat_move_to_advanced",
+                        "chat::ada::processing::chat_move_to_advanced::response"
                     ],
                     "no": [
-                        "chat::meme::processing::chat_retry_circle",
-                        "chat::meme::processing::chat_check_circle",
-                        "chat::meme::processing::chat_check_circle::response"
+                        "chat::ada::processing::chat_retry_circle",
+                        "chat::ada::processing::chat_check_circle",
+                        "chat::ada::processing::chat_check_circle::response"
                     ]
                 }
             }
         },
         {
-          "name": "chat::meme::processing::chat_retry_circle",
+          "name": "chat::ada::processing::chat_retry_circle",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "Hm.. make sure you type the exact code below in the Text editor field, and then press play. Double check your work!"
           }
         },
         {
-          "name": "chat::meme::processing::chat_confirm_circle",
+          "name": "chat::ada::processing::chat_confirm_circle",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "A perfect circle!"
           }
         },
         {
-          "name": "chat::meme::processing::chat_explain_circle",
+          "name": "chat::ada::processing::chat_explain_circle",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "The \"ellipse()\" line of code tells Processing to draw an ellipse (or oval) with the parameters we chose:"
           }
         },
         {
-            "name": "chat::meme::processing::show_circle_parameters",
+            "name": "chat::ada::processing::show_circle_parameters",
             "type": "chat-actor-attachment",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "attachment": {
                     "desc": "Visual explanation of circle parameters in Sketch",
                     "path": "circle_key.png"
@@ -1546,26 +1546,26 @@
             }
         },
         {
-            "name": "chat::meme::processing::chat_tweak_circle_parameters",
+            "name": "chat::ada::processing::chat_tweak_circle_parameters",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Again, feel free to experiment by changing those parameters and pressing play to see what happens!"
             }
         },
         {
-            "name": "chat::meme::processing::chat_move_to_advanced",
+            "name": "chat::ada::processing::chat_move_to_advanced",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Click here when you're ready to move on."
             }
         },
         {
-            "name": "chat::meme::processing::chat_move_to_advanced::response",
+            "name": "chat::ada::processing::chat_move_to_advanced::response",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1578,69 +1578,69 @@
                 },
                 "responses": {
                     "yes": [
-                        "chat::meme::processing::chat_advanced_tutorial",
-                        "chat::meme::processing::code_martian",
-                        "chat::meme::processing::chat_martian_example",
-                        "chat::meme::processing::show_martian_example"
+                        "chat::ada::processing::chat_advanced_tutorial",
+                        "chat::ada::processing::code_martian",
+                        "chat::ada::processing::chat_martian_example",
+                        "chat::ada::processing::show_martian_example"
                     ]
                 }
             }
         },
         {
-          "name": "chat::meme::processing::chat_advanced_tutorial",
+          "name": "chat::ada::processing::chat_advanced_tutorial",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "With a little practice and creativity, you can use Processing to turn simple lines and circles into more complex works of art. To see an \"otherwordly\" example, add these lines to your code and press play."
           }
         },
         {
-            "name": "chat::meme::processing::code_martian",
+            "name": "chat::ada::processing::code_martian",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n rectMode(CENTER);   // draws everything from center \n rect(100,100,20,100);   // draws the body \n ellipse(100,70,60,60);   // draws the head \n ellipse(81,70,16,32);   // draws the left eye \n ellipse(119,70,16,32);   // draws the right eye \n line(90,150,80,160);   // draws the left leg \n line(110,150,120,160);   // draws the right leg \n \n print(\"Hello, Mars!\");   // prints a message in the Console</span>"
             }
         },
         {
-          "name": "chat::meme::processing::chat_martian_example",
+          "name": "chat::ada::processing::chat_martian_example",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "After you hit play, you should see something like this:"
           }
         },
         {
-            "name": "chat::meme::processing::show_martian_example",
+            "name": "chat::ada::processing::show_martian_example",
             "type": "chat-actor-attachment",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "attachment": {
                     "desc": "Screenshot of martian in Processing",
                     "path": "martian.png",
                     "open_event": [
-                        "chat::meme::processing::chat_check_martian",
-                        "chat::meme::processing::show_martian_code",
-                        "chat::meme::processing::chat_confirm_martian",
-                        "chat::meme::processing::chat_move_to_colors",
-                        "chat::meme::processing::chat_move_to_colors::response"
+                        "chat::ada::processing::chat_check_martian",
+                        "chat::ada::processing::show_martian_code",
+                        "chat::ada::processing::chat_confirm_martian",
+                        "chat::ada::processing::chat_move_to_colors",
+                        "chat::ada::processing::chat_move_to_colors::response"
                     ]
                 }
             }
         },
         {
-            "name": "chat::meme::processing::chat_check_martian",
+            "name": "chat::ada::processing::chat_check_martian",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "If you don't see the Martian, click the below icon to open a file containing the completed code. See if you can spot the difference!"
             }
         },
         {
-            "name": "chat::meme::processing::show_martian_code",
+            "name": "chat::ada::processing::show_martian_code",
             "type": "chat-actor-attachment",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "attachment": {
                     "desc": "The completed code of the Martian",
                     "path": "martian.pde"
@@ -1648,26 +1648,26 @@
             }
         },
         {
-            "name": "chat::meme::processing::chat_confirm_martian",
+            "name": "chat::ada::processing::chat_confirm_martian",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Thankfully, it looks like a friendly alien! But we're not done yet..."
             }
         },
         {
-            "name": "chat::meme::processing::chat_move_to_colors",
+            "name": "chat::ada::processing::chat_move_to_colors",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Click the button when you're ready to continue."
             }
         },
         {
-            "name": "chat::meme::processing::chat_move_to_colors::response",
+            "name": "chat::ada::processing::chat_move_to_colors::response",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1680,75 +1680,75 @@
                 },
                 "responses": {
                     "yes": [
-                        "chat::meme::processing::chat_color_code",
-                        "chat::meme::processing::code_color_martian",
-                        "chat::meme::processing::chat_explain_code_reading",
-                        "chat::meme::processing::chat_martian_colors_example",
-                        "chat::meme::processing::show_martian_colors_example"
+                        "chat::ada::processing::chat_color_code",
+                        "chat::ada::processing::code_color_martian",
+                        "chat::ada::processing::chat_explain_code_reading",
+                        "chat::ada::processing::chat_martian_colors_example",
+                        "chat::ada::processing::show_martian_colors_example"
                     ]
                 }
             }
         },
         {
-            "name": "chat::meme::processing::chat_color_code",
+            "name": "chat::ada::processing::chat_color_code",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Color in the Martian by adding the highlighted code belowe and pressing play."
             }
         },
         {
-            "name": "chat::meme::processing::code_color_martian",
+            "name": "chat::ada::processing::code_color_martian",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n rectMode(CENTER);   // draws everything from center \n background(100);   // colors the background dark gray \n fill(0,200,0);   // colors the Martian's body green \n rect(100,100,20,100);   // draws the body \n ellipse(100,70,60,60);   // draws the head \n fill(0);   // colors the Martian's eyes black \n ellipse(81,70,16,32);   // draws the left eye \n ellipse(119,70,16,32);   // draws the right eye \n line(90,150,80,160);   // draws the left leg \n line(110,150,120,160);   // draws the right leg \n \n print(\"Hello, Mars!\");   // prints a message in the Console</span>"
             }
         },
         {
-            "name": "chat::meme::processing::chat_explain_code_reading",
+            "name": "chat::ada::processing::chat_explain_code_reading",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Make sure that your lines of code appear in exactly the same order as they do in the example. Processing reads your code from top to bottom, so adjusting the order will change your Martian's appearance."
             }
         },
         {
-          "name": "chat::meme::processing::chat_martian_colors_example",
+          "name": "chat::ada::processing::chat_martian_colors_example",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "If done correctly, your Martian should look like this:"
           }
         },
         {
-            "name": "chat::meme::processing::show_martian_colors_example",
+            "name": "chat::ada::processing::show_martian_colors_example",
             "type": "chat-actor-attachment",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "attachment": {
                     "desc": "Screenshot of colored Martian in Processing",
                     "path": "martian_colors.png",
                     "open_event": [
-                        "chat::meme::processing::chat_check_martian_colors",
-                        "chat::meme::processing::chat_check_martian_colors::response"
+                        "chat::ada::processing::chat_check_martian_colors",
+                        "chat::ada::processing::chat_check_martian_colors::response"
                     ]
                 }
             }
         },
         {
-            "name": "chat::meme::processing::chat_check_martian_colors",
+            "name": "chat::ada::processing::chat_check_martian_colors",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Did your Martian appear with a green body and black eyes in the Sketch window?"
             }
         },
         {
-            "name": "chat::meme::processing::chat_check_martian_colors::response",
+            "name": "chat::ada::processing::chat_check_martian_colors::response",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1764,101 +1764,101 @@
                 },
                 "responses": {
                     "yes": [
-                        "chat::meme::processing::chat_confirm_martian_colors",
-                        "chat::meme::processing::chat_explain_martian_grayscale",
-                        "chat::meme::processing::code_grayscale",
-                        "chat::meme::processing::chat_explain_martian_rgb",
-                        "chat::meme::processing::code_rgb",
-                        "chat::meme::processing::chat_tweak_color",
-                        "chat::meme::processing::chat_confirm_martian_colors",
-                        "chat::meme::processing::chat_move_to_stroke",
-                        "chat::meme::processing::chat_move_to_stroke::response"
+                        "chat::ada::processing::chat_confirm_martian_colors",
+                        "chat::ada::processing::chat_explain_martian_grayscale",
+                        "chat::ada::processing::code_grayscale",
+                        "chat::ada::processing::chat_explain_martian_rgb",
+                        "chat::ada::processing::code_rgb",
+                        "chat::ada::processing::chat_tweak_color",
+                        "chat::ada::processing::chat_confirm_martian_colors",
+                        "chat::ada::processing::chat_move_to_stroke",
+                        "chat::ada::processing::chat_move_to_stroke::response"
                     ],
                     "no": [
-                        "chat::meme::processing::chat_retry_martian_colors",
-                        "chat::meme::processing::chat_check_martian_colors",
-                        "chat::meme::processing::chat_check_martian_colors::response"
+                        "chat::ada::processing::chat_retry_martian_colors",
+                        "chat::ada::processing::chat_check_martian_colors",
+                        "chat::ada::processing::chat_check_martian_colors::response"
                     ]
                 }
             }
         },
         {
-          "name": "chat::meme::processing::chat_retry_martian_colors",
+          "name": "chat::ada::processing::chat_retry_martian_colors",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "Hm.. why don't you try again? Make sure that your lines of code appear in exactly the same order as below. Processing reads your code from top to bottom, so adjusting the order will change the look of your Martian. Type the exact code below in the Text editor field, and then press play."
           }
         },
         {
-          "name": "chat::meme::processing::chat_confirm_martian_colors",
+          "name": "chat::ada::processing::chat_confirm_martian_colors",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "Now that's a Martian! So what's going on here?"
           }
         },
         {
-          "name": "chat::meme::processing::chat_explain_martian_grayscale",
+          "name": "chat::ada::processing::chat_explain_martian_grayscale",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "When adding color with \"background()\" and \"fill()\", you can either do it in grayscale mode or in RGB (red-green-blue) mode. In grayscale mode, you simply pick a number between 0 (black) and 255 (white), like you did with the background and the eyes:"
           }
         },
         {
-            "name": "chat::meme::processing::code_grayscale",
+            "name": "chat::ada::processing::code_grayscale",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "<span font_family='monospace'>background(100);   // colors the background dark gray \n fill(0);   // colors the Martian's eyes black \n </span>"
             }
         },
         {
-          "name": "chat::meme::processing::chat_explain_martian_rgb",
+          "name": "chat::ada::processing::chat_explain_martian_rgb",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "In RGB mode, each parameter is a value from 0 to 255. So, in our example, we selected \"0\" for red, \"200\" for green, and \"0\" for blue. That's how we colored the Martian's body green!"
           }
         },
         {
-            "name": "chat::meme::processing::code_rgb",
+            "name": "chat::ada::processing::code_rgb",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "<span font_family='monospace'>fill(0,200,0);   // colors the Martian's body green</span>"
             }
         },
         {
-          "name": "chat::meme::processing::chat_tweak_color",
+          "name": "chat::ada::processing::chat_tweak_color",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "Feel free to experiment with changing your Martian's colors by changing those parameters in your code! Here are some tips for creating certain colors in RGB mode: \n Red + Green = Yellow \n Red + Blue = Purple \n Green + Blue = Cyan"
           }
         },
         {
-          "name": "chat::meme::processing::chat_confirm_martian_colors",
+          "name": "chat::ada::processing::chat_confirm_martian_colors",
           "type": "chat-actor",
           "data": {
-            "actor": "MEME",
+            "actor": "Ada",
             "message": "Now that's a Martian! So what's going on here?"
           }
         },
         {
-            "name": "chat::meme::processing::chat_move_to_stroke",
+            "name": "chat::ada::processing::chat_move_to_stroke",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Ready for one more example? Click the button when you're ready."
             }
         },
         {
-            "name": "chat::meme::processing::chat_move_to_stroke::response",
+            "name": "chat::ada::processing::chat_move_to_stroke::response",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1871,11 +1871,11 @@
                 },
                 "responses": {
                     "yes": [
-                        "chat::meme::processing::chat_stroke_code",
-                        "chat::meme::processing::code_stroke",
-                        "chat::meme::processing::chat_stroke_color",
-                        "chat::meme::processing::chat_tweak_martian",
-                        "chat::meme::processing::chat_move_to_stroke",
+                        "chat::ada::processing::chat_stroke_code",
+                        "chat::ada::processing::code_stroke",
+                        "chat::ada::processing::chat_stroke_color",
+                        "chat::ada::processing::chat_tweak_martian",
+                        "chat::ada::processing::chat_move_to_stroke",
                         "processing::start-mission::yoursystem"
                     ]
                 }
@@ -1889,42 +1889,42 @@
             }
         },      
         {
-            "name": "chat::meme::processing::chat_stroke_code",
+            "name": "chat::ada::processing::chat_stroke_code",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "The default \"stroke weight\" of our lines and circles is a single pixel, but this can be changed with the \"strokeWeight()\" function. The single parameter to \"strokeWeight()\" sets the width of drawn lines. For example, this code would make your Martian have a thicker head:"
             }
         },
         {
-            "name": "chat::meme::processing::code_stroke",
+            "name": "chat::ada::processing::code_stroke",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "<span font_family='monospace'>stroke(8);   // thickens the Martian's head</span>"
             }
         },
         {
-            "name": "chat::meme::processing::chat_stroke_color",
+            "name": "chat::ada::processing::chat_stroke_color",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "You can also change the stroke color with the code \"stroke()\" inputting either one value (for grayscale mode) or three values (for RGB mode), making sure to input the appropriate parameters as described before."
             }
         },
         {
-            "name": "chat::meme::processing::chat_tweak_martian",
+            "name": "chat::ada::processing::chat_tweak_martian",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Play around with your Martian, adjust its stroke weight, stroke color, or anything else you feel like changing."
             }
         },
         {
-            "name": "chat::meme::processing::chat_move_to_stroke",
+            "name": "chat::ada::processing::chat_move_to_stroke",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Congrats! You're well on your way to learning Processing! When you're ready to try something new, head to AVATAR2 and they'll direct you the next set of activities!"
             }
         },
@@ -1936,18 +1936,18 @@
             }
         },
         {
-            "name": "chat::meme::yoursystem::find_etc",
+            "name": "chat::ada::yoursystem::find_etc",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Now it is time to find the system configuration files. They're known in oldspeak as 'Editable Text Configuration' files. What directory do you think we can find them in?"
             }
         },
         {
-            "name": "chat::meme::yoursystem::find_etc::response",
+            "name": "chat::ada::yoursystem::find_etc::response",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1969,44 +1969,44 @@
                 },
                 "responses": {
                     "usr": [
-                        "chat::meme::yoursystem::find_etc::again"
+                        "chat::ada::yoursystem::find_etc::again"
                     ],
                     "var": [
-                        "chat::meme::yoursystem::find_etc::again"
+                        "chat::ada::yoursystem::find_etc::again"
                     ],
                     "boot": [
-                        "chat::meme::yoursystem::find_etc::again"
+                        "chat::ada::yoursystem::find_etc::again"
                     ],
                     "etc": [
-                        "chat::meme::yoursystem::find_etc::success",
+                        "chat::ada::yoursystem::find_etc::success",
                         "artifact::yoursystem::found_etc",
-                        "chat::meme::yoursystem::find_logs",
-                        "chat::meme::yoursystem::find_logs::challenge"
+                        "chat::ada::yoursystem::find_logs",
+                        "chat::ada::yoursystem::find_logs::challenge"
                     ]
                 }
             }
         },
         {
-            "name": "chat::meme::yoursystem::find_etc::again",
+            "name": "chat::ada::yoursystem::find_etc::again",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Hmm, I don't see any text files in there."
             }
         },
         {
-            "name": "chat::meme::yoursystem::find_etc::success",
+            "name": "chat::ada::yoursystem::find_etc::success",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Of course. 'Editable Text Configuration' files shortens down to 'etc'."
             }
         },
         {
-            "name": "chat::meme::yoursystem::find_logs",
+            "name": "chat::ada::yoursystem::find_logs",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Now, where can you find your system logs"
             }
         },
@@ -2018,10 +2018,10 @@
             }
         },
         {
-            "name": "chat::meme::yoursystem::find_logs::challenge",
+            "name": "chat::ada::yoursystem::find_logs::challenge",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -2043,36 +2043,36 @@
                 },
                 "responses": {
                     "usr": [
-                        "chat::meme::yoursystem::find_logs::again"
+                        "chat::ada::yoursystem::find_logs::again"
                     ],
                     "var": [
-                        "chat::meme::yoursystem::find_logs::success",
+                        "chat::ada::yoursystem::find_logs::success",
                         "artifact::yoursystem::found_logs",
-                        "chat::meme::yoursystem::find_configs",
-                        "chat::meme::yoursystem::find_configs::challenge"
+                        "chat::ada::yoursystem::find_configs",
+                        "chat::ada::yoursystem::find_configs::challenge"
                     ],
                     "boot": [
-                        "chat::meme::yoursystem::find_logs::again"
+                        "chat::ada::yoursystem::find_logs::again"
                     ],
                     "etc": [
-                        "chat::meme::yoursystem::find_logs::again"
+                        "chat::ada::yoursystem::find_logs::again"
                     ]
                 }
             }
         },
         {
-            "name": "chat::meme::yoursystem::find_logs::again",
+            "name": "chat::ada::yoursystem::find_logs::again",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Nope, no logs here"
             }
         },
         {
-            "name": "chat::meme::yoursystem::find_logs::success",
+            "name": "chat::ada::yoursystem::find_logs::success",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Sweet, all the logs are here. You can also use `journalctl` to view all the logs in one place."
             }
         },
@@ -2084,18 +2084,18 @@
             }
         },
         {
-            "name": "chat::meme::yoursystem::find_configs",
+            "name": "chat::ada::yoursystem::find_configs",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "There's lots of configuration files in your home directory. But they're all hiddden from view. Can you tell me in one character or less why that is?"
             }
         },
         {
-            "name": "chat::meme::yoursystem::find_configs::challenge",
+            "name": "chat::ada::yoursystem::find_configs::challenge",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "text",
                     "settings": {
@@ -2104,30 +2104,30 @@
                 },
                 "responses": {
                     "success": [
-                        "chat::meme::yoursystem::find_configs::success",
+                        "chat::ada::yoursystem::find_configs::success",
                         "artifact::yoursystem::found_configs",
                         "yoursystem::start-mission::python"
                     ],
                     "failure": [
-                        "chat::meme::yoursystem::find_configs::again",
-                        "chat::meme::yoursystem::find_configs::challenge"
+                        "chat::ada::yoursystem::find_configs::again",
+                        "chat::ada::yoursystem::find_configs::challenge"
                     ]
                 }
             }
         },
         {
-            "name": "chat::meme::yoursystem::find_configs::success",
+            "name": "chat::ada::yoursystem::find_configs::success",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "That's right! They all begin with a '.' so they are hidden. But you can unhide them. Why don't you try pressing Control-H in the File Manager and see what you find?"
             }
         },
         {
-            "name": "chat::meme::yoursystem::find_configs::again",
+            "name": "chat::ada::yoursystem::find_configs::again",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Hmm, no it isn't quite that. They all start with one and it isn't a letter or an number. But it causes them to be hidden from view. Why not search the internet to find out what it is?"
             }
         },
@@ -2146,10 +2146,10 @@
             }
         },
         {
-            "name": "chat::meme::showmehow_python",
+            "name": "chat::ada::showmehow_python",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Now that you've learned a bit about what runs your system and the files in your system, how about we start learning a programming language so that you can write your own programs? I've added a new lesson to showmehow to start exploring the Python programming language. Check it out."
             }
         },
@@ -2264,26 +2264,26 @@
             }
         },
         {
-            "name": "chat::meme::python_functions::intro",
+            "name": "chat::ada::python_functions::intro",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Now it is time to edit your first Python file. I'm going to send you something and you'll need to call the right functions in order to solve the problem I'm going to give you"
             }
         },
         {
-            "name": "chat::meme::python_functions::enter_code",
+            "name": "chat::ada::python_functions::enter_code",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Can you tell me what the output of this file is once you run it with the code: '5 2 8 4 9 1'?"
             }
         },
         {
-            "name": "chat::meme::python_functions::intro::attachment",
+            "name": "chat::ada::python_functions::intro::attachment",
             "type": "chat-actor-attachment",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "attachment": {
                     "desc": "Some functions",
                     "path": "functions.py"
@@ -2291,18 +2291,18 @@
             }
         },
         {
-            "name": "chat::meme::python_functions::how_to_run_file",
+            "name": "chat::ada::python_functions::how_to_run_file",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "You can run this file by using the <span font_family='monospace'>python</span> command in the terminal. Copy the contents of this file to a new one called 'functions.py', then navigate to that directory in the terminal and run it with: <span font_family='monospace'>python functions.py 5 2 8 4 9 1</span>"
             }
         },
         {
-            "name": "chat::meme::python_functions::challenge",
+            "name": "chat::ada::python_functions::challenge",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "text",
                     "settings": {
@@ -2311,30 +2311,30 @@
                 },
                 "responses": {
                     "success": [
-                        "chat::meme::python_functions::challenge::success",
+                        "chat::ada::python_functions::challenge::success",
                         "artifact::python_functions::found_answer",
                         "python_functions::start-mission::python_lists"
                     ],
                     "failure": [
-                        "chat::meme::python_functions::challenge::again",
-                        "chat::meme::python_functions::challenge"
+                        "chat::ada::python_functions::challenge::again",
+                        "chat::ada::python_functions::challenge"
                     ]
                 }
             }
         },
         {
-            "name": "chat::meme::python_functions::challenge::success",
+            "name": "chat::ada::python_functions::challenge::success",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Correct! You put the functions together in the right away and got the right answer!"
             }
         },
         {
-            "name": "chat::meme::python_functions::challenge::again",
+            "name": "chat::ada::python_functions::challenge::again",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Nope, wrong answer, try again."
             }
         },
@@ -2353,10 +2353,10 @@
             }
         },
         {
-            "name": "chat::meme::python_lists::intro",
+            "name": "chat::ada::python_lists::intro",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Now let's learn a bit more about what you can do with lists. Python has a concept of list comprehensions, which you should try out in the python_lists task in showmehow."
             }
         },
@@ -2437,26 +2437,26 @@
             }
         },
         {
-            "name": "chat::meme::python_classes::intro",
+            "name": "chat::ada::python_classes::intro",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Another python file. This time, it is going to contain some classes and objects and you'll need to add the right methods to the class in order to get things to work."
             }
         },
         {
-            "name": "chat::meme::python_classes::enter_code",
+            "name": "chat::ada::python_classes::enter_code",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Can you tell me what the output of this file is once you implement the missing methods?"
             }
         },
         {
-            "name": "chat::meme::python_classes::intro::attachment",
+            "name": "chat::ada::python_classes::intro::attachment",
             "type": "chat-actor-attachment",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "attachment": {
                     "desc": "Object Oriented Programming in Python",
                     "path": "classes.py"
@@ -2464,10 +2464,10 @@
             }
         },
         {
-            "name": "chat::meme::python_classes::challenge",
+            "name": "chat::ada::python_classes::challenge",
             "type": "input-user",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "input": {
                     "type": "text",
                     "settings": {
@@ -2476,30 +2476,30 @@
                 },
                 "responses": {
                     "success": [
-                        "chat::meme::python_classes::challenge::success",
+                        "chat::ada::python_classes::challenge::success",
                         "artifact::python_classes::found_answer",
                         "python_classes::start-mission::showmehow_python_gi"
                     ],
                     "failure": [
-                        "chat::meme::python_classes::challenge::again",
-                        "chat::meme::python_classes::challenge"
+                        "chat::ada::python_classes::challenge::again",
+                        "chat::ada::python_classes::challenge"
                     ]
                 }
             }
         },
         {
-            "name": "chat::meme::python_classes::challenge::success",
+            "name": "chat::ada::python_classes::challenge::success",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Correct! You put the classes together and got the right answer!"
             }
         },
         {
-            "name": "chat::meme::python_classes::challenge::again",
+            "name": "chat::ada::python_classes::challenge::again",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "Nope, wrong answer, try again."
             }
         },
@@ -2531,10 +2531,10 @@
             }
         },
         {
-            "name": "chat::meme::showmehow_python_gi::intro",
+            "name": "chat::ada::showmehow_python_gi::intro",
             "type": "chat-actor",
             "data": {
-                "actor": "MEME",
+                "actor": "Ada",
                 "message": "You can use almost any programming language (including python) to interact with lots of different components on your system. For instance, you can send notifications or even create new windows. Check out the 'python-gi' task I added to showmehow for more."
             }
         },
