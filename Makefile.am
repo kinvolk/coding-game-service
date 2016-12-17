@@ -16,6 +16,8 @@ arbitrary_files = \
 	files/martian.png \
 	files/martian_colors.png \
 	files/wave.pde \
+	files/coding-terminal.desktop \
+	files/showmehow-terminal \
 	$(NULL)
 
 filesdir = $(pkgdatadir)/files
@@ -127,6 +129,7 @@ lib_LTLIBRARIES = libcoding_game_service-1.0.la
 bin_SCRIPTS = \
 	coding-game-service \
 	coding-game-validator \
+	coding-terminal \
 	$(NULL)
 
 coding-game-service: $(srcdir)/bin/coding-game-service.js.in
@@ -134,6 +137,10 @@ coding-game-service: $(srcdir)/bin/coding-game-service.js.in
 	chmod +x $@
 
 coding-game-validator: $(srcdir)/bin/coding-game-validator.js
+	cp $< $@
+	chmod +x $@
+
+coding-terminal: $(srcdir)/bin/coding-terminal
 	cp $< $@
 	chmod +x $@
 
