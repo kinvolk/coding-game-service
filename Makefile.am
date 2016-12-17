@@ -15,6 +15,7 @@ arbitrary_files = \
 	files/line_key.png \
 	files/martian.png \
 	files/martian_colors.png \
+	files/wave.pde \
 	$(NULL)
 
 filesdir = $(pkgdatadir)/files
