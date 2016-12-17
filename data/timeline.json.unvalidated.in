@@ -130,8 +130,10 @@
             "long_desc": "You can create some drawings with code using the processing app",
             "hint": "If you get stuck, you can always ask for a sample file",
             "start_events": [
-                "chat::ada::processing::ask_familiar_processing",
-                "chat::ada::processing::ask_familiar_processing::response"
+                "chat::ada::processing::time_something_new",
+                "chat::ada::processing::processing_tool_drawings",
+                "chat::ada::processing::chat_beginner_tutorial",
+                "chat::ada::processing::click_icon"
             ],
             "artifacts": [
                 {
@@ -816,7 +818,6 @@
                 ]
             }
         },
-        
         {
             "name": "chat::ada::terminaltasks::settings",
             "type": "chat-actor",
@@ -856,43 +857,19 @@
             }
         },
         {
-            "name": "chat::ada::processing::ask_familiar_processing",
+            "name": "chat::ada::processing::time_something_new",
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "I'm your Processing tutor. This is a great tool for creating interactive drawings with code. Are you already familiar with Processing?"
+                "message": "Alright, time for something new!"
             }
         },
         {
-            "name": "chat::ada::processing::ask_familiar_processing::response",
-            "type": "input-user",
+            "name": "chat::ada::processing::processing_tool_drawings",
+            "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "input": {
-                    "type": "choice",
-                    "settings": {
-                        "choices": {
-                            "yes": {
-                                "text": "Yes"
-                            },
-                            "no": {
-                                "text": "No"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "yes": [
-                        "chat::ada::processing::chat_advanced_tutorial",
-                        "chat::ada::processing::code_martian",
-                        "chat::ada::processing::chat_martian_example",
-                        "chat::ada::processing::show_martian_example"
-                    ],
-                    "no": [
-                        "chat::ada::processing::chat_beginner_tutorial",
-                        "chat::ada::processing::click_icon"
-                    ]
-                }
+                "message": "Processing is a great tool for creating interactive drawings with code. "
             }
         },
         {
@@ -900,7 +877,7 @@
           "type": "chat-actor",
           "data": {
             "actor": "Ada",
-            "message": "Great, let's get started! Click the icon below to start Sketch."
+            "message": "To get started, click the Processing icon on the desktop. It should look like this:"
           }
         },
         {
@@ -1041,7 +1018,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n line(90,150,80,160);   // draws a line \n \n print(\"Hello, Mars!\");   // prints a message in the Console</span>"
+                "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n line(90,150,80,160);   // draws a line \n</span>"
             }
         },
         {
@@ -1106,6 +1083,7 @@
                         "chat::ada::processing::chat_retry_line",
                         "chat::ada::processing::chat_check_line",
                         "chat::ada::processing::show_sketch_code",
+                        "chat::ada::processing::chat_compare_code",
                         "chat::ada::processing::chat_check_line::response"
                     ]
                 }
@@ -1116,7 +1094,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "Hm.. click the below icon to open a file containing the completed code. Compare the two to see if you missed something!"
+                "message": "Hm.. click the below icon to open a file containing the completed code."
             }
         },
         {
@@ -1128,6 +1106,14 @@
                     "desc": "The completed code of the line",
                     "path": "line.pde"
                 }
+            }
+        },
+        {
+            "name": "chat::ada::processing::chat_compare_code",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Compare the completed code with your code and see if you can spot the difference. You can continue with this code if you want."
             }
         },
         {
@@ -1143,7 +1129,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "The numbers—also called \"parameters\"—in the \"line()\" code tell Processing exactly where to draw the line."
+                "message": "The numbers—also called \"parameters\" in the \"line()\" code tell Processing exactly where to draw the line."
             }
         },
         {
@@ -1170,7 +1156,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "Click here when you're ready to move on."
+                "message": "Click the button when you're ready to move on."
             }
         },
         {
@@ -1183,7 +1169,7 @@
                     "settings": {
                         "choices": {
                             "yes": {
-                                "text": "Ready"
+                                "text": "Ready!"
                             }
                         }
                     }
@@ -1194,7 +1180,6 @@
                         "chat::ada::processing::code_circle",
                         "chat::ada::processing::chat_circle_example",
                         "chat::ada::processing::show_circle_example"
-                        
                     ]
                 }
             }
@@ -1204,7 +1189,7 @@
           "type": "chat-actor",
           "data": {
             "actor": "Ada",
-            "message": "Cool! Now let's try something new. Add the below code to your Text editor to draw a circle. The highlighted code shows the new code we're adding."
+            "message": "Cool! Now let's try something new. Add the below code to your Text editor to draw a circle. You can recognize the new code because its comment says “draws a circle.”"
           }
         },
         {
@@ -1275,6 +1260,7 @@
                     ],
                     "no": [
                         "chat::ada::processing::chat_retry_circle",
+                        "chat::ada::processing::code_circle",
                         "chat::ada::processing::chat_check_circle",
                         "chat::ada::processing::chat_check_circle::response"
                     ]
@@ -1342,7 +1328,7 @@
                     "settings": {
                         "choices": {
                             "yes": {
-                                "text": "Ready"
+                                "text": "Ready!"
                             }
                         }
                     }
@@ -1390,17 +1376,55 @@
                     "desc": "Screenshot of martian in Processing",
                     "path": "martian.png",
                     "open_event": [
-                        "chat::ada::processing::chat_check_martian",
-                        "chat::ada::processing::show_martian_code",
-                        "chat::ada::processing::chat_confirm_martian",
-                        "chat::ada::processing::chat_move_to_colors",
-                        "chat::ada::processing::chat_move_to_colors::response"
+                       "chat::ada::processing::chat_check_martian_appeared", "chat::ada::processing::chat_check_martian_appeared::response"
                     ]
                 }
             }
         },
         {
-            "name": "chat::ada::processing::chat_check_martian",
+            "name": "chat::ada::processing::chat_check_martian_appeared",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Did your Martian appear in the Sketch window?"
+            }
+        },
+        {
+            "name": "chat::ada::processing::chat_check_martian_appeared::response",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Yes"
+                            },
+                            "no": {
+                                "text": "No"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::ada::processing::chat_confirm_martian",
+                        "chat::ada::processing::chat_move_to_colors",
+                        "chat::ada::processing::chat_move_to_colors::response"
+                    ],
+                    "no": [
+                        "chat::ada::processing::chat_suggest_compare",
+                        "chat::ada::processing::show_martian_code",
+                        "chat::ada::processing::chat_martian_can_continue",
+                        "chat::ada::processing::chat_check_martian_appeared",
+                        "chat::ada::processing::chat_check_martian_appeared::response"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::ada::processing::chat_suggest_compare",
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
@@ -1416,6 +1440,14 @@
                     "desc": "The completed code of the Martian",
                     "path": "martian.pde"
                 }
+            }
+        },
+        {
+            "name": "chat::ada::processing::chat_martian_can_continue",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "You can now continue from this point using the completed code."
             }
         },
         {
@@ -1465,7 +1497,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "Color in the Martian by adding the highlighted code belowe and pressing play."
+                "message": "Color in the Martian by adding the 'fill' commands below and pressing play."
             }
         },
         {
@@ -1610,19 +1642,11 @@
           }
         },
         {
-          "name": "chat::ada::processing::chat_confirm_martian_colors",
-          "type": "chat-actor",
-          "data": {
-            "actor": "Ada",
-            "message": "Now that's a Martian! So what's going on here?"
-          }
-        },
-        {
             "name": "chat::ada::processing::chat_move_to_stroke",
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "Ready for one more example? Click the button when you're ready."
+                "message": "When you're done coloring your alien, click the button to continue"
             }
         },
         {
@@ -1635,7 +1659,7 @@
                     "settings": {
                         "choices": {
                             "yes": {
-                                "text": "Ready"
+                                "text": "Ready!"
                             }
                         }
                     }
@@ -1646,19 +1670,12 @@
                         "chat::ada::processing::code_stroke",
                         "chat::ada::processing::chat_stroke_color",
                         "chat::ada::processing::chat_tweak_martian",
-                        "chat::ada::processing::chat_move_to_stroke",
-                        "processing::start-mission::yoursystem"
+                        "chat::ada::processing::chat_move_to_cool_example",
+                        "chat::ada::processing::chat_move_to_cool_example::response"
                     ]
                 }
             }
         },
-        {
-            "name": "processing::start-mission::yoursystem",
-            "type": "start-mission",
-            "data": {
-                "name": "yoursystem"
-            }
-        },      
         {
             "name": "chat::ada::processing::chat_stroke_code",
             "type": "chat-actor",
@@ -1692,11 +1709,54 @@
             }
         },
         {
-            "name": "chat::ada::processing::chat_move_to_stroke",
+            "name": "chat::ada::processing::chat_move_to_cool_example",
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "Congrats! You're well on your way to learning Processing! When you're ready to try something new, head to AVATAR2 and they'll direct you the next set of activities!"
+                "message": "When you're ready to see something really cool, click the button below to continue."
+            }
+        },
+        {
+            "name": "chat::ada::processing::chat_move_to_cool_example::response",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Ready!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::ada::processing::wave_explanation",
+                        "chat::ada::processing::wave_attachment",
+                        "processing::start-mission::yoursystem"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::ada::processing::wave_explanation",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Here's an example of just how far you can go with a little bit of code."
+            }
+        },
+        {
+            "name": "chat::ada::processing::wave_attachment",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "Ada",
+                "attachment": {
+                    "desc": "Waves",
+                    "path": "wave.pde"
+                }
             }
         },
         {
