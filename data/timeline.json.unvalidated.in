@@ -25,7 +25,8 @@
             "long_desc": "Why don't you answer the questions and see where the rabbit hole leads",
             "hint": "Just follow the prompts and search beyond your user account",
             "start_events": [
-                "chat::meme::intro::hook"
+                "chat::meme::intro::hook",
+                "chat::meme::intro::hook::challenge"
             ],
             "artifacts": [
                 {
