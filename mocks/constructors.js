@@ -61,7 +61,7 @@ const createExternalService = jasmine.createSpyObj.bind(this, 'ExternalServiceMo
 const ExternalEffectsStub = new Lang.Class({
     Name: 'ExternalEffectsStub',
 
-    performEventIn: function(event, timeout, callback) {
+    performEventIn: function(timeout, callback) {
         callback();
     },
 
