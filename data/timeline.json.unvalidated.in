@@ -1,14 +1,31 @@
 {
     "missions": [
         {
+            "name": "nothing_here",
+            "short_desc": "Nothing to see here, folks",
+            "long_desc": "But maybe it might if you just wait a little longer...",
+            "hint": "You're patient, right?",
+            "start_events": [
+                "chat::meme::nothing_here::wait-intro",
+                "chat::change::where_to_go",
+                "chat::change::where_to_go::input"
+            ],
+            "artifacts": [
+                {
+                    "name": "artifact::nothing_here::patience",
+                    "desc": "Demonstrated some level of patience",
+                    "icon": "text-editor-symbolic",
+                    "points": 100
+                }
+            ]
+        },
+        {
             "name": "intro",
             "short_desc": "Down the rabbit hole",
             "long_desc": "Why don't you answer the questions and see where the rabbit hole leads",
             "hint": "Just follow the prompts and search beyond your user account",
             "start_events": [
-                "chat::change::where_to_go",
-                "chat::change::where_to_go::input",
-                "chat::meme::intro::wait-intro"
+                "chat::meme::intro::hook"
             ],
             "artifacts": [
                 {
@@ -301,25 +318,40 @@
         }
     ],
     "start": {
-        "initial_event": "start-mission::intro"
+        "initial_event": "start-mission::nothing_here"
     },
     "events": [
+        {
+            "name": "start-mission::nothing_here",
+            "type": "start-mission",
+            "data": {
+                "name": "nothing_here"
+            }
+        },
+        {
+            "name": "chat::meme::nothing_here::wait-intro",
+            "type": "wait-for",
+            "data": {
+                "timeout": 100000,
+                "then": [
+                    "chat::meme::nothing_here::artifact",
+                    "start-mission::intro",
+                    "chat::meme::intro::hook::challenge"
+                ]
+            }
+        },
+        {
+            "name": "chat::meme::nothing_here::artifact",
+            "type": "register-artifact",
+            "data": {
+                "name": "artifact::nothing_here::patience"
+            }
+        },
         {
             "name": "start-mission::intro",
             "type": "start-mission",
             "data": {
                 "name": "intro"
-            }
-        },
-        {
-            "name": "chat::meme::intro::wait-intro",
-            "type": "wait-for",
-            "data": {
-                "timeout": 100000,
-                "then": [
-                    "chat::meme::intro::hook",
-                    "chat::meme::intro::hook::challenge"
-                ]
             }
         },
         {
