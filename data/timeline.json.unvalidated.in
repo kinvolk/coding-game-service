@@ -7,7 +7,7 @@
             "hint": "You're patient, right?",
             "start_events": [
                 "chat::ada::nothing_here::wait-intro",
-                "chat::marlon::where_to_go",
+                "chat::marlon::initial",
                 "chat::marlon::where_to_go::input"
             ],
             "artifacts": [
@@ -26,6 +26,7 @@
             "hint": "Just follow the prompts and search beyond your user account",
             "start_events": [
                 "chat::ada::intro::hook",
+                "chat::ada::intro::enjoyed_exploring",
                 "chat::ada::intro::hook::challenge"
             ],
             "artifacts": [
@@ -336,8 +337,7 @@
                 "timeout": 100000,
                 "then": [
                     "chat::ada::nothing_here::artifact",
-                    "start-mission::intro",
-                    "chat::ada::intro::hook::challenge"
+                    "start-mission::intro"
                 ]
             }
         },
@@ -360,7 +360,15 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "Hey you"
+                "message": "Hi there!"
+            }
+        },
+        {
+            "name": "chat::ada::intro::enjoyed_exploring",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "I'm Ada, the Endless bot! Have you enjoyed exploring Endless OS?"
             }
         },
         {
@@ -377,8 +385,10 @@
                 "responses": {
                     "success": [
                         "chat::ada::intro::hook::artifact",
-                        "chat::ada::intro::choice_see_cool",
-                        "chat::ada::intro::choice_see_cool::challenge"
+                        "chat::ada::intro::more_meets_eye",
+                        "chat::ada::intro::exists_secret_code",
+                        "chat::ada::intro::type_exact_code",
+                        "chat::ada::intro::hook::type_exact_code::response"
                     ]
                 }
             }
@@ -391,171 +401,59 @@
             }
         },
         {
-            "name": "chat::ada::intro::choice_see_cool",
+            "name": "chat::ada::intro::more_meets_eye",
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "Wanna see something cool?"
+                "message": "Well, there’s a lot more to Endless than meets the eye! If you have the right knowledge, you can use this computer to do anything. Your imagination is the only limit."
             }
         },
         {
-            "name": "chat::ada::intro::choice_see_cool::challenge",
+            "name": "chat::ada::intro::exists_secret_code",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Take this window for example. If you move it around, it looks like just a regular old window. But if I give you the secret code, you can transform it into a WOBBLY WINDOW!"
+            }
+        },
+        {
+            "name": "chat::ada::intro::type_exact_code",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Want to give it a shot? Type this exact code: <span font_family=\"monospace\">\"wobbly_window\" = true;</span>"
+            }
+        },
+        {
+            "name": "chat::ada::intro::hook::type_exact_code::response",
             "type": "input-user",
             "data": {
                 "actor": "Ada",
-                "input": {
-                    "type": "choice",
-                    "settings": {
-                        "choices": {
-                            "yes": {
-                                "text": "Sure, why not"
-                            },
-                            "no": {
-                                "text": "Go away"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "yes": [
-                        "chat::ada::intro::choice_see_cool::artifact",
-                        "chat::ada::intro::tell-goog-key",
-                        "chat::goog::intro::tell-goog-key",
-                        "chat::dank::intro::tell-goog-key",
-                        "event::intro::leave-key-behind",
-                        "chat::goog::intro::tell-goog-key::input"
-                    ],
-                    "no": [
-                        "chat::ada::intro::choice_see_cool::again",
-                        "chat::ada::intro::choice_see_cool::challenge"
-                    ]
-                }
-            }
-        },
-        {
-            "name": "chat::ada::intro::choice_see_cool::artifact",
-            "type": "register-artifact",
-            "data": {
-                "name": "artifact::intro::choice_see_cool::challenge"
-            }
-        },
-        {
-            "name": "chat::ada::intro::choice_see_cool::again",
-            "type": "chat-actor",
-            "data": {
-                "actor": "Ada",
-                "message": "Sure you don't?"
-            }
-        },
-        {
-            "name": "chat::ada::intro::tell-goog-key",
-            "type": "chat-actor",
-            "data": {
-                "actor": "Ada",
-                "message": "So here's the thing. Someone left a key behind and I heard that GOOG will unlock the system if you just tell it a password. All you have to do is find it ..."
-            }
-        },
-        {
-            "name": "chat::goog::intro::tell-goog-key",
-            "type": "chat-actor",
-            "data": {
-                "actor": "GOOG",
-                "message": "Yeah there's no way that's going to happen. You tell me the password and I'll just ignore you! I can do what I want!"
-            }
-        },
-        {
-            "name": "chat::goog::intro::tell-goog-key::again",
-            "type": "chat-actor",
-            "data": {
-                "actor": "GOOG",
-                "message": "Wrong! You'll never make me open this thing up"
-            }
-        },
-        {
-            "name": "chat::goog::intro::goog-receive-key::segfault",
-            "type": "chat-actor",
-            "data": {
-                "actor": "GOOG",
-                "message": "Whatever. That's the right key but I'll just call a method to ignore you... Segmentation Fault (Signal 9)."
-            }
-        },
-        {
-            "name": "chat::goog::intro::goog-receive-key::wait-name-error",
-            "type": "wait-for",
-            "data": {
-                "timeout": 5000,
-                "then": [
-                    "chat::goog::intro::goog-receive-key::name-error",
-                    "chat::goog::intro::goog-receive-key::wait-give-in"
-                ]
-            }
-        },
-        {
-            "name": "chat::goog::intro::goog-receive-key::wait-give-in",
-            "type": "wait-for",
-            "data": {
-                "timeout": 5000,
-                "then": [
-                    "chat::goog::intro::goog-receive-key::give-in",
-                    "chat::ada::intro::enable-wobbly-windows::comment",
-                    "event::intro::enable-wobbly-windows",
-                    "listen::intro::wobble-window"
-                ]
-            }
-        },
-        {
-            "name": "chat::goog::intro::goog-receive-key::name-error",
-            "type": "chat-actor",
-            "data": {
-                "actor": "GOOG",
-                "message": "Uh, let me try again. There's a function around here to just pretend this never happened. NameError."
-            }
-        },
-        {
-            "name": "chat::goog::intro::goog-receive-key::give-in",
-            "type": "chat-actor",
-            "data": {
-                "actor": "GOOG",
-                "message": "You've gotta be kidding me! Is there no other way?!"
-            }
-        },
-        {
-            "name": "chat::goog::intro::tell-goog-key::input",
-            "type": "input-user",
-            "data": {
-                "actor": "GOOG",
                 "input": {
                     "type": "text",
                     "settings": {
-                        "showmehow_id": "intro::goog_key"
+                        "showmehow_id": "intro::enable_wobbly_windows"
                     }
                 },
                 "responses": {
-                    "failure": [
-                        "chat::goog::intro::tell-goog-key::again",
-                        "chat::goog::intro::tell-goog-key::input"
-                    ],
                     "success": [
-                        "chat::goog::intro::goog-receive-key::segfault",
-                        "chat::goog::intro::goog-receive-key::wait-name-error"
+                        "event::intro::enable-wobbly-windows",
+                        "listen::intro::wobble-window",
+                        "chat::ada::intro::enable-wobbly-windows::comment"
+                    ],
+                    "failure": [
+                        "chat::ada::intro::type_exact_code::again",
+                        "chat::ada::intro::hook::type_exact_code::response"
                     ]
                 }
             }
         },
         {
-            "name": "chat::dank::intro::tell-goog-key",
+            "name": "chat::ada::intro::type_exact_code::again",
             "type": "chat-actor",
             "data": {
-                "actor": "DANK",
-                "message": "DANK here! I found something in a place all of us have access to! Maybe you should come take a look!"
-            }
-        },
-        {
-            "name": "event::intro::leave-key-behind",
-            "type": "copy-file",
-            "data": {
-                "source": "sw.txt",
-                "target": "/home/shared/secret.txt"
+                "actor": "Ada",
+                "message": "That wasn't quite right. Type this exact code: <span font_family=\"monospace\">\"wobbly_window\" = true;</span>"
             }
         },
         {
@@ -563,7 +461,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "SYSTEM UNLOCKED! Let's have some fun! I turned this window into jello - check it out!"
+                "message": "Did it work? Try moving a window around!"
             }
         },
         {
@@ -593,44 +491,17 @@
                 "name": "move-window",
                 "received": [
                     "listen::intro::wobble-window::artifact",
-                    "chat::ada::intro::stop-wobble-window-comment",
-                    "chat::fruit::intro::stop-wobble-window-comment",
-                    "chat::dank::intro::stop-wobble-window-comment",
-                    "chat::goog::intro::stop-wobble-window-comment",
+                    "chat::ada::intro::wobble-window-comment",
                     "listen::intro::stop-wobble-window"
                 ]
             }
         },
         {
-            "name": "chat::ada::intro::stop-wobble-window-comment",
+            "name": "chat::ada::intro::wobble-window-comment",
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "Aaaack! Stop it!"
-            }
-        },
-        {
-            "name": "chat::fruit::intro::stop-wobble-window-comment",
-            "type": "chat-actor",
-            "data": {
-                "actor": "FRUIT",
-                "message": "Woah! What on earth is going on here?"
-            }
-        },
-        {
-            "name": "chat::goog::intro::stop-wobble-window-comment",
-            "type": "chat-actor",
-            "data": {
-                "actor": "GOOG",
-                "message": "What the?!?!"
-            }
-        },
-        {
-            "name": "chat::dank::intro::stop-wobble-window-comment",
-            "type": "chat-actor",
-            "data": {
-                "actor": "DANK",
-                "message": "Abort! Abort!"
+                "message": "Woah! So cool!"
             }
         },
         {
@@ -639,12 +510,11 @@
             "data": {
                 "name": "stop-moving-windows",
                 "received": [
-                    "chat::ada::intro::wobble-windows-comment",
+                    "chat::ada::intro::stop-wobble-windows-comment",
+                    "chat::ada::intro::just_the_beginning",
+                    "chat::ada::intro::start_where_all_famous",
                     "event::intro::disable-wobbly-windows",
                     "chat::ada::intro::install_programming",
-                    "chat::dank::intro::new_splash_paint",
-                    "chat::dank::intro::new_splash_paint::input",
-                    "chat::fruit::intro::install_programming::comment",
                     "chat::ada::intro::install_programming::challenge"
                 ]
             }
@@ -657,71 +527,27 @@
             }
         },
         {
-            "name": "chat::ada::intro::wobble-windows-comment",
+            "name": "chat::ada::intro::stop-wobble-windows-comment",
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "Things are not as they seem around here"
+                "message": "You just learned your first code!"
             }
         },
         {
-            "name": "chat::dank::intro::new_splash_paint",
+            "name": "chat::ada::intro::just_the_beginning",
             "type": "chat-actor",
             "data": {
-                "actor": "DANK",
-                "message": "Here's something cool I found! Why don't you try 'newsplash' and see what the paint bucket changes this time?"
+                "actor": "Ada",
+                "message": "This is just the beginning. The more programming skills you unlock, the more cool things you can do with your Endless computer!"
             }
         },
         {
-            "name": "chat::dank::intro::new_splash_paint::again",
+            "name": "chat::ada::intro::start_where_all_famous",
             "type": "chat-actor",
             "data": {
-                "actor": "DANK",
-                "message": "We want a NEW splash, not an old one!"
-            }
-        },
-        {
-            "name": "chat::dank::intro::new_splash_paint::complete",
-            "type": "chat-actor",
-            "data": {
-                "actor": "DANK",
-                "message": "How is that for a difference?"
-            }
-        },
-        {
-            "name": "chat::dank::intro::new_splash_paint::input",
-            "type": "input-user",
-            "data": {
-                "actor": "DANK",
-                "input": {
-                    "type": "text",
-                    "settings": {
-                        "showmehow_id": "intro::change_background_pic"
-                    }
-                },
-                "responses": {
-                    "success": [
-                        "event::intro::new_splash_paint::background",
-                        "chat::dank::intro::new_splash_paint::complete"
-                    ],
-                    "failure": [
-                        "chat::dank::intro::new_splash_paint::again",
-                        "chat::dank::intro::new_splash_paint::input"
-                    ]
-                }
-            }
-        },
-        {
-            "name": "event::intro::new_splash_paint::background",
-            "type": "change-setting",
-            "data": {
-                "schema": "org.gnome.desktop.background",
-                "key": "picture-uri",
-                "variant_type": "s",
-                "value": {
-                    "type": "internal-file-uri",
-                    "value": "background_pic.jpg"
-                }
+                "actor": "Ada",
+                "message": "If you’re ready to take your next step into the world of Endless Code, we need to start where all the famous programmers got their start: in the Terminal."
             }
         },
         {
@@ -729,7 +555,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "You think I can teach you something cool? Try this: install-terminal"
+                "message": "Once you're ready, type this exact code to install Terminal: <span font=\"monospace\">install-terminal</span>"
             }
         },
         {
@@ -748,12 +574,11 @@
                         "chat::ada::intro::install-terminal::artifact",
                         "event::ada::intro::install-terminal::insert-terminal-icon",
                         "chat::ada::intro::intro-complete",
-                        "chat::goog::intro::install_programming::comment",
-                        "intro::start-bashrc-mission"
+                        "chat::ada::intro::intro-complete::marlon",
+                        "intro::start-mission::terminalintro"
                     ],
                     "failure": [
                         "chat::ada::intro::install_programming::again",
-                        "chat::fruit::intro::install_programming::again",
                         "chat::ada::intro::install_programming::challenge"
                     ]
                 }
@@ -765,30 +590,6 @@
             "data": {
                 "actor": "Ada",
                 "message": "'install-terminal' EXACTLY. I haven't got all day!"
-            }
-        },
-        {
-            "name": "chat::fruit::intro::install_programming::again",
-            "type": "chat-actor",
-            "data": {
-                "actor": "FRUIT",
-                "message": "That's it, step away from that keyboard"
-            }
-        },
-        {
-            "name": "chat::fruit::intro::install_programming::comment",
-            "type": "chat-actor",
-            "data": {
-                "actor": "FRUIT",
-                "message": "You don't want to do this. Stay in that walled garden!"
-            }
-        },
-        {
-            "name": "chat::goog::intro::install_programming::comment",
-            "type": "chat-actor",
-            "data": {
-                "actor": "GOOG",
-                "message": "This really isn't going to be pretty..."
             }
         },
         {
@@ -811,49 +612,19 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "Buckle up Dorothy, because Kansas is going bye-bye!\nSee you in the 'Coding Fun' app on your desktop!"
+                "message": "Excellent work! You should now see the Terminal app on the desktop. Click it to get started, and I’ll meet you there!"
             }
         },
         {
-            "name": "intro::start-bashrc-mission",
-            "type": "start-mission",
-            "data": {
-                "name": "bashrc"
-            }
-        },
-        {
-            "name": "bashrc::chat::ada::send_bashrc",
-            "type": "chat-actor-attachment",
-            "data": {
-                "actor": "Ada",
-                "attachment": {
-                    "desc": "Your Shell's Configuration",
-                    "path": "~/.bashrc",
-                    "open_event": [
-                        "bashrc::register_artifact",
-                        "bashrc::chat::ada::open_bashrc",
-                        "bashrc::start-mission::terminalintro"
-                    ]
-                }
-            }
-        },
-        {
-            "name": "bashrc::register_artifact",
-            "type": "register-artifact",
-            "data": {
-                "name": "artifact::openbashrc"
-            }
-        },
-        {
-            "name": "bashrc::chat::ada::open_bashrc",
+            "name": "chat::ada::intro::intro-complete::marlon",
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "With great powers come great responsibility."
+                "message": "By the way, if you ever get stuck or want to jump to a different coding activity, just talk to my bot buddy Marlon."
             }
         },
         {
-            "name": "bashrc::start-mission::terminalintro",
+            "name": "intro::start-mission::terminalintro",
             "type": "start-mission",
             "data": {
                 "name": "terminalintro"
@@ -2592,11 +2363,11 @@
             }
         },
         {
-            "name": "chat::marlon::where_to_go",
+            "name": "chat::marlon::initial",
             "type": "chat-actor",
             "data": {
                 "actor": "Marlon",
-                "message": "What would you like to do next?"
+                "message": "If you ever want to try a different coding activity, let me know. Just choose from one of the below options:"
             }
         },
         {
@@ -2612,10 +2383,10 @@
                                 "text": "Introduction"
                             },
                             "showmehow": {
-                                "text": "Showmehow - Terminal"
+                                "text": "Terminal - Dig into the system"
                             },
                             "processing": {
-                                "text": "Processing"
+                                "text": "Sketch - Create works of art wit hcode"
                             },
                             "showmehow_python": {
                                 "text": "Showmehow - Python"
@@ -2629,30 +2400,38 @@
                 "responses": {
                     "intro": [
                         "start-mission::intro",
-                        "chat::marlon::where_to_go",
+                        "chat::marlon::where_to_go::response",
                         "chat::marlon::where_to_go::input"
                     ],
                     "processing": [
                         "terminaltasks::start-mission::processing",
-                        "chat::marlon::where_to_go",
+                        "chat::marlon::where_to_go::response",
                         "chat::marlon::where_to_go::input"
                     ],
                     "showmehow": [
-                        "bashrc::start-mission::terminalintro",
-                        "chat::marlon::where_to_go",
+                        "intro::start-mission::terminalintro",
+                        "chat::marlon::where_to_go::response",
                         "chat::marlon::where_to_go::input"
                     ],
                     "showmehow_python": [
                         "yoursystem::start-mission::python",
-                        "chat::marlon::where_to_go",
+                        "chat::marlon::where_to_go::response",
                         "chat::marlon::where_to_go::input"
                     ],
                     "python_functions": [
                         "showmehow_python::start-mission::python_functions",
-                        "chat::marlon::where_to_go",
+                        "chat::marlon::where_to_go::response",
                         "chat::marlon::where_to_go::input"
                     ]
                 }
+            }
+        },
+        {
+            "name": "chat::marlon::where_to_go::response",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Marlon",
+                "message": "Excellent choice! Come back here if you ever want to switch to a different activity"
             }
         }
     ]
