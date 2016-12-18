@@ -1045,7 +1045,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "// sets size of the window\nsize(200,200);\n// draws a line\nline(90,150,80,160);</span>"
+                "message": "// sets size of the window\nsize(200,200);\n// draws a line\nline(90,150,80,160);"
             }
         },
         {
