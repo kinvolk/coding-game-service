@@ -1905,7 +1905,7 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Flip to source code editor button",
-                    "path": "codeview-icon-hint.png",
+                    "path": "codeview-icon.png",
                     "open_event": [
                         "chat::ada::codeview::weather::flip_screen::hint_chat_second",
                         "chat::ada::codeview::weather::flip_screen::response"
@@ -1968,7 +1968,7 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Overview of source code editor",
-                    "path": "codeview-builder-overview.png",
+                    "path": "builder-overview.png",
                     "open_event": [
                         "chat::ada::codeview::weather::editor::task",
                         "chat::ada::codeview::weather::first_task::description",
@@ -2095,7 +2095,7 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Hint for finding the copyright year.",
-                    "path": "codeview-builder-hints.png",
+                    "path": "codeview-builder.png",
                     "open_event": [
                         "chat::ada::codeview::weather::first_task::challenge::prompt",
                         "chat::ada::codeview::weather::first_task::challenge"
