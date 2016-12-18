@@ -47,12 +47,6 @@
                     "desc": "Discovered a new way of looking at things",
                     "icon": "text-editor-symbolic",
                     "points": 52
-                },
-                {
-                    "name": "artifact::intro::install-terminal",
-                    "icon": "text-editor-symbolic",
-                    "desc": "Installed the terminal",
-                    "points": 52
                 }
             ]
         },
@@ -79,12 +73,18 @@
             "long_desc": "See what lies behind the curtains in the terminal. Complete the exercises in showmehow and learn more about this new world.",
             "hint": "Use 'showmehow' to start learning things",
             "start_events": [
-                "terminalintro::setting::showmehow::add-showmehow",
-                "listen::terminalintro::showmehow-showmehow",
-                "terminalintro::chat::ada::open_terminal",
-                "terminalintro::chat::ada::open_terminal::choice"
+                "chat::ada::terminalintro::just_the_beginning",
+                "chat::ada::terminalintro::start_where_all_famous",
+                "chat::ada::terminalintro::install_programming",
+                "chat::ada::terminalintro::install_programming::challenge"
             ],
             "artifacts": [
+                {
+                    "name": "artifact::intro::install-terminal",
+                    "icon": "text-editor-symbolic",
+                    "desc": "Installed the terminal",
+                    "points": 52
+                },
                 {
                     "name": "artifact::terminalintro::showmehow",
                     "desc": "Learned how to use showmehow",
@@ -536,11 +536,8 @@
                 "name": "stop-moving-windows",
                 "received": [
                     "chat::ada::intro::stop-wobble-windows-comment",
-                    "chat::ada::intro::just_the_beginning",
-                    "chat::ada::intro::start_where_all_famous",
                     "event::intro::disable-wobbly-windows",
-                    "chat::ada::intro::install_programming",
-                    "chat::ada::intro::install_programming::challenge"
+                    "intro::start-mission::terminalintro"
                 ]
             }
         },
@@ -560,7 +557,14 @@
             }
         },
         {
-            "name": "chat::ada::intro::just_the_beginning",
+            "name": "intro::start-mission::terminalintro",
+            "type": "start-mission",
+            "data": {
+                "name": "terminalintro"
+            }
+        },
+        {
+            "name": "chat::ada::terminalintro::just_the_beginning",
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
@@ -568,7 +572,7 @@
             }
         },
         {
-            "name": "chat::ada::intro::start_where_all_famous",
+            "name": "chat::ada::terminalintro::start_where_all_famous",
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
@@ -576,7 +580,7 @@
             }
         },
         {
-            "name": "chat::ada::intro::install_programming",
+            "name": "chat::ada::terminalintro::install_programming",
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
@@ -584,7 +588,7 @@
             }
         },
         {
-            "name": "chat::ada::intro::install_programming::challenge",
+            "name": "chat::ada::terminalintro::install_programming::challenge",
             "type": "input-user",
             "data": {
                 "actor": "Ada",
@@ -596,22 +600,25 @@
                 },
                 "responses": {
                     "success": [
-                        "chat::ada::intro::install-terminal::artifact",
-                        "event::ada::intro::install-terminal::copy-terminal-desktop-file",
-                        "event::ada::intro::install-terminal::insert-terminal-icon",
-                        "chat::ada::intro::intro-complete",
-                        "chat::ada::intro::intro-complete::marlon",
-                        "intro::start-mission::terminalintro"
+                        "chat::ada::terminalintro::install-terminal::artifact",
+                        "event::ada::terminalintro::install-terminal::copy-terminal-desktop-file",
+                        "event::ada::terminalintro::install-terminal::insert-terminal-icon",
+                        "terminalintro::setting::showmehow::add-showmehow",
+                        "listen::terminalintro::showmehow-showmehow",
+                        "chat::ada::terminalintro::intro-complete",
+                        "chat::ada::terminalintro::intro-complete::marlon",
+                        "terminalintro::chat::ada::open_terminal",
+                        "terminalintro::chat::ada::open_terminal::choice"
                     ],
                     "failure": [
-                        "chat::ada::intro::install_programming::again",
-                        "chat::ada::intro::install_programming::challenge"
+                        "chat::ada::terminalintro::install_programming::again",
+                        "chat::ada::terminalintro::install_programming::challenge"
                     ]
                 }
             }
         },
         {
-            "name": "chat::ada::intro::install_programming::again",
+            "name": "chat::ada::terminalintro::install_programming::again",
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
@@ -619,14 +626,14 @@
             }
         },
         {
-            "name": "chat::ada::intro::install-terminal::artifact",
+            "name": "chat::ada::terminalintro::install-terminal::artifact",
             "type": "register-artifact",
             "data": {
                 "name": "artifact::intro::install-terminal"
             }
         },
         {
-            "name": "event::ada::intro::install-terminal::copy-terminal-desktop-file",
+            "name": "event::ada::terminalintro::install-terminal::copy-terminal-desktop-file",
             "type": "copy-file",
             "data": {
                 "source": "coding-terminal.desktop",
@@ -634,7 +641,7 @@
             }
         },
         {
-            "name": "event::ada::intro::install-terminal::insert-terminal-icon",
+            "name": "event::ada::terminalintro::install-terminal::insert-terminal-icon",
             "type": "modify-app-grid",
             "data": {
                 "action": "add-app",
@@ -642,7 +649,7 @@
             }
         },
         {
-            "name": "chat::ada::intro::intro-complete",
+            "name": "chat::ada::terminalintro::intro-complete",
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
@@ -650,18 +657,11 @@
             }
         },
         {
-            "name": "chat::ada::intro::intro-complete::marlon",
+            "name": "chat::ada::terminalintro::intro-complete::marlon",
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
                 "message": "By the way, if you ever get stuck or want to jump to a different coding activity, just talk to my bot buddy Marlon."
-            }
-        },
-        {
-            "name": "intro::start-mission::terminalintro",
-            "type": "start-mission",
-            "data": {
-                "name": "terminalintro"
             }
         },
         {
