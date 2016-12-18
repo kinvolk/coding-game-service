@@ -1,4 +1,7 @@
-size(200,200);   // sets size of the window \n line(90,150,80,160);
-line(90,150,80,160);    // draws a line
+// sets size of the window
+size(200,200);
+// draws a line
+line(90,150,80,160);
 
-print("Hello, Mars!");   // prints a message in the Console
+// prints a message in the Console
+print("Hello, Mars!");
