@@ -969,7 +969,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "By the way, the text that comes after \"//\" is called a \"comment\" because it describes what that piece of code actually does. You can copy that too, but it’s not necessary for the code to run properly."
+                "message": "By the way, the text that comes after \"<span font_family=\"monospace\">//</span>\" is called a \"comment\" because it describes what that piece of code actually does. You can copy that too, but it’s not necessary for the code to run properly."
             }
         },
         {
@@ -1156,7 +1156,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "The numbers—also called \"parameters\" in the \"line()\" code tell Processing exactly where to draw the line."
+                "message": "The numbers—also called \"parameters\" in the <span font_family=\"monospace\">line()</span> code tell Processing exactly where to draw the line."
             }
         },
         {
@@ -1315,7 +1315,7 @@
           "type": "chat-actor",
           "data": {
             "actor": "Ada",
-            "message": "The \"ellipse()\" line of code tells Processing to draw an ellipse (or oval) with the parameters we chose:"
+            "message": "The <span font_family=\"monospace\">ellipse()</span> line of code tells Processing to draw an ellipse (or oval) with the parameters we chose:"
           }
         },
         {
@@ -1648,7 +1648,7 @@
           "type": "chat-actor",
           "data": {
             "actor": "Ada",
-            "message": "In RGB mode, each parameter is a value from 0 to 255. So, in our example, we selected \"0\" for red, \"200\" for green, and \"0\" for blue. That's how we colored the Martian's body green!"
+            "message": "In RGB mode, each parameter is a value from 0 to 255. So, in our example, we selected <span font_family=\"monospace\">0</span> for red, <span font_family=\"monospace\">200</span> for green, and <span font_family=\"monospace\">0</span> for blue. That's how we colored the Martian's body green!"
           }
         },
         {
@@ -1707,7 +1707,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "The default \"stroke weight\" of our lines and circles is a single pixel, but this can be changed with the \"strokeWeight()\" function. The single parameter to \"strokeWeight()\" sets the width of drawn lines. For example, this code would make your Martian have a thicker head:"
+                "message": "The default \"stroke weight\" of our lines and circles is a single pixel, but this can be changed with the <span font_family=\"monospace\">strokeWeight()</span> function. The single parameter to <span font_family=\"monospace\">strokeWeight()</span> sets the width of drawn lines. For example, this code would make your Martian have a thicker head:"
             }
         },
         {
@@ -1723,7 +1723,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "You can also change the stroke color with the code \"stroke()\" inputting either one value (for grayscale mode) or three values (for RGB mode), making sure to input the appropriate parameters as described before."
+                "message": "You can also change the stroke color with the code <span font_family=\"monospace\">stroke()</span> inputting either one value (for grayscale mode) or three values (for RGB mode), making sure to input the appropriate parameters as described before."
             }
         },
         {
