@@ -961,7 +961,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "// prints a message in the Console\nprint(\"Hello, Mars!\");"
+                "message": "// prints a message in the Console\nprint(\"Hello, Mars!\");",
+                "styles": ["code"]
             }
         },
         {
@@ -1045,7 +1046,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "// sets size of the window\nsize(200,200);\n// draws a line\nline(90,150,80,160);"
+                "message": "// sets size of the window\nsize(200,200);\n// draws a line\nline(90,150,80,160);",
+                "styles": ["code"]
             }
         },
         {
@@ -1224,7 +1226,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "// sets size of the window\nsize(200,200);\n// draws a line\nline(90,150,80,160);\n// draws a circle\nellipse(100,70,60,60);\n\n// prints a message in the Console\nprint(\"Hello, Mars!\");"
+                "message": "// sets size of the window\nsize(200,200);\n// draws a line\nline(90,150,80,160);\n// draws a circle\nellipse(100,70,60,60);\n\n// prints a message in the Console\nprint(\"Hello, Mars!\");",
+                "styles": ["code"]
             }
         },
         {
@@ -1383,7 +1386,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "// sets size of the window\nsize(200,200);\n// draws everything from center\nrectMode(CENTER);\n// draws the body\nrect(100,100,20,100);\n// draws the head\nellipse(100,70,60,60);\n// draws the left eye\nellipse(81,70,16,32);\n// draws the right eye\nellipse(119,70,16,32);\n// draws the left leg\nline(90,150,80,160);\n// draws the right leg\nline(110,150,120,160);\n\n// prints a message in the Console\nprint(\"Hello, Mars!\");"
+                "message": "// sets size of the window\nsize(200,200);\n// draws everything from center\nrectMode(CENTER);\n// draws the body\nrect(100,100,20,100);\n// draws the head\nellipse(100,70,60,60);\n// draws the left eye\nellipse(81,70,16,32);\n// draws the right eye\nellipse(119,70,16,32);\n// draws the left leg\nline(90,150,80,160);\n// draws the right leg\nline(110,150,120,160);\n\n// prints a message in the Console\nprint(\"Hello, Mars!\");",
+                "styles": ["code"]
             }
         },
         {
@@ -1532,7 +1536,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "// sets size of the window\nsize(200,200);\n// draws everything from center\nrectMode(CENTER);\n// colors the background dark gray\n background(100);\n// colors the Martian's body green\nfill(0,200,0);\n// draws the body\nrect(100,100,20,100);\n// draws the head\nellipse(100,70,60,60);\n// colors the Martian's eyes black\nfill(0);\n// draws the left eye\nellipse(81,70,16,32);\n// draws the right eye\nellipse(119,70,16,32);\n// draws the left leg\nline(90,150,80,160);\n// draws the right leg\nline(110,150,120,160);\n\n// prints a message in the Console\nprint(\"Hello, Mars!\");"
+                "message": "// sets size of the window\nsize(200,200);\n// draws everything from center\nrectMode(CENTER);\n// colors the background dark gray\n background(100);\n// colors the Martian's body green\nfill(0,200,0);\n// draws the body\nrect(100,100,20,100);\n// draws the head\nellipse(100,70,60,60);\n// colors the Martian's eyes black\nfill(0);\n// draws the left eye\nellipse(81,70,16,32);\n// draws the right eye\nellipse(119,70,16,32);\n// draws the left leg\nline(90,150,80,160);\n// draws the right leg\nline(110,150,120,160);\n\n// prints a message in the Console\nprint(\"Hello, Mars!\");",
+                "styles": ["code"]
             }
         },
         {
@@ -1640,7 +1645,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "// colors the background dark gray\nbackground(100);// colors the Martian's eyes black\nfill(0);"
+                "message": "// colors the background dark gray\nbackground(100);\n// colors the Martian's eyes black\nfill(0);",
+                "styles": ["code"]
             }
         },
         {
@@ -1656,7 +1662,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "// colors the Martian's body green\nfill(0,200,0);"
+                "message": "// colors the Martian's body green\nfill(0,200,0);",
+                "styles": ["code"]
             }
         },
         {
@@ -1715,7 +1722,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "// thickens the Martian's head\nstroke(8);
+                "message": "// thickens the Martian's head\nstroke(8);",
+                "styles": ["code"]
             }
         },
         {
