@@ -1065,11 +1065,7 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Screenshot of line in Processing",
-                    "path": "line.png",
-                    "open_event": [
-                        "chat::ada::processing::chat_check_line",
-                        "chat::ada::processing::chat_check_line::response"
-                    ]
+                    "path": "line.png"
                 }
             }
         },
