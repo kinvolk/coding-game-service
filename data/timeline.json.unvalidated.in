@@ -763,8 +763,17 @@
             "data": {
                 "name": "showmehow-navigation",
                 "received": [
+                    "terminalintro::chat::ada::open_terminal::navigation-partner-content",
                     "terminalintro::start-mission::terminaltasks"
                 ]
+            }
+        },
+        {
+            "name": "terminalintro::chat::ada::open_terminal::navigation-partner-content",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "I hope you enjoyed learning about the file system in Terminal. There’s so much more you can do! Check out this great lesson from <a href=\"https://www.codecademy.com/learn/learn-the-command-line\">Codecademy</a>!"
             }
         },
         {
