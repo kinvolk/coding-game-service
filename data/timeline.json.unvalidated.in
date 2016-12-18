@@ -961,7 +961,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>print(\"Hello, Mars!\");   // prints a message in the Console</span>"
+                "message": "// prints a message in the Console\nprint(\"Hello, Mars!\");"
             }
         },
         {
@@ -1045,7 +1045,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n line(90,150,80,160);   // draws a line \n</span>"
+                "message": "// sets size of the window\nsize(200,200);\n// draws a line\nline(90,150,80,160);</span>"
             }
         },
         {
@@ -1224,7 +1224,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n line(90,150,80,160);   // draws a line \n ellipse(100,70,60,60);   // draws a circle \n \n print(\"Hello, Mars!\");   // prints a message in the Console</span>"
+                "message": "// sets size of the window\nsize(200,200);\n// draws a line\nline(90,150,80,160);\n// draws a circle\nellipse(100,70,60,60);\n\n// prints a message in the Console\nprint(\"Hello, Mars!\");"
             }
         },
         {
@@ -1383,7 +1383,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n rectMode(CENTER);   // draws everything from center \n rect(100,100,20,100);   // draws the body \n ellipse(100,70,60,60);   // draws the head \n ellipse(81,70,16,32);   // draws the left eye \n ellipse(119,70,16,32);   // draws the right eye \n line(90,150,80,160);   // draws the left leg \n line(110,150,120,160);   // draws the right leg \n \n print(\"Hello, Mars!\");   // prints a message in the Console</span>"
+                "message": "// sets size of the window\nsize(200,200);\n// draws everything from center\nrectMode(CENTER);\n// draws the body\nrect(100,100,20,100);\n// draws the head\nellipse(100,70,60,60);\n// draws the left eye\nellipse(81,70,16,32);\n// draws the right eye\nellipse(119,70,16,32);\n// draws the left leg\nline(90,150,80,160);\n// draws the right leg\nline(110,150,120,160);\n\n// prints a message in the Console\nprint(\"Hello, Mars!\");"
             }
         },
         {
@@ -1532,7 +1532,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n rectMode(CENTER);   // draws everything from center \n background(100);   // colors the background dark gray \n fill(0,200,0);   // colors the Martian's body green \n rect(100,100,20,100);   // draws the body \n ellipse(100,70,60,60);   // draws the head \n fill(0);   // colors the Martian's eyes black \n ellipse(81,70,16,32);   // draws the left eye \n ellipse(119,70,16,32);   // draws the right eye \n line(90,150,80,160);   // draws the left leg \n line(110,150,120,160);   // draws the right leg \n \n print(\"Hello, Mars!\");   // prints a message in the Console</span>"
+                "message": "// sets size of the window\nsize(200,200);\n// draws everything from center\nrectMode(CENTER);\n// colors the background dark gray\n background(100);\n// colors the Martian's body green\nfill(0,200,0);\n// draws the body\nrect(100,100,20,100);\n// draws the head\nellipse(100,70,60,60);\n// colors the Martian's eyes black\nfill(0);\n// draws the left eye\nellipse(81,70,16,32);\n// draws the right eye\nellipse(119,70,16,32);\n// draws the left leg\nline(90,150,80,160);\n// draws the right leg\nline(110,150,120,160);\n\n// prints a message in the Console\nprint(\"Hello, Mars!\");"
             }
         },
         {
@@ -1632,7 +1632,7 @@
           "type": "chat-actor",
           "data": {
             "actor": "Ada",
-            "message": "When adding color with \"background()\" and \"fill()\", you can either do it in grayscale mode or in RGB (red-green-blue) mode. In grayscale mode, you simply pick a number between 0 (black) and 255 (white), like you did with the background and the eyes:"
+            "message": "When adding color with <span font_family=\"monospace\">background()</span> and <span font_family=\"monospace\">fill()</span>, you can either do it in grayscale mode or in RGB (red-green-blue) mode. In grayscale mode, you simply pick a number between 0 (black) and 255 (white), like you did with the background and the eyes:"
           }
         },
         {
@@ -1640,7 +1640,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>background(100);   // colors the background dark gray \n fill(0);   // colors the Martian's eyes black \n </span>"
+                "message": "// colors the background dark gray\nbackground(100);// colors the Martian's eyes black\nfill(0);"
             }
         },
         {
@@ -1656,7 +1656,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>fill(0,200,0);   // colors the Martian's body green</span>"
+                "message": "// colors the Martian's body green\nfill(0,200,0);"
             }
         },
         {
@@ -1715,7 +1715,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>stroke(8);   // thickens the Martian's head</span>"
+                "message": "// thickens the Martian's head\nstroke(8);
             }
         },
         {
