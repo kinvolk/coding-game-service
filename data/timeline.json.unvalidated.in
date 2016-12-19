@@ -460,6 +460,7 @@
                         "showmehow_id": "intro::enable_wobbly_windows"
                     }
                 },
+                "styles": ["code"],
                 "responses": {
                     "success": [
                         "event::intro::enable-wobbly-windows",
