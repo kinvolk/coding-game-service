@@ -446,7 +446,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "Want to give it a shot? Type this exact code: <span font_family=\"monospace\">\"wobbly_window\" = true;</span>"
+                "message": "Want to give it a shot? Type this exact code: <span font_family=\"monospace\">wobbly_window = true;</span>"
             }
         },
         {
@@ -478,7 +478,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "That wasn't quite right. Type this exact code: <span font_family=\"monospace\">\"wobbly_window\" = true;</span>"
+                "message": "That wasn't quite right. Type this exact code: <span font_family=\"monospace\">wobbly_window = true;</span>"
             }
         },
         {
