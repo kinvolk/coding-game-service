@@ -1205,7 +1205,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "Feel free to tweak the line's parameters, press play, and see what happens! (Be sure to keep the values under 200 or else the line will go off screen.)"
+                "message": "Feel free to tweak the line's parameters, press play, and see what happens! (Be sure to keep the values under 200 or else the line will go off screen)."
             }
         },
         {
