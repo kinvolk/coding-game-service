@@ -32,6 +32,18 @@ The game service is designed primarily with this use case in mind. As such,
 chat responses are not responses to D-Bus method calls in the usual sense, but
 instead sent as new messages to `com.endlessm.Coding.Chatbox`.
 
+Chat messages are dispatched by using the `chat-actor`, `chat-actor-attachment`
+and `input-user` events. The `chat-actor` events support
+[Pango markup](https://developer.gnome.org/pango/stable/PangoMarkupFormat.html)
+so you can use something like
+`<span font_family=\'monospace\'>My text</span>` to ensure that it displays
+as 'code'. The `chat-actor-attachment` message type allows you to attach
+a file along with a message. If non-absolute path to a file is given as an attachment,
+it will be resolved relative to the data directory of `coding-game-service`.
+Files are always opened using the default handler for that file type. They are
+also always copied to a hidden location in the user's home directory so that
+they are editable.
+
 The only relevant methods exposed to external clients are `ChatHistory`, which
 gets the entire chat history for a particular actor and `ChatResponse`. These
 are primarily for use by the `coding-chatbox` app, to respond to a particular
