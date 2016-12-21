@@ -10,7 +10,8 @@ Build-Depends: autotools-dev,
                libgirepository1.0-dev,
                libglib2.0-dev,
                pkg-config,
-               python-lcov-cobertura (>= 1.5)
+               python-lcov-cobertura (>= 1.5),
+               showmehow
 Standards-Version: 3.9.4
 Section: non-free/libs
 Homepage: http://www.endlessm.com
