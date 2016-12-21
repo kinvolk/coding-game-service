@@ -502,7 +502,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "message": "SYSTEM UNLOCKED! Lets have some fun! I turned this window into jello - check it out!"
+                "message": "SYSTEM UNLOCKED! Let's have some fun! I turned this window into jello - check it out!"
             }
         },
         {
@@ -943,7 +943,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "message": "Now that you're working your way around terminal, lets try some stuff that you can't do anywhere else."
+                "message": "Now that you're working your way around terminal, let's try some stuff that you can't do anywhere else."
             }
         },
         {
@@ -1425,7 +1425,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "message": "Now lets learn a bit more about what you can do with lists. Python has a concept of list comprehensions, which you should try out in the python_lists task in showmehow."
+                "message": "Now let's learn a bit more about what you can do with lists. Python has a concept of list comprehensions, which you should try out in the python_lists task in showmehow."
             }
         },
         {
