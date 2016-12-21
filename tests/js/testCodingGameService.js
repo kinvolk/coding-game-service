@@ -15,7 +15,7 @@ const Mocks = imports.mocks.constructors;
 
 describe ('Game Service Controller', function () {
     beforeEach(function () {
-        GLib.setenv('G_SETTINGS_BACKEND', 'memory', true);
+        GLib.setenv('GSETTINGS_BACKEND', 'memory', true);
     });
 
     it('constructs', function() {

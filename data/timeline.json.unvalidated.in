@@ -6,6 +6,8 @@
             "long_desc": "Why don't you answer the questions and see where the rabbit hole leads",
             "hint": "Just follow the prompts and search beyond your user account",
             "start_events": [
+                "chat::change::where_to_go",
+                "chat::change::where_to_go::input",
                 "chat::meme::intro::hook",
                 "chat::meme::intro::hook::challenge"
             ],
@@ -87,6 +89,7 @@
             "hint": "Pipes (|) are key here",
             "start_events": [
                 "terminaltasks::setting::showmehow::add-textprocessing",
+                "chat::meme::terminaltasks::intro",
                 "listen::terminaltasks::showmehow-textprocessing"
             ],
             "artifacts": [
@@ -499,7 +502,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "message": "SYSTEM UNLOCKED! Lets have some fun! I turned this window into jello - check it out!"
+                "message": "SYSTEM UNLOCKED! Let's have some fun! I turned this window into jello - check it out!"
             }
         },
         {
@@ -933,6 +936,14 @@
                     "type": "append-to-list-unique",
                     "value": ["textprocessing"]
                 }
+            }
+        },
+        {
+            "name": "chat::meme::terminaltasks::intro",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Now that you're working your way around terminal, let's try some stuff that you can't do anywhere else."
             }
         },
         {
@@ -1414,7 +1425,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "message": "Now lets learn a bit more about what you can do with lists. Python has a concept of list comprehensions, which you should try out in the python_lists task in showmehow."
+                "message": "Now let's learn a bit more about what you can do with lists. Python has a concept of list comprehensions, which you should try out in the python_lists task in showmehow."
             }
         },
         {
@@ -1646,6 +1657,62 @@
                 "received": [
                     "artifact::python::send_gnotification"
                 ]
+            }
+        },
+        {
+            "name": "chat::change::where_to_go",
+            "type": "chat-actor",
+            "data": {
+                "actor": "CHANGE",
+                "message": "What would you like to do next?"
+            }
+        },
+        {
+            "name": "chat::change::where_to_go::input",
+            "type": "input-user",
+            "data": {
+                "actor": "CHANGE",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "intro": {
+                                "text": "Introduction"
+                            },
+                            "showmehow": {
+                                "text": "Showmehow - Terminal"
+                            },
+                            "showmehow_python": {
+                                "text": "Showmehow - Python"
+                            },
+                            "python_functions": {
+                                "text": "Python Functions"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "intro": [
+                        "start-mission::intro",
+                        "chat::change::where_to_go",
+                        "chat::change::where_to_go::input"
+                    ],
+                    "showmehow": [
+                        "bashrc::start-mission::terminalintro",
+                        "chat::change::where_to_go",
+                        "chat::change::where_to_go::input"
+                    ],
+                    "showmehow_python": [
+                        "yoursystem::start-mission::python",
+                        "chat::change::where_to_go",
+                        "chat::change::where_to_go::input"
+                    ],
+                    "python_functions": [
+                        "showmehow_python::start-mission::python_functions",
+                        "chat::change::where_to_go",
+                        "chat::change::where_to_go::input"
+                    ]
+                }
             }
         }
     ]
