@@ -43,8 +43,7 @@
             "long_desc": "It is time to find out where all those hidden toggles are. Pay attention to the clues that you're given and find out what you need to edit to get ahead.",
             "hint": "A system configuration file is just like any other file, right?",
             "start_events": [
-                "bashrc::chat::meme::send_bashrc",
-                "listen::bashrc::open_bashrc"
+                "bashrc::chat::meme::send_bashrc"
             ],
             "artifacts": [
                 {
@@ -103,6 +102,24 @@
                     "desc": "Changed settings in the terminal",
                     "icon": "text-editor-symbolic",
                     "points": 141
+                }
+            ]
+        },
+        {
+            "name": "processing",
+            "short_desc": "Create beautiful drawings with processing",
+            "long_desc": "You can create some drawings with code using the processing app",
+            "hint": "If you get stuck, you can always ask for a sample file",
+            "start_events": [
+                "chat::meme::processing::ask_familiar_processing",
+                "chat::meme::processing::ask_familiar_processing::response"
+            ],
+            "artifacts": [
+                {
+                    "name": "artifact::processing::launched_processing",
+                    "desc": "Launched processing",
+                    "icon": "text-editor-symbolic",
+                    "points": 131
                 }
             ]
         },
@@ -778,20 +795,12 @@
                 "attachment": {
                     "desc": "Your Shell's Configuration",
                     "path": "~/.bashrc",
-                    "open_event": "bashrc::event::open_bashrc"
+                    "open_event": [
+                        "bashrc::register_artifact",
+                        "bashrc::chat::meme::open_bashrc",
+                        "bashrc::start-mission::terminalintro"
+                    ]
                 }
-            }
-        },
-        {
-            "name": "listen::bashrc::open_bashrc",
-            "type": "listen-event",
-            "data": {
-                "name": "bashrc::event::open_bashrc",
-                "received": [
-                    "bashrc::register_artifact",
-                    "bashrc::chat::meme::open_bashrc",
-                    "bashrc::start-mission::terminalintro"
-                ]
             }
         },
         {
@@ -1010,12 +1019,851 @@
             "data": {
                 "name": "showmehow-settings",
                 "received": [
-                    "terminaltasks::start-mission::yoursystem"
+                    "terminaltasks::start-mission::processing"
                 ]
             }
         },
         {
-            "name": "terminaltasks::start-mission::yoursystem",
+            "name": "terminaltasks::start-mission::processing",
+            "type": "start-mission",
+            "data": {
+                "name": "processing"
+            }
+        },
+        {
+            "name": "chat::meme::processing::ask_familiar_processing",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "I'm your Processing tutor. This is a great tool for creating interactive drawings with code. Are you already familiar with Processing?"
+            }
+        },
+        {
+            "name": "chat::meme::processing::ask_familiar_processing::response",
+            "type": "input-user",
+            "data": {
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Yes"
+                            },
+                            "no": {
+                                "text": "No"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::meme::processing::chat_advanced_tutorial"
+                    ],
+                    "no": [
+                        "chat::meme::processing::chat_beginner_tutorial",
+                        "chat::meme::processing::click_icon"
+                    ]
+                }
+            }
+        },
+        {
+          "name": "chat::meme::processing::chat_beginner_tutorial",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "Great, let's get started! Click the icon below to start Sketch."
+          }
+        },
+        {
+            "name": "chat::meme::processing::click_icon",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "MEME",
+                "attachment": {
+                    "desc": "Processing",
+                    "path": "processing.desktop",
+                    "open_event": [
+                        "chat::meme::processing::chat_show_interface",
+                        "chat::meme::processing::show_processing_interface"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_show_interface",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "The image below explains the main interface areas in the app."
+            }
+        },
+        {
+            "name": "chat::meme::processing::show_processing_interface",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "MEME",
+                "attachment": {
+                    "desc": "Processing interface",
+                    "path": "processing.png",
+                    "open_event": [
+                        "chat::meme::processing::chat_first_code",
+                        "chat::meme::processing::code_print_console",
+                        "chat::meme::processing::chat_explain_comments",
+                        "chat::meme::processing::chat_check_print",
+                        "chat::meme::processing::chat_check_print::response"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_first_code",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Now, let's write our first code. In the Text editor, type the code below, and then click on the play button to run your code."
+            }
+        },
+        {
+            "name": "chat::meme::processing::code_print_console",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "<span font_family='monospace'>print(\"Hello, Mars!\");   // prints a message in the Console</span>"
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_explain_comments",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "By the way, the text that comes after \"//\" is called a \"comment\" because it describes what that piece of code actually does. You can copy that too, but it’s not necessary for the code to run properly."
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_check_print",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "After you hit play, the message \"Hello, Mars\" should appear in the Console. Did you see the message?"
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_check_print::response",
+            "type": "input-user",
+            "data": {
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Yes"
+                            },
+                            "no": {
+                                "text": "No"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::meme::processing::chat_confirm_print",
+                        "chat::meme::processing::chat_line_code",
+                        "chat::meme::processing::code_line",
+                        "chat::meme::processing::chat_line_example",
+                        "chat::meme::processing::show_line_example",
+                        "chat::meme::processing::chat_check_line",
+                        "chat::meme::processing::chat_check_line::response"
+                    ],
+                    "no": [
+                        "chat::meme::processing::chat_retry_print",
+                        "chat::meme::processing::chat_check_print",
+                        "chat::meme::processing::chat_check_print::response"
+                    ]
+                }
+            }
+        },
+        {
+          "name": "chat::meme::processing::chat_retry_print",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "Hm.. make sure you type the exact code below in the Text editor field, and then press play. Don't forget the semicolon!"
+          }
+        },
+        {
+          "name": "chat::meme::processing::chat_confirm_print",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "Great! Now let's start drawing. How about we start with a simple line?"
+          }
+        },
+        {
+          "name": "chat::meme::processing::chat_line_code",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "Type the below code into the Text editor, and then press play."
+          }
+        },
+        {
+            "name": "chat::meme::processing::code_line",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n line(90,150,80,160);   // draws a line \n \n print(\"Hello, Mars!\");   // prints a message in the Console</span>"
+            }
+        },
+        {
+          "name": "chat::meme::processing::chat_line_example",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "After you hit play, you should see something like this:"
+          }
+        },
+        {
+            "name": "chat::meme::processing::show_line_example",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "MEME",
+                "attachment": {
+                    "desc": "Screenshot of line in Processing",
+                    "path": "line.png",
+                    "open_event": [
+                        "chat::meme::processing::chat_check_line",
+                        "chat::meme::processing::chat_check_line::response"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_check_line",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Did your line appear in the Sketch window?"
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_check_line::response",
+            "type": "input-user",
+            "data": {
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Yes"
+                            },
+                            "no": {
+                                "text": "No"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::meme::processing::chat_confirm_line",
+                        "chat::meme::processing::chat_explain_parameters",
+                        "chat::meme::processing::show_line_parameters",
+                        "chat::meme::processing::chat_tweak_line_parameters"
+                    ],
+                    "no": [
+                        "chat::meme::processing::chat_retry_line",
+                        "chat::meme::processing::chat_check_line",
+                        "chat::meme::processing::show_sketch_code",
+                        "chat::meme::processing::chat_check_line::response",
+                        "chat::meme::processing::chat_move_to_circle",
+                        "chat::meme::processing::chat_move_to_circle::response"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_retry_line",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Hm.. click the below icon to open a file containing the completed code. Compare the two to see if you missed something!"
+            }
+        },
+        {
+            "name": "chat::meme::processing::show_sketch_code",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "MEME",
+                "attachment": {
+                    "desc": "The completed code of the line",
+                    "path": "line.pde"
+                }
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_confirm_line",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "That's a nice line!"
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_explain_parameters",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "The numbers—also called \"parameters\"—in the \"line()\" code tell Processing exactly where to draw the line."
+            }
+        },
+        {
+            "name": "chat::meme::processing::show_line_parameters",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "MEME",
+                "attachment": {
+                    "desc": "Visual explanation of line parameters in Sketch",
+                    "path": "line_key.png"
+                }
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_tweak_line_parameters",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Feel free to tweak the line's parameters, press play, and see what happens! (Be sure to keep the values under 200 or else the line will go off screen.)"
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_move_to_circle",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Click here when you're ready to move on."
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_move_to_circle::response",
+            "type": "input-user",
+            "data": {
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Ready"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::meme::processing::chat_circle_code",
+                        "chat::meme::processing::code_circle",
+                        "chat::meme::processing::chat_circle_example",
+                        "chat::meme::processing::show_circle_example"
+                        
+                    ]
+                }
+            }
+        },
+        {
+          "name": "chat::meme::processing::chat_circle_code",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "Cool! Now let's try something new. Add the below code to your Text editor to draw a circle. The highlighted code shows the new code we're adding."
+          }
+        },
+        {
+            "name": "chat::meme::processing::code_circle",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n line(90,150,80,160);   // draws a line \n ellipse(100,70,60,60);   // draws a circle \n \n print(\"Hello, Mars!\");   // prints a message in the Console</span>"
+            }
+        },
+        {
+          "name": "chat::meme::processing::chat_circle_example",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "After you hit play, you should see something like this:"
+          }
+        },
+        {
+            "name": "chat::meme::processing::show_circle_example",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "MEME",
+                "attachment": {
+                    "desc": "Screenshot of circle in Processing",
+                    "path": "circle.png",
+                    "open_event": [
+                        "chat::meme::processing::chat_check_circle",
+                        "chat::meme::processing::chat_check_circle::response"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_check_circle",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Did your circle appear in the Sketch window?"
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_check_circle::response",
+            "type": "input-user",
+            "data": {
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Yes"
+                            },
+                            "no": {
+                                "text": "No"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::meme::processing::chat_confirm_circle",
+                        "chat::meme::processing::chat_explain_circle",
+                        "chat::meme::processing::show_circle_parameters",
+                        "chat::meme::processing::chat_tweak_circle_parameters",
+                        "chat::meme::processing::chat_move_to_advanced",
+                        "chat::meme::processing::chat_move_to_advanced::response"
+                    ],
+                    "no": [
+                        "chat::meme::processing::chat_retry_circle",
+                        "chat::meme::processing::chat_check_circle",
+                        "chat::meme::processing::chat_check_circle::response"
+                    ]
+                }
+            }
+        },
+        {
+          "name": "chat::meme::processing::chat_retry_circle",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "Hm.. make sure you type the exact code below in the Text editor field, and then press play. Double check your work!"
+          }
+        },
+        {
+          "name": "chat::meme::processing::chat_confirm_circle",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "A perfect circle!"
+          }
+        },
+        {
+          "name": "chat::meme::processing::chat_explain_circle",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "The \"ellipse()\" line of code tells Processing to draw an ellipse (or oval) with the parameters we chose:"
+          }
+        },
+        {
+            "name": "chat::meme::processing::show_circle_parameters",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "MEME",
+                "attachment": {
+                    "desc": "Visual explanation of circle parameters in Sketch",
+                    "path": "circle_key.png"
+                }
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_tweak_circle_parameters",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Again, feel free to experiment by changing those parameters and pressing play to see what happens!"
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_move_to_advanced",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Click here when you're ready to move on."
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_move_to_advanced::response",
+            "type": "input-user",
+            "data": {
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Ready"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::meme::processing::chat_advanced_tutorial",
+                        "chat::meme::processing::code_martian",
+                        "chat::meme::processing::chat_martian_example",
+                        "chat::meme::processing::show_martian_example"
+                    ]
+                }
+            }
+        },
+        {
+          "name": "chat::meme::processing::chat_advanced_tutorial",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "With a little practice and creativity, you can use Processing to turn simple lines and circles into more complex works of art. To see an \"otherwordly\" example, add these lines to your code and press play."
+          }
+        },
+        {
+            "name": "chat::meme::processing::code_martian",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n rectMode(CENTER);   // draws everything from center \n rect(100,100,20,100);   // draws the body \n ellipse(100,70,60,60);   // draws the head \n ellipse(81,70,16,32);   // draws the left eye \n ellipse(119,70,16,32);   // draws the right eye \n line(90,150,80,160);   // draws the left leg \n line(110,150,120,160);   // draws the right leg \n \n print(\"Hello, Mars!\");   // prints a message in the Console</span>"
+            }
+        },
+        {
+          "name": "chat::meme::processing::chat_martian_example",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "After you hit play, you should see something like this:"
+          }
+        },
+        {
+            "name": "chat::meme::processing::show_martian_example",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "MEME",
+                "attachment": {
+                    "desc": "Screenshot of martian in Processing",
+                    "path": "martian.png",
+                    "open_event": [
+                        "chat::meme::processing::chat_check_martian",
+                        "chat::meme::processing::show_martian_code",
+                        "chat::meme::processing::chat_confirm_martian",
+                        "chat::meme::processing::chat_move_to_colors",
+                        "chat::meme::processing::chat_move_to_colors::response"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_check_martian",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "If you don't see the Martian, click the below icon to open a file containing the completed code. See if you can spot the difference!"
+            }
+        },
+        {
+            "name": "chat::meme::processing::show_martian_code",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "MEME",
+                "attachment": {
+                    "desc": "The completed code of the Martian",
+                    "path": "martian.pde"
+                }
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_confirm_martian",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Thankfully, it looks like a friendly alien! But we're not done yet..."
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_move_to_colors",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Click the button when you're ready to continue."
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_move_to_colors::response",
+            "type": "input-user",
+            "data": {
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Ready"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::meme::processing::chat_color_code",
+                        "chat::meme::processing::code_color_martian",
+                        "chat::meme::processing::chat_explain_code_reading",
+                        "chat::meme::processing::chat_martian_colors_example",
+                        "chat::meme::processing::show_martian_colors_example"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_color_code",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Color in the Martian by adding the highlighted code belowe and pressing play."
+            }
+        },
+        {
+            "name": "chat::meme::processing::code_color_martian",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n rectMode(CENTER);   // draws everything from center \n background(100);   // colors the background dark gray \n fill(0,200,0);   // colors the Martian's body green \n rect(100,100,20,100);   // draws the body \n ellipse(100,70,60,60);   // draws the head \n fill(0);   // colors the Martian's eyes black \n ellipse(81,70,16,32);   // draws the left eye \n ellipse(119,70,16,32);   // draws the right eye \n line(90,150,80,160);   // draws the left leg \n line(110,150,120,160);   // draws the right leg \n \n print(\"Hello, Mars!\");   // prints a message in the Console</span>"
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_explain_code_reading",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Make sure that your lines of code appear in exactly the same order as they do in the example. Processing reads your code from top to bottom, so adjusting the order will change your Martian's appearance."
+            }
+        },
+        {
+          "name": "chat::meme::processing::chat_martian_colors_example",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "If done correctly, your Martian should look like this:"
+          }
+        },
+        {
+            "name": "chat::meme::processing::show_martian_colors_example",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "MEME",
+                "attachment": {
+                    "desc": "Screenshot of colored Martian in Processing",
+                    "path": "martian_colors.png",
+                    "open_event": [
+                        "chat::meme::processing::chat_check_martian_colors",
+                        "chat::meme::processing::chat_check_martian_colors::response"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_check_martian_colors",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Did your Martian appear with a green body and black eyes in the Sketch window?"
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_check_martian_colors::response",
+            "type": "input-user",
+            "data": {
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Yes"
+                            },
+                            "no": {
+                                "text": "No"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::meme::processing::chat_confirm_martian_colors",
+                        "chat::meme::processing::chat_explain_martian_grayscale",
+                        "chat::meme::processing::code_grayscale",
+                        "chat::meme::processing::chat_explain_martian_rgb",
+                        "chat::meme::processing::code_rgb",
+                        "chat::meme::processing::chat_tweak_color",
+                        "chat::meme::processing::chat_confirm_martian_colors",
+                        "chat::meme::processing::chat_move_to_stroke",
+                        "chat::meme::processing::chat_move_to_stroke::response"
+                    ],
+                    "no": [
+                        "chat::meme::processing::chat_retry_martian_colors",
+                        "chat::meme::processing::chat_check_martian_colors",
+                        "chat::meme::processing::chat_check_martian_colors::response"
+                    ]
+                }
+            }
+        },
+        {
+          "name": "chat::meme::processing::chat_retry_martian_colors",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "Hm.. why don't you try again? Make sure that your lines of code appear in exactly the same order as below. Processing reads your code from top to bottom, so adjusting the order will change the look of your Martian. Type the exact code below in the Text editor field, and then press play."
+          }
+        },
+        {
+          "name": "chat::meme::processing::chat_confirm_martian_colors",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "Now that's a Martian! So what's going on here?"
+          }
+        },
+        {
+          "name": "chat::meme::processing::chat_explain_martian_grayscale",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "When adding color with \"background()\" and \"fill()\", you can either do it in grayscale mode or in RGB (red-green-blue) mode. In grayscale mode, you simply pick a number between 0 (black) and 255 (white), like you did with the background and the eyes:"
+          }
+        },
+        {
+            "name": "chat::meme::processing::code_grayscale",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "<span font_family='monospace'>background(100);   // colors the background dark gray \n fill(0);   // colors the Martian's eyes black \n </span>"
+            }
+        },
+        {
+          "name": "chat::meme::processing::chat_explain_martian_rgb",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "In RGB mode, each parameter is a value from 0 to 255. So, in our example, we selected \"0\" for red, \"200\" for green, and \"0\" for blue. That's how we colored the Martian's body green!"
+          }
+        },
+        {
+            "name": "chat::meme::processing::code_rgb",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "<span font_family='monospace'>fill(0,200,0);   // colors the Martian's body green</span>"
+            }
+        },
+        {
+          "name": "chat::meme::processing::chat_tweak_color",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "Feel free to experiment with changing your Martian's colors by changing those parameters in your code! Here are some tips for creating certain colors in RGB mode: \n Red + Green = Yellow \n Red + Blue = Purple \n Green + Blue = Cyan"
+          }
+        },
+        {
+          "name": "chat::meme::processing::chat_confirm_martian_colors",
+          "type": "chat-actor",
+          "data": {
+            "actor": "MEME",
+            "message": "Now that's a Martian! So what's going on here?"
+          }
+        },
+        {
+            "name": "chat::meme::processing::chat_move_to_stroke",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Ready for one more example? Click the button when you're ready."
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_move_to_stroke::response",
+            "type": "input-user",
+            "data": {
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Ready"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::meme::processing::chat_stroke_code",
+                        "chat::meme::processing::code_stroke",
+                        "chat::meme::processing::chat_stroke_color",
+                        "chat::meme::processing::chat_tweak_martian",
+                        "chat::meme::processing::chat_move_to_stroke",
+                        "processing::start-mission::yoursystem"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "processing::start-mission::yoursystem",
+            "type": "start-mission",
+            "data": {
+                "name": "yoursystem"
+            }
+        },      
+        {
+            "name": "chat::meme::processing::chat_stroke_code",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "The default \"stroke weight\" of our lines and circles is a single pixel, but this can be changed with the \"strokeWeight()\" function. The single parameter to \"strokeWeight()\" sets the width of drawn lines. For example, this code would make your Martian have a thicker head:"
+            }
+        },
+        {
+            "name": "chat::meme::processing::code_stroke",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "<span font_family='monospace'>stroke(8);   // thickens the Martian's head</span>"
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_stroke_color",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "You can also change the stroke color with the code \"stroke()\" inputting either one value (for grayscale mode) or three values (for RGB mode), making sure to input the appropriate parameters as described before."
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_tweak_martian",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Play around with your Martian, adjust its stroke weight, stroke color, or anything else you feel like changing."
+            }
+        },
+        {
+            "name": "chat::meme::processing::chat_move_to_stroke",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "Congrats! You're well on your way to learning Processing! When you're ready to try something new, head to AVATAR2 and they'll direct you the next set of activities!"
+            }
+        },
+        {
+            "name": "processing::start-mission::yoursystem",
             "type": "start-mission",
             "data": {
                 "name": "yoursystem"
