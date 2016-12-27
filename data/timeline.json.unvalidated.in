@@ -30,7 +30,7 @@
                     "points": 52
                 },
                 {
-                    "name": "artifact::intro::install-programming",
+                    "name": "artifact::intro::install-terminal",
                     "icon": "text-editor-symbolic",
                     "desc": "Installed the terminal",
                     "points": 52
@@ -205,6 +205,7 @@
                 "chat::meme::python_functions::intro",
                 "chat::meme::python_functions::enter_code",
                 "chat::meme::python_functions::intro::attachment",
+                "chat::meme::python_functions::how_to_run_file",
                 "chat::meme::python_functions::challenge"
             ],
             "artifacts": [
@@ -695,7 +696,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "message": "You think I can teach you something cool? Try this: install-programming"
+                "message": "You think I can teach you something cool? Try this: install-terminal"
             }
         },
         {
@@ -711,8 +712,8 @@
                 },
                 "responses": {
                     "success": [
-                        "chat::meme::intro::install-programming::artifact",
-                        "event::meme::intro::install-programming::insert-terminal-icon",
+                        "chat::meme::intro::install-terminal::artifact",
+                        "event::meme::intro::install-terminal::insert-terminal-icon",
                         "chat::meme::intro::intro-complete",
                         "chat::goog::intro::install_programming::comment",
                         "intro::start-bashrc-mission"
@@ -730,7 +731,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "MEME",
-                "message": "'install-programming' EXACTLY. I haven't got all day!"
+                "message": "'install-terminal' EXACTLY. I haven't got all day!"
             }
         },
         {
@@ -758,14 +759,14 @@
             }
         },
         {
-            "name": "chat::meme::intro::install-programming::artifact",
+            "name": "chat::meme::intro::install-terminal::artifact",
             "type": "register-artifact",
             "data": {
-                "name": "artifact::intro::install-programming"
+                "name": "artifact::intro::install-terminal"
             }
         },
         {
-            "name": "event::meme::intro::install-programming::insert-terminal-icon",
+            "name": "event::meme::intro::install-terminal::insert-terminal-icon",
             "type": "modify-app-grid",
             "data": {
                 "action": "add-app",
@@ -869,7 +870,8 @@
                         "terminalintro::chat::meme::open_terminal::where"
                     ],
                     "afraid": [
-                        "terminalintro::chat::meme::open_terminal::afraid"
+                        "terminalintro::chat::meme::open_terminal::afraid",
+                        "terminalintro::chat::meme::open_terminal::where"
                     ]
                 }
             }
@@ -953,7 +955,7 @@
                 "variant_type": "as",
                 "value": {
                     "type": "append-to-list-unique",
-                    "value": ["textprocessing"]
+                    "value": ["text"]
                 }
             }
         },
@@ -971,9 +973,18 @@
             "data": {
                 "name": "showmehow-textprocessing",
                 "received": [
+                    "chat::meme::terminaltasks::ps",
                     "terminaltasks::setting::showmehow::add-ps",
                     "listen::terminaltasks::showmehow-ps"
                 ]
+            }
+        },
+        {
+            "name": "chat::meme::terminaltasks::ps",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "You can also see what is going on in your system using the terminal. Try the 'ps' lesson."
             }
         },
         {
@@ -995,9 +1006,19 @@
             "data": {
                 "name": "showmehow-ps",
                 "received": [
+                    "chat::meme::terminaltasks::settings",
                     "terminaltasks::setting::showmehow::add-settings",
                     "listen::terminaltasks::showmehow-settings"
                 ]
+            }
+        },
+        
+        {
+            "name": "chat::meme::terminaltasks::settings",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "With the terminal you can also change settings on your system. Check out the 'settings' lesson on showmehow."
             }
         },
         {
@@ -1042,6 +1063,7 @@
             "name": "chat::meme::processing::ask_familiar_processing::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1057,7 +1079,10 @@
                 },
                 "responses": {
                     "yes": [
-                        "chat::meme::processing::chat_advanced_tutorial"
+                        "chat::meme::processing::chat_advanced_tutorial",
+                        "chat::meme::processing::code_martian",
+                        "chat::meme::processing::chat_martian_example",
+                        "chat::meme::processing::show_martian_example"
                     ],
                     "no": [
                         "chat::meme::processing::chat_beginner_tutorial",
@@ -1151,6 +1176,7 @@
             "name": "chat::meme::processing::chat_check_print::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1249,6 +1275,7 @@
             "name": "chat::meme::processing::chat_check_line::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1267,15 +1294,15 @@
                         "chat::meme::processing::chat_confirm_line",
                         "chat::meme::processing::chat_explain_parameters",
                         "chat::meme::processing::show_line_parameters",
-                        "chat::meme::processing::chat_tweak_line_parameters"
+                        "chat::meme::processing::chat_tweak_line_parameters",
+                        "chat::meme::processing::chat_move_to_circle",
+                        "chat::meme::processing::chat_move_to_circle::response"
                     ],
                     "no": [
                         "chat::meme::processing::chat_retry_line",
                         "chat::meme::processing::chat_check_line",
                         "chat::meme::processing::show_sketch_code",
-                        "chat::meme::processing::chat_check_line::response",
-                        "chat::meme::processing::chat_move_to_circle",
-                        "chat::meme::processing::chat_move_to_circle::response"
+                        "chat::meme::processing::chat_check_line::response"
                     ]
                 }
             }
@@ -1346,6 +1373,7 @@
             "name": "chat::meme::processing::chat_move_to_circle::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1418,6 +1446,7 @@
             "name": "chat::meme::processing::chat_check_circle::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1503,6 +1532,7 @@
             "name": "chat::meme::processing::chat_move_to_advanced::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1604,6 +1634,7 @@
             "name": "chat::meme::processing::chat_move_to_colors::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1684,6 +1715,7 @@
             "name": "chat::meme::processing::chat_check_martian_colors::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -1793,6 +1825,7 @@
             "name": "chat::meme::processing::chat_move_to_stroke::response",
             "type": "input-user",
             "data": {
+                "actor": "MEME",
                 "input": {
                     "type": "choice",
                     "settings": {
@@ -2225,6 +2258,14 @@
             }
         },
         {
+            "name": "chat::meme::python_functions::how_to_run_file",
+            "type": "chat-actor",
+            "data": {
+                "actor": "MEME",
+                "message": "You can run this file by using the <span font_family='monospace'>python</span> command in the terminal. Copy the contents of this file to a new one called 'functions.py', then navigate to that directory in the terminal and run it with: <span font_family='monospace'>python functions.py 5 2 8 4 9 1</span>"
+            }
+        },
+        {
             "name": "chat::meme::python_functions::challenge",
             "type": "input-user",
             "data": {
@@ -2303,7 +2344,7 @@
             "name": "listen::python_lists::convert_list",
             "type": "listen-event",
             "data": {
-                "name": "showmehow-python-lists-convert-list",
+                "name": "showmehow-python-convert-list",
                 "received": [
                     "listen::python_lists::filter_list",
                     "artifact::python::convert_list"
@@ -2384,7 +2425,7 @@
             "data": {
                 "actor": "MEME",
                 "attachment": {
-                    "desc": "Some functions",
+                    "desc": "Object Oriented Programming in Python",
                     "path": "classes.py"
                 }
             }
@@ -2540,6 +2581,9 @@
                             "showmehow": {
                                 "text": "Showmehow - Terminal"
                             },
+                            "processing": {
+                                "text": "Processing"
+                            },
                             "showmehow_python": {
                                 "text": "Showmehow - Python"
                             },
@@ -2554,6 +2598,9 @@
                         "start-mission::intro",
                         "chat::change::where_to_go",
                         "chat::change::where_to_go::input"
+                    ],
+                    "processing": [
+                        "terminaltasks::start-mission::processing"
                     ],
                     "showmehow": [
                         "bashrc::start-mission::terminalintro",
