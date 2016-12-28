@@ -1,0 +1,9 @@
+#!/bin/bash
+
+echo "Welcome to Terminal! I’m Ada from the wobbly chat window, and I’m here to teach you all about Terminal"
+sleep 1;
+echo "Basically, this tool gives you text-based access to Endless OS—you can control your whole computer from here!"
+sleep 1;
+echo "To get started with some simple Terminal tricks, type ‘showmehow’ (without the quotation marks) and then hit enter."
+sleep 2;
+bash

@@ -574,6 +574,7 @@
                 "responses": {
                     "success": [
                         "chat::ada::intro::install-terminal::artifact",
+                        "event::ada::intro::install-terminal::copy-terminal-desktop-file",
                         "event::ada::intro::install-terminal::insert-terminal-icon",
                         "chat::ada::intro::intro-complete",
                         "chat::ada::intro::intro-complete::marlon",
@@ -602,11 +603,19 @@
             }
         },
         {
+            "name": "event::ada::intro::install-terminal::copy-terminal-desktop-file",
+            "type": "copy-file",
+            "data": {
+                "source": "coding-terminal.desktop",
+                "target": "~/.local/share/applications/coding-terminal.desktop"
+            }
+        },
+        {
             "name": "event::ada::intro::install-terminal::insert-terminal-icon",
             "type": "modify-app-grid",
             "data": {
                 "action": "add-app",
-                "app": "org.gnome.Terminal.desktop"
+                "app": "coding-terminal.desktop"
             }
         },
         {
