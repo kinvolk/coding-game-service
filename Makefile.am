@@ -80,6 +80,7 @@ EXTRA_DIST = \
 	com.endlessm.CodingGameService.xml \
 	com.endlessm.CodingGameService.service.in \
 	com.endlessm.CodingGameService.gresource.xml \
+	bin/coding-terminal \
 	data/timeline.json.unvalidated.in \
 	com.endlessm.Coding.policy.in \
 	files/coding-copy-files.js.in \
