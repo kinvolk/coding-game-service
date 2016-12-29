@@ -1,3 +1,4 @@
+debian/tmp/usr/bin/coding-dev-reset
 debian/tmp/usr/bin/coding-game-service
 debian/tmp/usr/bin/coding-terminal
 debian/tmp/usr/lib/*/com.endlessm.CodingGameService/coding-copy-files
