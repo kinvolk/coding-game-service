@@ -80,6 +80,7 @@ EXTRA_DIST = \
 	com.endlessm.CodingGameService.xml \
 	com.endlessm.CodingGameService.service.in \
 	com.endlessm.CodingGameService.gresource.xml \
+	bin/coding-dev-reset \
 	bin/coding-terminal \
 	data/timeline.json.unvalidated.in \
 	com.endlessm.Coding.policy.in \
@@ -128,10 +129,15 @@ lib_LTLIBRARIES = libcoding_game_service-1.0.la
 
 # Scripts to install
 bin_SCRIPTS = \
+	coding-dev-reset \
 	coding-game-service \
 	coding-game-validator \
 	coding-terminal \
 	$(NULL)
+
+coding-dev-reset: $(srcdir)/bin/coding-dev-reset
+	cp $< $@
+	chmod +x $@
 
 coding-game-service: $(srcdir)/bin/coding-game-service.js.in
 	$(AM_V_GEN) sed -e 's,%PKGDATADIR%,$(pkgdatadir),g' $< > $@.tmp && mv -f $@.tmp $@
