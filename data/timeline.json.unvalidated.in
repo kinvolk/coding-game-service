@@ -2020,7 +2020,10 @@
                 },
                 "responses": {
                     "success": [
-                        "chat::ada::codeview::weather::first_task::challenge::success"
+                        "chat::ada::codeview::weather::first_task::challenge::success",
+                        "chat::ada::codeview::weather::first_task::challenge::code_line",
+                        "chat::ada::codeview::weather::first_task::challenge::checking",
+                        "chat::ada::codeview::weather::first_task::challenge::found"
                     ],
                     "failure": [
                         "chat::ada::codeview::weather::first_task::challenge::hint",
@@ -2066,6 +2069,128 @@
                         "chat::ada::codeview::weather::first_task::challenge"
                     ]
                 }
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge::code_line",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "this._conditionsLabel.label = Util.getWeatherConditions(info);"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge::checking",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Do you see it?"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge::found",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Found it!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::ada::codeview::weather::first_task::challenge::task_details",
+                        "chat::ada::codeview::weather::first_task::challenge::code_change",
+                        "chat::ada::codeview::weather::first_task::challenge::save",
+                        "chat::ada::codeview::weather::first_task::challenge::run",
+                        "chat::ada::codeview::weather::first_task::challenge::patience",
+                        "chat::ada::codeview::weather::first_task::challenge::outro",
+                        "chat::ada::codeview::weather::first_task::challenge::ready"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge::task_details",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Great! Now we’re going to make that change we talked about. Instead of displaying general weather conditions, we’re going to display wind conditions. To make this modification, simply replace the existing code at line 178 with this new code:"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge::code_change",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "this._conditionsLabel.label = \"Wind: \" + this._info.get_wind();"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge::save",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Once you’ve made the change (and double checked your work), hit ctrl+S to save changes."
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge::run",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "To view the change in the actual app, use the play button at the center top to build and run your changes. CodeView will build and install the app."
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge::patience",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "This can take a moment, so please be patient."
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge::outro",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "When you’re ready to make the next modification, let me know!"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge::ready",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Ready!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::ada::codeview::weather::second_task::intro"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::second_task::intro",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "So the first change we made replaced the description of general weather conditions with a description of wind conditions."
             }
         },
         {
