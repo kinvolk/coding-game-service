@@ -3,7 +3,7 @@ arbitrary_files = \
 	files/sw.txt \
 	files/background_pic.jpg \
 	files/test.txt \
-	files/processing.desktop \
+	files/org.processing.App.desktop \
 	files/martian.pde \
 	files/line.pde \
 	files/classes.py \
