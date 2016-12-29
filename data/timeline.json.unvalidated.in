@@ -144,6 +144,27 @@
                 }
             ]
         },
+	{
+            "name": "weather",
+            "short_desc": "Change the weather",
+            "long_desc": "Well, you can manipulate the display of the aggregated weather data.",
+            "hint": "Look for the codeview button on enabled applications",
+            "start_events": [
+                "chat::ada::codeview::weather::intro",
+                "chat::ada::codeview::weather::guessed",
+                "chat::ada::codeview::weather::changed",
+                "chat::ada::codeview::weather::start_app",
+                "chat::ada::codeview::weather::start_app::response"
+            ],
+            "artifacts": [
+                {
+                    "name": "artifact::codeview::hacked_weather",
+                    "desc": "Hacked weather",
+                    "icon": "text-editor-symbolic",
+                    "points": 101
+                }
+            ]
+        },
         {
             "name": "yoursystem",
             "short_desc": "Uncover the wraps on your filesystem",
@@ -1767,6 +1788,166 @@
                 }
             }
         },
+	{
+            "name": "codeview::start-mission::weather",
+            "type": "start-mission",
+            "data": {
+                "name": "weather"
+            }
+        },
+	{
+            "name": "chat::ada::codeview::weather::intro",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Alright, it’s time for CodeView!"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::guessed",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "If you haven’t already guessed, everything on your computer screen has code running behind it: the cursor you’re moving around… the desktop… the icons on the desktop… even this chat window!"
+            }
+        },
+	{
+            "name": "chat::ada::codeview::weather::changed",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "But usually we can’t peek at the code running our favorite programs. That’s about to change."
+            }
+        },
+	{
+            "name": "chat::ada::codeview::weather::start_app",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "On the desktop, you should see an icon for the “Weather” app. Click the icon, and let me know once the app opens"
+            }
+        },
+	{
+            "name": "chat::ada::codeview::weather::start_app::response",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Done!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::ada::codeview::weather::start_app::old",
+			"chat::ada::codeview::weather::start_app::what",
+			"chat::ada::codeview::weather::flip_screen::hint_chat",
+			"chat::ada::codeview::weather::flip_screen::hint_screenshot",
+			"chat::ada::codeview::weather::flip_screen::hint_chat_second",
+                        "chat::ada::codeview::weather::flip_screen::response"
+                    ]
+                }
+            }
+        },
+	{
+            "name": "chat::ada::codeview::weather::start_app::old",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Looks like a regular old Weather app, right? You can see the temperature outside, the current weather conditions, and even a forecast for the next few days."
+            }
+        },
+	{
+            "name": "chat::ada::codeview::weather::start_app::what",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "But what if we wanted to modify it? What if we wanted to make changes to the code behind the Weather app? We can do that with CodeView!"
+            }
+        },
+	{
+            "name": "chat::ada::codeview::weather::flip_screen::hint_chat",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Do you see the little white icon in the bottom righthand corner of the Weather app? It should look like this:"
+            }
+        },
+	{
+            "name": "chat::ada::codeview::weather::flip_screen::hint_screenshot",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "Ada",
+                "attachment": {
+                    "desc": "Flip to source code editor button",
+                    "path": "codeview-icon-hint.png"
+                }
+            }
+        },
+	{
+            "name": "chat::ada::codeview::weather::flip_screen::hint_chat_second",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Click it to flip the window and view the code behind the Weather app! Let me know once you’ve done it."
+            }
+        },
+	{
+            "name": "chat::ada::codeview::weather::flip_screen::response",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Done!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::ada::codeview::weather::editor::welcome",
+			"chat::ada::codeview::weather::editor::overview",
+			"chat::ada::codeview::weather::editor::overview::screenshot"
+                    ]
+                }
+            }
+        },
+	{
+            "name": "chat::ada::codeview::weather::editor::welcome",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Welcome to CodeView."
+            }
+        },
+	{
+            "name": "chat::ada::codeview::weather::editor::overview",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Here’s a visual explanation of what you’re looking at:"
+            }
+        },
+	{
+            "name": "chat::ada::codeview::weather::editor::overview::screenshot",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "Ada",
+                "attachment": {
+                    "desc": "Overview of source code editor",
+                    "path": "codeview-builder-overview.png"
+                }
+            }
+        },
         {
             "name": "processing::start-mission::yoursystem",
             "type": "start-mission",
@@ -2456,6 +2637,9 @@
                             "processing": {
                                 "text": "Sketch - Create works of art with code"
                             },
+			    "codeview": {
+                                "text": "CodeView - Sneak behind the screen"
+                            },
                             "showmehow_python": {
                                 "text": "Showmehow - Python"
                             },
@@ -2473,6 +2657,11 @@
                     ],
                     "processing": [
                         "terminaltasks::start-mission::processing",
+                        "chat::marlon::where_to_go::response",
+                        "chat::marlon::where_to_go::input"
+                    ],
+		    "codeview": [
+                        "codeview::start-mission::weather",
                         "chat::marlon::where_to_go::response",
                         "chat::marlon::where_to_go::input"
                     ],
