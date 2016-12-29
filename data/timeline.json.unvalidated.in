@@ -1847,9 +1847,7 @@
                         "chat::ada::codeview::weather::start_app::old",
 			"chat::ada::codeview::weather::start_app::what",
 			"chat::ada::codeview::weather::flip_screen::hint_chat",
-			"chat::ada::codeview::weather::flip_screen::hint_screenshot",
-			"chat::ada::codeview::weather::flip_screen::hint_chat_second",
-                        "chat::ada::codeview::weather::flip_screen::response"
+			"chat::ada::codeview::weather::flip_screen::hint_screenshot"
                     ]
                 }
             }
@@ -1885,7 +1883,11 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Flip to source code editor button",
-                    "path": "codeview-icon-hint.png"
+                    "path": "codeview-icon-hint.png",
+                    "open_event": [
+                        "chat::ada::codeview::weather::flip_screen::hint_chat_second",
+                        "chat::ada::codeview::weather::flip_screen::response"
+                    ]
                 }
             }
         },
