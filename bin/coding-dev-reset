@@ -1,0 +1,8 @@
+#!/bin/bash
+
+rm -rf ~/.config/com.endlessm.CodingGameService*
+rm -rf ~/.config/com.endlessm/Showmehow*
+gsettings reset-recursively com.endlessm.showmehow
+gsettings reset org.gnome.shell taskbar-pins
+gsettings reset org.gnome.shell wobbly-effect
+killall -9 -q /usr/bin/gjs || true
