@@ -1953,8 +1953,7 @@
                         "chat::ada::codeview::weather::first_task::overview",
                         "chat::ada::codeview::weather::first_task::navigate",
                         "chat::ada::codeview::weather::first_task::select",
-                        "chat::ada::codeview::weather::first_task::prompt",
-                        "chat::ada::codeview::weather::first_task::challenge"
+                        "chat::ada::codeview::weather::first_task::pause"
                     ]
                 }
             }
@@ -1997,6 +1996,17 @@
             "data": {
                 "actor": "Ada",
                 "message": "Once you select the “city.js” file, you should see its source code in the very center of the screen."
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::pause",
+            "type": "wait-for",
+            "data": {
+                "timeout": 15000,
+                "then": [
+                    "chat::ada::codeview::weather::first_task::prompt",
+                    "chat::ada::codeview::weather::first_task::challenge"
+                ]
             }
         },
         {
@@ -2109,8 +2119,7 @@
                         "chat::ada::codeview::weather::first_task::challenge::save",
                         "chat::ada::codeview::weather::first_task::challenge::run",
                         "chat::ada::codeview::weather::first_task::challenge::patience",
-                        "chat::ada::codeview::weather::first_task::challenge::outro",
-                        "chat::ada::codeview::weather::first_task::challenge::ready"
+                        "chat::ada::codeview::weather::first_task::challenge::pause"
                     ]
                 }
             }
@@ -2153,6 +2162,17 @@
             "data": {
                 "actor": "Ada",
                 "message": "This can take a moment, so please be patient."
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge::pause",
+            "type": "wait-for",
+            "data": {
+                "timeout": 60000,
+                "then": [
+                    "chat::ada::codeview::weather::first_task::challenge::outro",
+                    "chat::ada::codeview::weather::first_task::challenge::ready"
+                ]
             }
         },
         {
