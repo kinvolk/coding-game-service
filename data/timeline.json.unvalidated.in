@@ -1824,7 +1824,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "On the desktop, you should see an icon for the “Weather” app. Click the icon, and let me know once the app opens"
+                "message": "On the desktop, you should see an icon for the “Weather” app. Click the icon, and let me know once the app opens."
             }
         },
         {
@@ -1946,7 +1946,125 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Overview of source code editor",
-                    "path": "codeview-builder-overview.png"
+                    "path": "codeview-builder-overview.png",
+                    "open_event": [
+                        "chat::ada::codeview::weather::editor::task",
+                        "chat::ada::codeview::weather::first_task::description",
+                        "chat::ada::codeview::weather::first_task::overview",
+                        "chat::ada::codeview::weather::first_task::navigate",
+                        "chat::ada::codeview::weather::first_task::select",
+                        "chat::ada::codeview::weather::first_task::prompt",
+                        "chat::ada::codeview::weather::first_task::challenge"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::editor::task",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Make sense? Then let’s make our first modification!"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::description",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Let’s say you wanted to replace the text that tells you the current weather conditions (e.g. “Scattered clouds”) with information about the current wind speed and direction. That’s actually a pretty simple change!"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::overview",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "To make the change, we’ll start on the lefthand side of CodeView, where you see the project folders and source files."
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::navigate",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Navigate to src >> app >> city.js. (In other words, open the “src” folder, then open the “app” folder, and there you’ll find the “city.js.” file.)"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::select",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Once you select the “city.js” file, you should see its source code in the very center of the screen."
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::prompt",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Found it? If you’re in the right file, you should see a year in line 3 of the code. What’s the year?"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "text",
+                    "settings": {
+                        "showmehow_id": "weather_year::challenge"
+                    }
+                },
+                "responses": {
+                    "success": [
+                        "chat::ada::codeview::weather::first_task::challenge::success"
+                    ],
+                    "failure": [
+                        "chat::ada::codeview::weather::first_task::challenge::hint",
+                        "chat::ada::codeview::weather::first_task::challenge::screenshot"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge::success",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Excellent work! Now that you’ve found the right file, you need to find the line of code to make our app modification. Scroll down to line 178, where you should find the following code:"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge::hint",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Hm.. that’s not right. Are you sure you’re in the right folder? Here’s something to help you navigate to src >> app >> city.js."
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge::prompt",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Hm.. that’s not right. Are you sure you’re in the right folder? Here’s something to help you navigate to src >> app >> city.js."
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge::screenshot",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "Ada",
+                "attachment": {
+                    "desc": "Hint for finding the copyright year.",
+                    "path": "codeview-builder-hints.png",
+                    "open_event": [
+                        "chat::ada::codeview::weather::first_task::challenge::prompt",
+                        "chat::ada::codeview::weather::first_task::challenge"
+                    ]
                 }
             }
         },
