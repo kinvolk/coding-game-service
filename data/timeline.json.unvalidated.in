@@ -133,6 +133,8 @@
                 "chat::ada::processing::time_something_new",
                 "chat::ada::processing::processing_tool_drawings",
                 "chat::ada::processing::chat_beginner_tutorial",
+                "event::ada::processing::copy_processing_desktop_file",
+                "event::ada::processing::insert_processing_icon",
                 "chat::ada::processing::click_icon"
             ],
             "artifacts": [
@@ -890,13 +892,29 @@
           }
         },
         {
+            "name": "event::ada::processing::copy_processing_desktop_file",
+            "type": "copy-file",
+            "data": {
+                "source": "org.processing.App.desktop",
+                "target": "~/.local/share/applications/org.processing.App.desktop"
+            }
+        },
+        {
+            "name": "event::ada::processing::insert_processing_icon",
+            "type": "modify-app-grid",
+            "data": {
+                "action": "add-app",
+                "app": "org.processing.App.desktop"
+            }
+        },
+        {
             "name": "chat::ada::processing::click_icon",
             "type": "chat-actor-attachment",
             "data": {
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Processing",
-                    "path": "processing.desktop",
+                    "path": "org.processing.App.desktop",
                     "open_event": [
                         "chat::ada::processing::chat_show_interface",
                         "chat::ada::processing::show_processing_interface"
