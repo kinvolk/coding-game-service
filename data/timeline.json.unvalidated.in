@@ -982,7 +982,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>print(\"Hello, Mars!\");   // prints a message in the Console</span>"
+                "message": "// prints a message in the Console\nprint(\"Hello, Mars!\");",
+                "styles": ["code"]
             }
         },
         {
@@ -990,7 +991,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "By the way, the text that comes after \"//\" is called a \"comment\" because it describes what that piece of code actually does. You can copy that too, but it’s not necessary for the code to run properly."
+                "message": "By the way, the text that comes after \"<span font_family=\"monospace\">//</span>\" is called a \"comment\" because it describes what that piece of code actually does. You can copy that too, but it’s not necessary for the code to run properly."
             }
         },
         {
@@ -1066,7 +1067,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n line(90,150,80,160);   // draws a line \n</span>"
+                "message": "// sets size of the window\nsize(200,200);\n// draws a line\nline(90,150,80,160);",
+                "styles": ["code"]
             }
         },
         {
@@ -1084,11 +1086,7 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Screenshot of line in Processing",
-                    "path": "line.png",
-                    "open_event": [
-                        "chat::ada::processing::chat_check_line",
-                        "chat::ada::processing::chat_check_line::response"
-                    ]
+                    "path": "line.png"
                 }
             }
         },
@@ -1177,7 +1175,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "The numbers—also called \"parameters\" in the \"line()\" code tell Processing exactly where to draw the line."
+                "message": "The numbers—also called \"parameters\" in the <span font_family=\"monospace\">line()</span> code tell Processing exactly where to draw the line."
             }
         },
         {
@@ -1245,7 +1243,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n line(90,150,80,160);   // draws a line \n ellipse(100,70,60,60);   // draws a circle \n \n print(\"Hello, Mars!\");   // prints a message in the Console</span>"
+                "message": "// sets size of the window\nsize(200,200);\n// draws a line\nline(90,150,80,160);\n// draws a circle\nellipse(100,70,60,60);\n\n// prints a message in the Console\nprint(\"Hello, Mars!\");",
+                "styles": ["code"]
             }
         },
         {
@@ -1336,7 +1335,7 @@
           "type": "chat-actor",
           "data": {
             "actor": "Ada",
-            "message": "The \"ellipse()\" line of code tells Processing to draw an ellipse (or oval) with the parameters we chose:"
+            "message": "The <span font_family=\"monospace\">ellipse()</span> line of code tells Processing to draw an ellipse (or oval) with the parameters we chose:"
           }
         },
         {
@@ -1404,7 +1403,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n rectMode(CENTER);   // draws everything from center \n rect(100,100,20,100);   // draws the body \n ellipse(100,70,60,60);   // draws the head \n ellipse(81,70,16,32);   // draws the left eye \n ellipse(119,70,16,32);   // draws the right eye \n line(90,150,80,160);   // draws the left leg \n line(110,150,120,160);   // draws the right leg \n \n print(\"Hello, Mars!\");   // prints a message in the Console</span>"
+                "message": "// size: 200 x 200 pixels\nsize(200,200);\n// draw rectangles from center\nrectMode(CENTER);\n// rectangle is the body\nrect(100,100,20,100);\n// legs\nline(90,150,80,160);\nline(110,150,120,160);\n// head\nellipse(100,70,60,60);\n// eyes\nellipse(81,70,16,32);\nellipse(119,70,16,32);\n\n\n// prints a message in the Console\nprint(\"Hello, Mars!\");",
+                "styles": ["code"]
             }
         },
         {
@@ -1553,7 +1553,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>size(200,200);   // sets size of the window \n rectMode(CENTER);   // draws everything from center \n background(100);   // colors the background dark gray \n fill(0,200,0);   // colors the Martian's body green \n rect(100,100,20,100);   // draws the body \n ellipse(100,70,60,60);   // draws the head \n fill(0);   // colors the Martian's eyes black \n ellipse(81,70,16,32);   // draws the left eye \n ellipse(119,70,16,32);   // draws the right eye \n line(90,150,80,160);   // draws the left leg \n line(110,150,120,160);   // draws the right leg \n \n print(\"Hello, Mars!\");   // prints a message in the Console</span>"
+                "message": "// size: 200 x 200 pixels\nsize(200,200);\n// draw rectangles the center\nrectMode(CENTER);\n// colors the background dark gray\n background(100);\n// colors the Martian's body green\nfill(0,200,0);\n// rectangle is the body\nrect(100,100,20,100);\n// legs\nline(90,150,80,160);\nline(110,150,120,160);\n// head\nellipse(100,70,60,60);\n// colors the Martian's eyes black\nfill(0);\n// eyes\nellipse(81,70,16,32);\nellipse(119,70,16,32);\n\n\n// prints a message in the Console\nprint(\"Hello, Mars!\");",
+                "styles": ["code"]
             }
         },
         {
@@ -1653,7 +1654,7 @@
           "type": "chat-actor",
           "data": {
             "actor": "Ada",
-            "message": "When adding color with \"background()\" and \"fill()\", you can either do it in grayscale mode or in RGB (red-green-blue) mode. In grayscale mode, you simply pick a number between 0 (black) and 255 (white), like you did with the background and the eyes:"
+            "message": "When adding color with <span font_family=\"monospace\">background()</span> and <span font_family=\"monospace\">fill()</span>, you can either do it in grayscale mode or in RGB (red-green-blue) mode. In grayscale mode, you simply pick a number between 0 (black) and 255 (white), like you did with the background and the eyes:"
           }
         },
         {
@@ -1661,7 +1662,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>background(100);   // colors the background dark gray \n fill(0);   // colors the Martian's eyes black \n </span>"
+                "message": "// colors the background dark gray\nbackground(100);\n// colors the Martian's eyes black\nfill(0);",
+                "styles": ["code"]
             }
         },
         {
@@ -1669,7 +1671,7 @@
           "type": "chat-actor",
           "data": {
             "actor": "Ada",
-            "message": "In RGB mode, each parameter is a value from 0 to 255. So, in our example, we selected \"0\" for red, \"200\" for green, and \"0\" for blue. That's how we colored the Martian's body green!"
+            "message": "In RGB mode, each parameter is a value from 0 to 255. So, in our example, we selected <span font_family=\"monospace\">0</span> for red, <span font_family=\"monospace\">200</span> for green, and <span font_family=\"monospace\">0</span> for blue. That's how we colored the Martian's body green!"
           }
         },
         {
@@ -1677,7 +1679,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>fill(0,200,0);   // colors the Martian's body green</span>"
+                "message": "// colors the Martian's body green\nfill(0,200,0);",
+                "styles": ["code"]
             }
         },
         {
@@ -1728,7 +1731,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "The default \"stroke weight\" of our lines and circles is a single pixel, but this can be changed with the \"strokeWeight()\" function. The single parameter to \"strokeWeight()\" sets the width of drawn lines. For example, this code would make your Martian have a thicker head:"
+                "message": "The default \"stroke weight\" of our lines and circles is a single pixel, but this can be changed with the <span font_family=\"monospace\">strokeWeight()</span> function. The single parameter to <span font_family=\"monospace\">strokeWeight()</span> sets the width of drawn lines. For example, this code would make your Martian have a thicker head:"
             }
         },
         {
@@ -1736,7 +1739,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>stroke(8);   // thickens the Martian's head</span>"
+                "message": "// thickens the Martian's head\nstroke(8);",
+                "styles": ["code"]
             }
         },
         {
@@ -1744,7 +1748,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "You can also change the stroke color with the code \"stroke()\" inputting either one value (for grayscale mode) or three values (for RGB mode), making sure to input the appropriate parameters as described before."
+                "message": "You can also change the stroke color with the code <span font_family=\"monospace\">stroke()</span> inputting either one value (for grayscale mode) or three values (for RGB mode), making sure to input the appropriate parameters as described before."
             }
         },
         {

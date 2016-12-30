@@ -1,7 +1,7 @@
-// the size of screen 200 x 200 pixels
+// size: 200 x 200 pixels
 size(200,200);
 
-// draw rectangles from the center
+// draw rectangles from center
 rectMode(CENTER);
 
 // rectangle is the body
