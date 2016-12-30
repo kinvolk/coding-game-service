@@ -1748,7 +1748,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "// thickens the Martian's head\nstroke(8);",
+                "message": "// thickens the Martian's head\nstrokeWeight(8);",
                 "styles": ["code"]
             }
         },
