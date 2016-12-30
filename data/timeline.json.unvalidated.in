@@ -2200,7 +2200,13 @@
                 },
                 "responses": {
                     "yes": [
-                        "chat::ada::codeview::weather::second_task::intro"
+                        "chat::ada::codeview::weather::second_task::intro",
+                        "chat::ada::codeview::weather::second_task::same",
+                        "chat::ada::codeview::weather::second_task::happen",
+                        "chat::ada::codeview::weather::second_task::navigate",
+                        "chat::ada::codeview::weather::second_task::code_snippet",
+                        "chat::ada::codeview::weather::second_task::prompt",
+                        "chat::ada::codeview::weather::second_task::found"
                     ]
                 }
             }
@@ -2211,6 +2217,130 @@
             "data": {
                 "actor": "Ada",
                 "message": "So the first change we made replaced the description of general weather conditions with a description of wind conditions."
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::second_task::same",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "But what if we wanted to see both sets of information at the same time?"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::second_task::happen",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Let’s make it happen!"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::second_task::navigate",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "First, we need to make a change in a different file. Navigate to data >> weather-widget.ui, and add the following “label definition” to line 88:"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::second_task::code_snippet",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "<span font_family='monospace'>&lt;child&gt; \n  &lt;object class=\"GtkLabel\" id=\"windLabel\"&gt; \n    &lt;property name=\"name\"&gt;wind-label&lt;/property&gt; \n    &lt;property name=\"visible\"&gt;True&lt;/property&gt; \n    &lt;property name=\"can_focus\"&gt;False&lt;/property&gt; \n    &lt;property name=\"valign\"&gt;start&lt;/property&gt; \n    &lt;property name=\"vexpand\"&gt;True&lt;/property&gt; \n    &lt;property name=\"halign\"&gt;start&lt;/property&gt; \n  &lt;/object&gt; \n  &lt;packing&gt; \n    &lt;property name=\"left_attach\"&gt;1&lt;/property&gt; \n    &lt;property name=\"top_attach\"&gt;2&lt;/property&gt; \n    &lt;property name=\"width\"&gt;1&lt;/property&gt; \n    &lt;property name=\"height\"&gt;1&lt;/property&gt; \n  &lt;/packing&gt; \n&lt;/child&gt;</span>"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::second_task::prompt",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Let me know when you’ve finished this step."
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::second_task::found",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Found it!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::ada::codeview::weather::second_task::onward",
+                        "chat::ada::codeview::weather::second_task::line_label",
+                        "chat::ada::codeview::weather::second_task::label",
+                        "chat::ada::codeview::weather::second_task::line_conditions",
+                        "chat::ada::codeview::weather::second_task::conditions",
+                        "chat::ada::codeview::weather::second_task::save",
+                        "chat::ada::codeview::weather::second_task::outro"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::second_task::onward",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Onward! Now let’s head back to the first file we edited (src >> app >> city.js) to make a couple other changes."
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::second_task::line_label",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "In line 39, add this label:"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::second_task::label",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "windLabel"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::second_task::line_conditions",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Then in line 180, add the following code to set the label to display wind conditions:"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::second_task::conditions",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "this._windLabel.label = \"Wind: \" + this._info.get_wind();"
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::second_task::save",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "That’s it! Now just hit ctrl+S to save changes."
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::second_task::outro",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Again, to view the change in the actual app, use the play button at the center top to build and run your changes. CodeView will build and install the app."
             }
         },
         {
