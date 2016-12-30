@@ -2078,7 +2078,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "Excellent work! Now that you’ve found the right file, you need to find the line of code to make our app modification. Scroll down to line 178, where you should find the following code:"
+                "message": "Excellent work! Now that you’ve found the right file, you need to find the line of code to make our app modification. Scroll down to line 179, where you should find the following code:"
             }
         },
         {
@@ -2161,7 +2161,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "Great! Now we’re going to make that change we talked about. Instead of displaying general weather conditions, we’re going to display wind conditions. To make this modification, simply replace the existing code at line 178 with this new code:"
+                "message": "Great! Now we’re going to make that change we talked about. Instead of displaying general weather conditions, we’re going to display wind conditions. To make this modification, simply replace the existing code at line 179 with this new code:"
             }
         },
         {
