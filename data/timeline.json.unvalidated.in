@@ -1562,7 +1562,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "// size: 200 x 200 pixels\nsize(200,200);\n// draw rectangles the center\nrectMode(CENTER);\n// colors the background dark gray\n background(100);\n// colors the Martian's body green\nfill(0,200,0);\n// rectangle is the body\nrect(100,100,20,100);\n// legs\nline(90,150,80,160);\nline(110,150,120,160);\n// head\nellipse(100,70,60,60);\n// colors the Martian's eyes black\nfill(0);\n// eyes\nellipse(81,70,16,32);\nellipse(119,70,16,32);\n\n\n// prints a message in the Console\nprint(\"Hello, Mars!\");",
+                "message": "// size: 200 x 200 pixels\nsize(200,200);\n// draw rectangles the center\nrectMode(CENTER);\n// colors the background dark gray\nbackground(100);\n// colors the Martian's body green\nfill(0,200,0);\n// rectangle is the body\nrect(100,100,20,100);\n// legs\nline(90,150,80,160);\nline(110,150,120,160);\n// head\nellipse(100,70,60,60);\n// colors the Martian's eyes black\nfill(0);\n// eyes\nellipse(81,70,16,32);\nellipse(119,70,16,32);\n\n\n// prints a message in the Console\nprint(\"Hello, Mars!\");",
                 "styles": ["code"]
             }
         },
