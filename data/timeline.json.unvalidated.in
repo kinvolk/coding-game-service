@@ -2108,7 +2108,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "this._conditionsLabel.label = Util.getWeatherConditions(info);"
+                "message": "this._conditionsLabel.label = Util.getWeatherConditions(info);",
+                "styles": ["code"]
             }
         },
         {
@@ -2159,7 +2160,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "this._conditionsLabel.label = \"Wind: \" + this._info.get_wind();"
+                "message": "this._conditionsLabel.label = \"Wind: \" + this._info.get_wind();",
+                "styles": ["code"]
             }
         },
         {
@@ -2270,7 +2272,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "<span font_family='monospace'>&lt;child&gt; \n  &lt;object class=\"GtkLabel\" id=\"windLabel\"&gt; \n    &lt;property name=\"name\"&gt;wind-label&lt;/property&gt; \n    &lt;property name=\"visible\"&gt;True&lt;/property&gt; \n    &lt;property name=\"can_focus\"&gt;False&lt;/property&gt; \n    &lt;property name=\"valign\"&gt;start&lt;/property&gt; \n    &lt;property name=\"vexpand\"&gt;True&lt;/property&gt; \n    &lt;property name=\"halign\"&gt;start&lt;/property&gt; \n  &lt;/object&gt; \n  &lt;packing&gt; \n    &lt;property name=\"left_attach\"&gt;1&lt;/property&gt; \n    &lt;property name=\"top_attach\"&gt;2&lt;/property&gt; \n    &lt;property name=\"width\"&gt;1&lt;/property&gt; \n    &lt;property name=\"height\"&gt;1&lt;/property&gt; \n  &lt;/packing&gt; \n&lt;/child&gt;</span>"
+                "message": "&lt;child&gt; \n  &lt;object class=\"GtkLabel\" id=\"windLabel\"&gt; \n    &lt;property name=\"name\"&gt;wind-label&lt;/property&gt; \n    &lt;property name=\"visible\"&gt;True&lt;/property&gt; \n    &lt;property name=\"can_focus\"&gt;False&lt;/property&gt; \n    &lt;property name=\"valign\"&gt;start&lt;/property&gt; \n    &lt;property name=\"vexpand\"&gt;True&lt;/property&gt; \n    &lt;property name=\"halign\"&gt;start&lt;/property&gt; \n  &lt;/object&gt; \n  &lt;packing&gt; \n    &lt;property name=\"left_attach\"&gt;1&lt;/property&gt; \n    &lt;property name=\"top_attach\"&gt;2&lt;/property&gt; \n    &lt;property name=\"width\"&gt;1&lt;/property&gt; \n    &lt;property name=\"height\"&gt;1&lt;/property&gt; \n  &lt;/packing&gt; \n&lt;/child&gt;",
+                "styles": ["code"]
             }
         },
         {
@@ -2330,7 +2333,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "windLabel"
+                "message": "windLabel",
+                "styles": ["code"]
             }
         },
         {
@@ -2346,7 +2350,8 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "this._windLabel.label = \"Wind: \" + this._info.get_wind();"
+                "message": "this._windLabel.label = \"Wind: \" + this._info.get_wind();",
+                "styles": ["code"]
             }
         },
         {
