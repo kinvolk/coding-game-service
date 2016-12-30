@@ -12,6 +12,9 @@ arbitrary_files = \
 	files/line.png \
 	files/circle.png \
 	files/circle_key.png \
+	files/codeview-builder-hints.png \
+	files/codeview-builder-overview.png \
+	files/codeview-icon-hint.png \
 	files/line_key.png \
 	files/martian.png \
 	files/martian_colors.png \
