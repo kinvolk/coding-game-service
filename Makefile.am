@@ -4,8 +4,6 @@ arbitrary_files = \
 	files/background_pic.jpg \
 	files/test.txt \
 	files/org.processing.App.desktop \
-	files/martian.pde \
-	files/line.pde \
 	files/classes.py \
 	files/functions.py \
 	files/processing.png \
@@ -18,13 +16,15 @@ arbitrary_files = \
 	files/line_key.png \
 	files/martian.png \
 	files/martian_colors.png \
-	files/wave.pde \
 	files/coding-terminal.desktop \
 	files/showmehow-terminal \
+	files/line/line.pde \
+	files/martian/martian.pde \
+	files/wave/wave.pde \
 	$(NULL)
 
-filesdir = $(pkgdatadir)/files
-files_DATA = $(arbitrary_files)
+filesdir = $(pkgdatadir)
+nobase_files_DATA = $(arbitrary_files)
 
 # Resource javascript modules
 resource_dist_js_files = \

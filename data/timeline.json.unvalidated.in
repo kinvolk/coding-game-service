@@ -1150,7 +1150,7 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "The completed code of the line",
-                    "path": "line.pde"
+                    "path": "line/line.pde"
                 }
             }
         },
@@ -1486,7 +1486,7 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "The completed code of the Martian",
-                    "path": "martian.pde"
+                    "path": "martian/martian.pde"
                 }
             }
         },
@@ -1806,7 +1806,7 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Waves",
-                    "path": "wave.pde"
+                    "path": "wave/wave.pde"
                 }
             }
         },
