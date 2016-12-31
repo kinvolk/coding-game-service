@@ -6,3 +6,11 @@ gsettings reset-recursively com.endlessm.showmehow
 gsettings reset org.gnome.shell taskbar-pins
 gsettings reset org.gnome.shell wobbly-effect
 killall -9 -q /usr/bin/gjs || true
+
+cd ~/Projects/gnome-weather && git reset --hard HEAD
+flatpak --user uninstall org.gnome.Weather
+rm -rf ~/.cache/app/org.gnome.Weather/
+rm -rf ~/.var/app/org.gnome.Weather/
+rm -rf ~/.var/app/org.gnome.Builder/cache/gnome-builder/builds/gnome-weather
+rm -rf ~/.var/app/org.gnome.Builder/data/gnome-builder/drafts/gnome-weather
+rm ~/.var/app/org.gnome.Builder/cache/gnome-builder/makecache/gnome-weather.makecache
