@@ -14,3 +14,7 @@ rm -rf ~/.var/app/org.gnome.Weather/
 rm -rf ~/.var/app/org.gnome.Builder/cache/gnome-builder/builds/gnome-weather
 rm -rf ~/.var/app/org.gnome.Builder/data/gnome-builder/drafts/gnome-weather
 rm ~/.var/app/org.gnome.Builder/cache/gnome-builder/makecache/gnome-weather.makecache
+
+rm -rf ~/.var/app/org.processing.App
+rm -rf ~/.processing
+rm -rf ./.java/.userPrefs/processing
