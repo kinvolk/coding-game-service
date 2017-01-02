@@ -1,7 +1,6 @@
 # Arbitrary files
 arbitrary_files = \
 	files/sw.txt \
-	files/background_pic.jpg \
 	files/test.txt \
 	files/org.processing.App.desktop \
 	files/classes.py \
