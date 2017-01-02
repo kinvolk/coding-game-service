@@ -1136,9 +1136,9 @@
                     ],
                     "no": [
                         "chat::ada::processing::chat_retry_line",
-                        "chat::ada::processing::chat_check_line",
                         "chat::ada::processing::show_sketch_code",
                         "chat::ada::processing::chat_compare_code",
+                        "chat::ada::processing::chat_check_line",
                         "chat::ada::processing::chat_check_line::response"
                     ]
                 }
