@@ -737,6 +737,7 @@
                 "name": "showmehow-showmehow",
                 "received": [
                     "terminalintro::chat::ada::open_terminal::showmehow-navigation",
+                    "terminalintro::chat::ada::open_terminal::navigation-partner-content",
                     "listen::terminalintro::showmehow-navigation",
                     "artifact::terminalintro::showmehow"
                 ]
@@ -763,7 +764,6 @@
             "data": {
                 "name": "showmehow-navigation",
                 "received": [
-                    "terminalintro::chat::ada::open_terminal::navigation-partner-content",
                     "terminalintro::start-mission::terminaltasks"
                 ]
             }
@@ -773,7 +773,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "I hope you enjoyed learning about the file system in Terminal. There’s so much more you can do! Check out this great lesson from <a href=\"https://www.codecademy.com/learn/learn-the-command-line\">Codecademy</a>!"
+                "message": "I hope you will enjoy learning about the file system in Terminal. There’s so much more you can do! Check out this great lesson from <a href=\"https://www.codecademy.com/learn/learn-the-command-line\">Codecademy</a>!"
             }
         },
         {
