@@ -1031,6 +1031,7 @@
                     ],
                     "no": [
                         "chat::ada::processing::chat_retry_print",
+                        "chat::ada::processing::code_print_console",
                         "chat::ada::processing::chat_check_print",
                         "chat::ada::processing::chat_check_print::response"
                     ]
@@ -1626,6 +1627,7 @@
                     ],
                     "no": [
                         "chat::ada::processing::chat_retry_martian_colors",
+                        "chat::ada::processing::code_color_martian",
                         "chat::ada::processing::chat_check_martian_colors",
                         "chat::ada::processing::chat_check_martian_colors::response"
                     ]
