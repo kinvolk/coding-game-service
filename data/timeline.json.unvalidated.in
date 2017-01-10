@@ -1031,6 +1031,7 @@
                     ],
                     "no": [
                         "chat::ada::processing::chat_retry_print",
+                        "chat::ada::processing::code_print_console",
                         "chat::ada::processing::chat_check_print",
                         "chat::ada::processing::chat_check_print::response"
                     ]
@@ -1626,6 +1627,7 @@
                     ],
                     "no": [
                         "chat::ada::processing::chat_retry_martian_colors",
+                        "chat::ada::processing::code_color_martian",
                         "chat::ada::processing::chat_check_martian_colors",
                         "chat::ada::processing::chat_check_martian_colors::response"
                     ]
@@ -2410,13 +2412,16 @@
                 },
                 "responses": {
                     "usr": [
-                        "chat::ada::yoursystem::find_etc::again"
+                        "chat::ada::yoursystem::find_etc::again",
+                        "chat::ada::yoursystem::find_etc::response"
                     ],
                     "var": [
-                        "chat::ada::yoursystem::find_etc::again"
+                        "chat::ada::yoursystem::find_etc::again",
+                        "chat::ada::yoursystem::find_etc::response"
                     ],
                     "boot": [
-                        "chat::ada::yoursystem::find_etc::again"
+                        "chat::ada::yoursystem::find_etc::again",
+                        "chat::ada::yoursystem::find_etc::response"
                     ],
                     "etc": [
                         "chat::ada::yoursystem::find_etc::success",
@@ -2484,7 +2489,8 @@
                 },
                 "responses": {
                     "usr": [
-                        "chat::ada::yoursystem::find_logs::again"
+                        "chat::ada::yoursystem::find_logs::again",
+                        "chat::ada::yoursystem::find_logs::challenge"
                     ],
                     "var": [
                         "chat::ada::yoursystem::find_logs::success",
@@ -2493,10 +2499,12 @@
                         "chat::ada::yoursystem::find_configs::challenge"
                     ],
                     "boot": [
-                        "chat::ada::yoursystem::find_logs::again"
+                        "chat::ada::yoursystem::find_logs::again",
+                        "chat::ada::yoursystem::find_logs::challenge"
                     ],
                     "etc": [
-                        "chat::ada::yoursystem::find_logs::again"
+                        "chat::ada::yoursystem::find_logs::again",
+                        "chat::ada::yoursystem::find_logs::challenge"
                     ]
                 }
             }
@@ -2768,7 +2776,7 @@
             "type": "chat-actor",
             "data": {
                 "actor": "Ada",
-                "message": "Correct! You put the functions together in the right away and got the right answer!"
+                "message": "Correct! You put the functions together in the right way and got the right answer!"
             }
         },
         {
