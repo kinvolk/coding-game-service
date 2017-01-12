@@ -949,7 +949,8 @@
                     "path": "org.processing.App.desktop",
                     "open_event": [
                         "chat::ada::processing::chat_show_interface",
-                        "chat::ada::processing::show_processing_interface"
+                        "chat::ada::processing::show_processing_interface",
+                        "chat::ada::processing::show_processing_interface_pause"
                     ]
                 }
             }
@@ -969,8 +970,27 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Processing interface",
-                    "path": "processing.png",
-                    "open_event": [
+                    "path": "processing.png"
+                }
+            }
+        },
+        {
+            "name": "chat::ada::processing::show_processing_interface_pause",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Ready!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
                         "chat::ada::processing::chat_first_code",
                         "chat::ada::processing::code_print_console",
                         "chat::ada::processing::chat_explain_comments",
@@ -1038,8 +1058,7 @@
                         "chat::ada::processing::code_line",
                         "chat::ada::processing::chat_line_example",
                         "chat::ada::processing::show_line_example",
-                        "chat::ada::processing::chat_check_line",
-                        "chat::ada::processing::chat_check_line::response"
+                        "chat::ada::processing::show_line_example_pause"
                     ],
                     "no": [
                         "chat::ada::processing::chat_retry_print",
@@ -1099,6 +1118,29 @@
                 "attachment": {
                     "desc": "Screenshot of line in Processing",
                     "path": "line.png"
+                }
+            }
+        },
+        {
+            "name": "chat::ada::processing::show_line_example_pause",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Ready!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::ada::processing::chat_check_line",
+                        "chat::ada::processing::chat_check_line::response"
+                    ]
                 }
             }
         },
@@ -1237,7 +1279,8 @@
                         "chat::ada::processing::chat_circle_code",
                         "chat::ada::processing::code_circle",
                         "chat::ada::processing::chat_circle_example",
-                        "chat::ada::processing::show_circle_example"
+                        "chat::ada::processing::show_circle_example",
+                        "chat::ada::processing::show_circle_example_pause"
                     ]
                 }
             }
@@ -1274,8 +1317,27 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Screenshot of circle in Processing",
-                    "path": "circle.png",
-                    "open_event": [
+                    "path": "circle.png"
+                }
+            }
+        },
+        {
+            "name": "chat::ada::processing::show_circle_example_pause",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Ready!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
                         "chat::ada::processing::chat_check_circle",
                         "chat::ada::processing::chat_check_circle::response"
                     ]
@@ -1397,7 +1459,8 @@
                         "chat::ada::processing::chat_advanced_tutorial",
                         "chat::ada::processing::code_martian",
                         "chat::ada::processing::chat_martian_example",
-                        "chat::ada::processing::show_martian_example"
+                        "chat::ada::processing::show_martian_example",
+                        "chat::ada::processing::show_martian_example_pause"
                     ]
                 }
             }
@@ -1434,9 +1497,29 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Screenshot of martian in Processing",
-                    "path": "martian.png",
-                    "open_event": [
-                       "chat::ada::processing::chat_check_martian_appeared", "chat::ada::processing::chat_check_martian_appeared::response"
+                    "path": "martian.png"
+                }
+            }
+        },
+        {
+            "name": "chat::ada::processing::show_martian_example_pause",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Ready!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::ada::processing::chat_check_martian_appeared",
+                        "chat::ada::processing::chat_check_martian_appeared::response"
                     ]
                 }
             }
@@ -1547,7 +1630,8 @@
                         "chat::ada::processing::code_color_martian",
                         "chat::ada::processing::chat_explain_code_reading",
                         "chat::ada::processing::chat_martian_colors_example",
-                        "chat::ada::processing::show_martian_colors_example"
+                        "chat::ada::processing::show_martian_colors_example",
+                        "chat::ada::processing::show_martian_colors_example_pause"
                     ]
                 }
             }
@@ -1592,8 +1676,27 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Screenshot of colored Martian in Processing",
-                    "path": "martian_colors.png",
-                    "open_event": [
+                    "path": "martian_colors.png"
+                }
+            }
+        },
+        {
+            "name": "chat::ada::processing::show_martian_colors_example_pause",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Ready!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
                         "chat::ada::processing::chat_check_martian_colors",
                         "chat::ada::processing::chat_check_martian_colors::response"
                     ]
@@ -1882,7 +1985,8 @@
                         "chat::ada::codeview::weather::start_app::old",
                         "chat::ada::codeview::weather::start_app::what",
                         "chat::ada::codeview::weather::flip_screen::hint_chat",
-                        "chat::ada::codeview::weather::flip_screen::hint_screenshot"
+                        "chat::ada::codeview::weather::flip_screen::hint_screenshot",
+                        "chat::ada::codeview::weather::flip_screen::hint_screenshot_pause"
                     ]
                 }
             }
@@ -1918,8 +2022,27 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Flip to source code editor button",
-                    "path": "codeview-icon.png",
-                    "open_event": [
+                    "path": "codeview-icon.png"
+                }
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::flip_screen::hint_screenshot_pause",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Ready!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
                         "chat::ada::codeview::weather::flip_screen::hint_chat_second",
                         "chat::ada::codeview::weather::flip_screen::response"
                     ]
@@ -1953,7 +2076,8 @@
                     "yes": [
                         "chat::ada::codeview::weather::editor::welcome",
                         "chat::ada::codeview::weather::editor::overview",
-                        "chat::ada::codeview::weather::editor::overview::screenshot"
+                        "chat::ada::codeview::weather::editor::overview::screenshot",
+                        "chat::ada::codeview::weather::editor::overview::screenshot_pause"
                     ]
                 }
             }
@@ -1981,8 +2105,27 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Overview of source code editor",
-                    "path": "builder-overview.png",
-                    "open_event": [
+                    "path": "builder-overview.png"
+                }
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::editor::overview::screenshot_pause",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Ready!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
                         "chat::ada::codeview::weather::editor::task",
                         "chat::ada::codeview::weather::first_task::description",
                         "chat::ada::codeview::weather::first_task::overview",
@@ -2072,7 +2215,8 @@
                     ],
                     "failure": [
                         "chat::ada::codeview::weather::first_task::challenge::hint",
-                        "chat::ada::codeview::weather::first_task::challenge::screenshot"
+                        "chat::ada::codeview::weather::first_task::challenge::screenshot",
+                        "chat::ada::codeview::weather::first_task::challenge::screenshot_pause"
                     ]
                 }
             }
@@ -2108,8 +2252,27 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Hint for finding the copyright year.",
-                    "path": "codeview-builder.png",
-                    "open_event": [
+                    "path": "codeview-builder.png"
+                }
+            }
+        },
+        {
+            "name": "chat::ada::codeview::weather::first_task::challenge::screenshot_pause",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Ready!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
                         "chat::ada::codeview::weather::first_task::challenge::prompt",
                         "chat::ada::codeview::weather::first_task::challenge"
                     ]
