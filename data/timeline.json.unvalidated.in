@@ -168,6 +168,24 @@
             ]
         },
         {
+            "name": "popquiz",
+            "short_desc": "Popular culture quiz",
+            "long_desc": "Misc quiz on music, cinema and sports.",
+            "hint": "Choose wisely, you'll have to start over if you don't answer correctly",
+            "start_events": [
+                "chat::konrad::popquiz::misc::intro",
+                "chat::konrad::popquiz::misc::ready"
+            ],
+            "artifacts": [
+                {
+                    "name": "artifact::popquiz::completed",
+                    "desc": "Completed pop quiz",
+                    "icon": "text-editor-symbolic",
+                    "points": 101
+                }
+            ]
+        },
+        {
             "name": "yoursystem",
             "short_desc": "Uncover the wraps on your filesystem",
             "long_desc": "Look in all the nooks and crannies in your system",
@@ -2547,6 +2565,278 @@
             }
         },
         {
+            "name": "popquiz::start-mission::popquiz",
+            "type": "start-mission",
+            "data": {
+                "name": "popquiz"
+            }
+        },
+        {
+            "name": "chat::konrad::popquiz::misc::intro",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Konrad",
+                "message": "Alright, it’s time for Quiz! You will be getting questions for misc categories. Choose wisely, because if you give the wrong answer, you'll have to start over. Are you ready?"
+            }
+        },
+        {
+            "name": "chat::konrad::popquiz::misc::ready",
+            "type": "input-user",
+            "data": {
+                "actor": "Konrad",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Yes! Let's go!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::konrad::popquiz::misc::jarjar",
+                        "chat::konrad::popquiz::misc::jarjar_question"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::konrad::popquiz::misc::wrong",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Konrad",
+                "message": "Ops! You have chosen the wrong answer. You'll have to start again. Are you ready?"
+            }
+        },
+        {
+            "name": "chat::konrad::popquiz::misc::jarjar",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Konrad",
+                "message": "The character Jar Jar Binks first appears in which of the Star Wars movies?"
+            }
+        },
+        {
+            "name": "chat::konrad::popquiz::misc::jarjar_question",
+            "type": "input-user",
+            "data": {
+                "actor": "Konrad",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "op1": {
+                                "text": "The Phantom Menace"
+                            },
+                            "op2": {
+                                "text": "Attack of the Clones"
+                            },
+                            "op3": {
+                                "text": "The Return of the Jedi"
+                            },
+                            "op4": {
+                                "text": "Rogue One"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "op1": [
+                        "chat::konrad::popquiz::misc::correct",
+                        "chat::konrad::popquiz::misc::beatles",
+                        "chat::konrad::popquiz::misc::beatles_question"
+                    ],
+                    "op2": [
+                        "chat::konrad::popquiz::misc::wrong",
+                        "chat::konrad::popquiz::misc::ready"
+                    ],
+                    "op3": [
+                        "chat::konrad::popquiz::misc::wrong",
+                        "chat::konrad::popquiz::misc::ready"
+                    ],
+                    "op4": [
+                        "chat::konrad::popquiz::misc::wrong",
+                        "chat::konrad::popquiz::misc::ready"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::konrad::popquiz::misc::beatles",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Konrad",
+                "message": "What city did music band 'The Beatles' come from?"
+            }
+        },
+        {
+            "name": "chat::konrad::popquiz::misc::beatles_question",
+            "type": "input-user",
+            "data": {
+                "actor": "Konrad",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "op1": {
+                                "text": "Manchester"
+                            },
+                            "op2": {
+                                "text": "London"
+                            },
+                            "op3": {
+                                "text": "Liverpool"
+                            },
+                            "op4": {
+                                "text": "Leeds"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "op3": [
+                        "chat::konrad::popquiz::misc::correct",
+                        "chat::konrad::popquiz::misc::lebron",
+                        "chat::konrad::popquiz::misc::lebron_question"
+                    ],
+                    "op1": [
+                        "chat::konrad::popquiz::misc::wrong",
+                        "chat::konrad::popquiz::misc::ready"
+                    ],
+                    "op2": [
+                        "chat::konrad::popquiz::misc::wrong",
+                        "chat::konrad::popquiz::misc::ready"
+                    ],
+                    "op4": [
+                        "chat::konrad::popquiz::misc::wrong",
+                        "chat::konrad::popquiz::misc::ready"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::konrad::popquiz::misc::lebron",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Konrad",
+                "message": "Which one of these people is a sports star?"
+            }
+        },
+        {
+            "name": "chat::konrad::popquiz::misc::lebron_question",
+            "type": "input-user",
+            "data": {
+                "actor": "Konrad",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "op1": {
+                                "text": "Richard Stallman"
+                            },
+                            "op2": {
+                                "text": "Hugh Laurie"
+                            },
+                            "op3": {
+                                "text": "LeBron James"
+                            },
+                            "op4": {
+                                "text": "Denzel Washington"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "op3": [
+                        "chat::konrad::popquiz::misc::correct",
+                        "chat::konrad::popquiz::misc::harry",
+                        "chat::konrad::popquiz::misc::harry_question"
+                    ],
+                    "op1": [
+                        "chat::konrad::popquiz::misc::wrong",
+                        "chat::konrad::popquiz::misc::ready"
+                    ],
+                    "op2": [
+                        "chat::konrad::popquiz::misc::wrong",
+                        "chat::konrad::popquiz::misc::ready"
+                    ],
+                    "op4": [
+                        "chat::konrad::popquiz::misc::wrong",
+                        "chat::konrad::popquiz::misc::ready"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::konrad::popquiz::misc::harry",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Konrad",
+                "message": "Which is the symbol of the Hufflepuff house on the Harry Potter stories?"
+            }
+        },
+        {
+            "name": "chat::konrad::popquiz::misc::harry_question",
+            "type": "input-user",
+            "data": {
+                "actor": "Konrad",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "op1": {
+                                "text": "Lion"
+                            },
+                            "op2": {
+                                "text": "Badger"
+                            },
+                            "op3": {
+                                "text": "Eagle"
+                            },
+                            "op4": {
+                                "text": "Snake"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "op4": [
+                        "chat::konrad::popquiz::misc::finished"
+                    ],
+                    "op1": [
+                        "chat::konrad::popquiz::misc::wrong",
+                        "chat::konrad::popquiz::misc::ready"
+                    ],
+                    "op2": [
+                        "chat::konrad::popquiz::misc::wrong",
+                        "chat::konrad::popquiz::misc::ready"
+                    ],
+                    "op3": [
+                        "chat::konrad::popquiz::misc::wrong",
+                        "chat::konrad::popquiz::misc::ready"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::konrad::popquiz::misc::correct",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Konrad",
+                "message": "Correct! Next one..."
+            }
+        },
+        {
+            "name": "chat::konrad::popquiz::misc::finished",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Konrad",
+                "message": "Awesome! You finished the quiz. Congratulations!"
+            }
+        },
+        {
             "name": "processing::start-mission::yoursystem",
             "type": "start-mission",
             "data": {
@@ -3249,6 +3539,9 @@
                             },
                             "python_functions": {
                                 "text": "Python Functions"
+                            },
+                            "popquiz": {
+                                "text": "Pop Culture Quiz"
                             }
                         }
                     }
@@ -3281,6 +3574,11 @@
                     ],
                     "python_functions": [
                         "showmehow_python::start-mission::python_functions",
+                        "chat::marlon::where_to_go::response",
+                        "chat::marlon::where_to_go::input"
+                    ],
+                    "popquiz": [
+                        "popquiz::start-mission::popquiz",
                         "chat::marlon::where_to_go::response",
                         "chat::marlon::where_to_go::input"
                     ]
