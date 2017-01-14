@@ -98,7 +98,7 @@ coding_game_service_app_integration_controller_service_event_with_listener(Codin
    * in this signal. If so, call the event handler straight away */
   const gchar * const *listening_for = coding_game_service_coding_game_service_get_currently_listening_for_events(controller->service);
   while (*listening_for) {
-    if (g_strcmp0(listening_for, event_name) == 0) {
+    if (g_strcmp0(*listening_for, event_name) == 0) {
       (*register_interest_cb)(controller, register_user_data);
       break;
     }
