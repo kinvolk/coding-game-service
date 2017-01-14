@@ -734,6 +734,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "",
                         "choices": {
                             "where": {
                                 "text": "Where is it?"
@@ -987,6 +988,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready!"
@@ -1030,6 +1032,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready!"
@@ -1089,6 +1092,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Yes"
@@ -1177,6 +1181,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready!"
@@ -1208,6 +1213,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Did the line appear?",
                         "choices": {
                             "yes": {
                                 "text": "Yes"
@@ -1315,6 +1321,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready!"
@@ -1377,6 +1384,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready!"
@@ -1408,6 +1416,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Did the circle appear?",
                         "choices": {
                             "yes": {
                                 "text": "Yes"
@@ -1495,6 +1504,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready!"
@@ -1557,6 +1567,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready!"
@@ -1588,6 +1599,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Did the martian appear?",
                         "choices": {
                             "yes": {
                                 "text": "Yes"
@@ -1665,6 +1677,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready"
@@ -1736,6 +1749,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready!"
@@ -1767,6 +1781,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Did the Martian appear with colors?",
                         "choices": {
                             "yes": {
                                 "text": "Yes"
@@ -1871,6 +1886,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready!"
@@ -1939,6 +1955,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready!"
@@ -2021,6 +2038,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Opened the app?",
                         "choices": {
                             "yes": {
                                 "text": "Done!"
@@ -2082,6 +2100,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready!"
@@ -2113,6 +2132,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Flipped the app?",
                         "choices": {
                             "yes": {
                                 "text": "Done!"
@@ -2165,6 +2185,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready!"
@@ -2232,6 +2253,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready!"
@@ -2324,6 +2346,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready!"
@@ -2364,6 +2387,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Found the line containing the year?",
                         "choices": {
                             "yes": {
                                 "text": "Found it!"
@@ -2430,8 +2454,10 @@
             "data": {
                 "actor": "Ada",
                 "input": {
+                    "prompt": "Ready to continue?",
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready!"
@@ -2463,6 +2489,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to continue?",
                         "choices": {
                             "yes": {
                                 "text": "Ready!"
@@ -2540,6 +2567,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Found it?",
                         "choices": {
                             "yes": {
                                 "text": "Found it!"
@@ -2641,6 +2669,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Ready to start?",
                         "choices": {
                             "yes": {
                                 "text": "Yes! Let's go!"
@@ -2680,6 +2709,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Your Answer",
                         "choices": {
                             "op1": {
                                 "text": "The Phantom Menace"
@@ -2733,6 +2763,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Your Answer",
                         "choices": {
                             "op1": {
                                 "text": "Manchester"
@@ -2786,6 +2817,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Your Answer",
                         "choices": {
                             "op1": {
                                 "text": "Richard Stallman"
@@ -2839,6 +2871,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Your Answer",
                         "choices": {
                             "op1": {
                                 "text": "Lion"
@@ -2913,6 +2946,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Your Answer",
                         "choices": {
                             "etc": {
                                 "text": "/etc"
@@ -2990,6 +3024,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Your Answer",
                         "choices": {
                             "etc": {
                                 "text": "/etc"
@@ -3575,6 +3610,7 @@
                 "input": {
                     "type": "choice",
                     "settings": {
+                        "prompt": "Where would you like to go?",
                         "choices": {
                             "intro": {
                                 "text": "Introduction"
