@@ -186,13 +186,14 @@ coding_game_service_app_integration_controller_dispose(GObject *object)
 }
 
 static void
-coding_game_service_app_integration_controller_init(CodingGameServiceAppIntegrationController *controller) {
+coding_game_service_app_integration_controller_init(CodingGameServiceAppIntegrationController *controller)
+{
   controller->service = coding_game_service_coding_game_service_proxy_new_for_bus_sync(G_BUS_TYPE_SESSION,
-                                                                                 G_DBUS_PROXY_FLAGS_NONE,
-                                                                                 "com.endlessm.CodingGameService.Service",
-                                                                                 "/com/endlessm/CodingGameService/Service",
-                                                                                 NULL,
-                                                                                 NULL);
+                                                                                       G_DBUS_PROXY_FLAGS_NONE,
+                                                                                       "com.endlessm.CodingGameService.Service",
+                                                                                       "/com/endlessm/CodingGameService/Service",
+                                                                                       NULL,
+                                                                                       NULL);
   controller->event_handlers = g_hash_table_new_full(g_str_hash,
                                                g_str_equal,
                                                g_free,
