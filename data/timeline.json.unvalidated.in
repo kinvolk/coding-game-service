@@ -135,7 +135,8 @@
                 "chat::ada::processing::chat_beginner_tutorial",
                 "event::ada::processing::copy_processing_desktop_file",
                 "event::ada::processing::insert_processing_icon",
-                "chat::ada::processing::click_icon"
+                "chat::ada::processing::show_icon",
+                "chat::ada::processing::show_icon_pause"
             ],
             "artifacts": [
                 {
@@ -958,14 +959,33 @@
             }
         },
         {
-            "name": "chat::ada::processing::click_icon",
+            "name": "chat::ada::processing::show_icon",
             "type": "chat-actor-attachment",
             "data": {
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Processing",
-                    "path": "org.processing.App.desktop",
-                    "open_event": [
+                    "path": "org.processing.App.desktop"
+                }
+            }
+        },
+        {
+            "name": "chat::ada::processing::show_icon_pause",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "choices": {
+                            "yes": {
+                                "text": "Ready!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
                         "chat::ada::processing::chat_show_interface",
                         "chat::ada::processing::show_processing_interface",
                         "chat::ada::processing::show_processing_interface_pause"
