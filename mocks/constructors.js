@@ -96,6 +96,9 @@ const ExternalEffectsStub = new Lang.Class({
     },
 
     removeApplication: function(app) {
+    },
+
+    removeFile: function(app) {
     }
 });
 const createExternalEffects = function() {
@@ -105,6 +108,7 @@ const createExternalEffects = function() {
     spyOn(effects, 'copySourceToTarget');
     spyOn(effects, 'addApplication');
     spyOn(effects, 'removeApplication');
+    spyOn(effects, 'removeFile');
     return effects;
 }
 const createLogFileWithStructure = function(structure) {
