@@ -1967,6 +1967,8 @@
                     "yes": [
                         "chat::ada::processing::wave_explanation",
                         "chat::ada::processing::wave_attachment",
+                        "chat::ada::processing::see_new_mission",
+                        "chat::ada::processing::see_new_mission::response",
                         "processing::start-mission::yoursystem"
                     ]
                 }
@@ -1988,6 +1990,37 @@
                 "attachment": {
                     "desc": "Waves",
                     "path": "wave/wave.pde"
+                }
+            }
+        },
+        {
+            "name": "chat::ada::processing::see_new_mission",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "When you're ready to move on to something completely different, hit the 'Ready' button."
+            }
+        },
+        {
+            "name": "chat::ada::processing::see_new_mission::response",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "prompt": "Ready to continue?",
+                        "choices": {
+                            "yes": {
+                                "text": "Ready!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "processing::start-mission::yoursystem"
+                    ]
                 }
             }
         },
