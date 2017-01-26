@@ -101,6 +101,7 @@ CodingGameService.c: $(srcdir)/com.endlessm.CodingGameService.xml
 CodingGameService.h: CodingGameService.c
 
 gdbus_codegen_built_sources = CodingGameService.c CodingGameService.h
+coding_game_service_shim_sources = lib/shim.c lib/shim.h
 
 # Validation of timeline (produces data.timeline)
 data/timeline.json: $(srcdir)/data/timeline.json.unvalidated.in $(all_js_files)
@@ -122,6 +123,7 @@ com.endlessm.CodingGameService.gresource: $(srcdir)/com.endlessm.CodingGameServi
 
 # Generate the CodingGameService GDBus Skeleton library
 libcoding_game_service_1_0_la_SOURCES = $(gdbus_codegen_built_sources) \
+					$(coding_game_service_shim_sources) \
 					$(NULL)
 libcoding_game_service_1_0_la_CFLAGS = $(CODING_GAME_SERVICE_CFLAGS)
 libcoding_game_service_1_0_la_LIBADD = $(CODING_GAME_SERVICE_LIBS)
