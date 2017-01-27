@@ -1938,8 +1938,7 @@
                         "chat::ada::processing::wave_explanation",
                         "chat::ada::processing::wave_attachment",
                         "chat::ada::processing::see_new_mission",
-                        "chat::ada::processing::see_new_mission::response",
-                        "processing::start-mission::python"
+                        "chat::ada::processing::see_new_mission::response"
                     ]
                 }
             }
