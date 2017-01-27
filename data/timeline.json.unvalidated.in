@@ -188,36 +188,6 @@
             ]
         },
         {
-            "name": "yoursystem",
-            "short_desc": "Uncover the wraps on your filesystem",
-            "long_desc": "Look in all the nooks and crannies in your system",
-            "hint": "Try starting with / and going down",
-            "start_events": [
-                "chat::ada::yoursystem::find_etc",
-                "chat::ada::yoursystem::find_etc::response"
-            ],
-            "artifacts": [
-                {
-                    "name": "artifact::yoursystem::found_etc",
-                    "desc": "Found out about /etc",
-                    "icon": "text-editor-symbolic",
-                    "points": 131
-                },
-                {
-                    "name": "artifact::yoursystem::found_logs",
-                    "desc": "Found out about where logs are stored",
-                    "icon": "text-editor-symbolic",
-                    "points": 124
-                },
-                {
-                    "name": "artifact::yoursystem::found_configs",
-                    "desc": "Found out about where configuration is stored",
-                    "icon": "text-editor-symbolic",
-                    "points": 200
-                }
-            ]
-        },
-        {
             "name": "python",
             "short_desc": "Get started with Python",
             "long_desc": "Get started with Python",
@@ -1969,7 +1939,7 @@
                         "chat::ada::processing::wave_attachment",
                         "chat::ada::processing::see_new_mission",
                         "chat::ada::processing::see_new_mission::response",
-                        "processing::start-mission::yoursystem"
+                        "processing::start-mission::python"
                     ]
                 }
             }
@@ -2019,7 +1989,7 @@
                 },
                 "responses": {
                     "yes": [
-                        "processing::start-mission::yoursystem"
+                        "processing::start-mission::python"
                     ]
                 }
             }
@@ -2957,225 +2927,7 @@
             }
         },
         {
-            "name": "processing::start-mission::yoursystem",
-            "type": "start-mission",
-            "data": {
-                "name": "yoursystem"
-            }
-        },
-        {
-            "name": "chat::ada::yoursystem::find_etc",
-            "type": "chat-actor",
-            "data": {
-                "actor": "Ada",
-                "message": "Now it is time to find the system configuration files. They're known in oldspeak as 'Editable Text Configuration' files. What directory do you think we can find them in?"
-            }
-        },
-        {
-            "name": "chat::ada::yoursystem::find_etc::response",
-            "type": "input-user",
-            "data": {
-                "actor": "Ada",
-                "input": {
-                    "type": "choice",
-                    "settings": {
-                        "prompt": "Your Answer",
-                        "choices": {
-                            "etc": {
-                                "text": "/etc"
-                            },
-                            "usr": {
-                                "text": "/usr"
-                            },
-                            "var": {
-                                "text": "/var"
-                            },
-                            "boot": {
-                                "text": "/boot"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "usr": [
-                        "chat::ada::yoursystem::find_etc::again",
-                        "chat::ada::yoursystem::find_etc::response"
-                    ],
-                    "var": [
-                        "chat::ada::yoursystem::find_etc::again",
-                        "chat::ada::yoursystem::find_etc::response"
-                    ],
-                    "boot": [
-                        "chat::ada::yoursystem::find_etc::again",
-                        "chat::ada::yoursystem::find_etc::response"
-                    ],
-                    "etc": [
-                        "chat::ada::yoursystem::find_etc::success",
-                        "artifact::yoursystem::found_etc",
-                        "chat::ada::yoursystem::find_logs",
-                        "chat::ada::yoursystem::find_logs::challenge"
-                    ]
-                }
-            }
-        },
-        {
-            "name": "chat::ada::yoursystem::find_etc::again",
-            "type": "chat-actor",
-            "data": {
-                "actor": "Ada",
-                "message": "Hmm, I don't see any text files in there."
-            }
-        },
-        {
-            "name": "chat::ada::yoursystem::find_etc::success",
-            "type": "chat-actor",
-            "data": {
-                "actor": "Ada",
-                "message": "Of course. 'Editable Text Configuration' files shortens down to 'etc'."
-            }
-        },
-        {
-            "name": "chat::ada::yoursystem::find_logs",
-            "type": "chat-actor",
-            "data": {
-                "actor": "Ada",
-                "message": "Now, where can you find your system logs"
-            }
-        },
-        {
-            "name": "artifact::yoursystem::found_etc",
-            "type": "register-artifact",
-            "data": {
-                "name": "artifact::yoursystem::found_logs"
-            }
-        },
-        {
-            "name": "chat::ada::yoursystem::find_logs::challenge",
-            "type": "input-user",
-            "data": {
-                "actor": "Ada",
-                "input": {
-                    "type": "choice",
-                    "settings": {
-                        "prompt": "Your Answer",
-                        "choices": {
-                            "etc": {
-                                "text": "/etc"
-                            },
-                            "usr": {
-                                "text": "/usr"
-                            },
-                            "var": {
-                                "text": "/var"
-                            },
-                            "boot": {
-                                "text": "/boot"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "usr": [
-                        "chat::ada::yoursystem::find_logs::again",
-                        "chat::ada::yoursystem::find_logs::challenge"
-                    ],
-                    "var": [
-                        "chat::ada::yoursystem::find_logs::success",
-                        "artifact::yoursystem::found_logs",
-                        "chat::ada::yoursystem::find_configs",
-                        "chat::ada::yoursystem::find_configs::challenge"
-                    ],
-                    "boot": [
-                        "chat::ada::yoursystem::find_logs::again",
-                        "chat::ada::yoursystem::find_logs::challenge"
-                    ],
-                    "etc": [
-                        "chat::ada::yoursystem::find_logs::again",
-                        "chat::ada::yoursystem::find_logs::challenge"
-                    ]
-                }
-            }
-        },
-        {
-            "name": "chat::ada::yoursystem::find_logs::again",
-            "type": "chat-actor",
-            "data": {
-                "actor": "Ada",
-                "message": "Nope, no logs here"
-            }
-        },
-        {
-            "name": "chat::ada::yoursystem::find_logs::success",
-            "type": "chat-actor",
-            "data": {
-                "actor": "Ada",
-                "message": "Sweet, all the logs are here. You can also use `journalctl` to view all the logs in one place."
-            }
-        },
-        {
-            "name": "artifact::yoursystem::found_logs",
-            "type": "register-artifact",
-            "data": {
-                "name": "artifact::yoursystem::found_logs"
-            }
-        },
-        {
-            "name": "chat::ada::yoursystem::find_configs",
-            "type": "chat-actor",
-            "data": {
-                "actor": "Ada",
-                "message": "There's lots of configuration files in your home directory. But they're all hiddden from view. Can you tell me in one character or less why that is?"
-            }
-        },
-        {
-            "name": "chat::ada::yoursystem::find_configs::challenge",
-            "type": "input-user",
-            "data": {
-                "actor": "Ada",
-                "input": {
-                    "type": "text",
-                    "settings": {
-                        "showmehow_id": "yoursystem::find_configs"
-                    }
-                },
-                "responses": {
-                    "success": [
-                        "chat::ada::yoursystem::find_configs::success",
-                        "artifact::yoursystem::found_configs",
-                        "yoursystem::start-mission::python"
-                    ],
-                    "failure": [
-                        "chat::ada::yoursystem::find_configs::again",
-                        "chat::ada::yoursystem::find_configs::challenge"
-                    ]
-                }
-            }
-        },
-        {
-            "name": "chat::ada::yoursystem::find_configs::success",
-            "type": "chat-actor",
-            "data": {
-                "actor": "Ada",
-                "message": "That's right! They all begin with a '.' so they are hidden. But you can unhide them. Why don't you try pressing Control-H in the File Manager and see what you find?"
-            }
-        },
-        {
-            "name": "chat::ada::yoursystem::find_configs::again",
-            "type": "chat-actor",
-            "data": {
-                "actor": "Ada",
-                "message": "Hmm, no it isn't quite that. They all start with one and it isn't a letter or an number. But it causes them to be hidden from view. Why not search the internet to find out what it is?"
-            }
-        },
-        {
-            "name": "artifact::yoursystem::found_configs",
-            "type": "register-artifact",
-            "data": {
-                "name": "artifact::yoursystem::found_configs"
-            }
-        },
-        {
-            "name": "yoursystem::start-mission::python",
+            "name": "processing::start-mission::python",
             "type": "start-mission",
             "data": {
                 "name": "python"
@@ -3691,7 +3443,7 @@
                         "chat::marlon::where_to_go::input"
                     ],
                     "showmehow_python": [
-                        "yoursystem::start-mission::python",
+                        "processing::start-mission::python",
                         "chat::marlon::where_to_go::response",
                         "chat::marlon::where_to_go::input"
                     ],
