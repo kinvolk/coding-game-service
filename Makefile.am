@@ -20,6 +20,8 @@ arbitrary_files = \
 	files/line/line.pde \
 	files/martian/martian.pde \
 	files/wave/wave.pde \
+	files/eos-shell-extension-prefs.desktop \
+	files/extension-todo.png \
 	$(NULL)
 
 filesdir = $(pkgdatadir)

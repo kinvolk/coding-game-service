@@ -68,6 +68,28 @@
             ]
         },
         {
+            "name": "shellextension",
+            "short_desc": "Shell extensions",
+            "long_desc": "Learn how to modify the world around you.",
+            "hint": "So many TODO's.",
+            "start_events": [
+                "chat::ada::shellextension::start",
+                "chat::ada::shellextension::about",
+                "chat::ada::shellextension::icon",
+                "event::ada::shellextension::insert_extension_icon",
+                "chat::ada::shellextension::show_icon",
+                "chat::ada::shellextension::show_icon_pause"
+            ],
+            "artifacts": [
+                {
+                    "name": "artifact::shellextension:finished",
+                    "icon": "text-editor-symbolic",
+                    "desc": "Learned all about the shell extension tool",
+                    "points": 112
+                }
+            ]
+        },
+        {
             "name": "terminalintro",
             "short_desc": "The Terminal. The System",
             "long_desc": "See what lies behind the curtains in the terminal. Complete the exercises in showmehow and learn more about this new world.",
@@ -2924,10 +2946,208 @@
             }
         },
         {
-            "name": "processing::start-mission::yoursystem",
+            "name": "shellextension::start-mission::shellextension",
             "type": "start-mission",
             "data": {
-                "name": "yoursystem"
+                "name": "shellextension"
+            }
+        },
+        {
+            "name": "chat::ada::shellextension::start",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "We will be learning about EOS shell extensions. The EOS shell is based off the GNOME shell. Learn more about GNOME shell <a href=\"https://wiki.gnome.org/Projects/GnomeShell\">here.</a>"
+            }
+        },
+        {
+            "name": "chat::ada::shellextension::about",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "EOS Shell Extensions are are small pieces of code written by developers that modify the way your system works and looks."
+            }
+        },
+        {
+          "name": "chat::ada::shellextension::icon",
+          "type": "chat-actor",
+          "data": {
+            "actor": "Ada",
+            "message": "Lets first have a look at the Extensions preferences application. To get started, click the Extensions icon."
+          }
+        },
+        {
+            "name": "event::ada::shellextension::insert_extension_icon",
+            "type": "modify-app-grid",
+            "data": {
+                "action": "add-app",
+                "app": "eos-shell-extension-prefs.desktop"
+            }
+        },
+        {
+            "name": "chat::ada::shellextension::show_icon",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "Ada",
+                "attachment": {
+                    "desc": "Shell extensions",
+                    "path": "eos-shell-extension-prefs.desktop"
+                }
+            }
+        },
+        {
+            "name": "chat::ada::shellextension::show_icon_pause",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "prompt": "Clicked and ready to continue?",
+                        "choices": {
+                            "yes": {
+                                "text": "Ready!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::ada::shellextension::about_extension_prefs",
+                        "chat::ada::shellextension::enable_todo_extension",
+                        "chat::ada::shellextension::show_todo_extension",
+                        "chat::ada::shellextension::clue_todo_extension"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::ada::shellextension::about_extension_prefs",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "There are a couple of extensions for you to enable already. Lets start with TODO extension, its a simple way to keep track of things you need to do. Click on the OFF button and your the TODO extension will be enabled."
+            }
+        },
+        {
+            "name": "chat::ada::shellextension::enable_todo_extension",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Your TODO list should now be located in the right corner of your screen."
+            }
+        },
+        {
+            "name": "chat::ada::shellextension::show_todo_extension",
+            "type": "chat-actor-attachment",
+            "data": {
+                "actor": "Ada",
+                "attachment": {
+                    "desc": "Location of the TODO Extension",
+                    "path": "extension-todo.png"
+                }
+            }
+        },
+        {
+            "name": "chat::ada::shellextension::clue_todo_extension",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "prompt": "Found it?",
+                        "choices": {
+                            "yes": {
+                                "text": "Yes!"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "yes": [
+                        "chat::ada::shellextension::clue_todo_about",
+                        "chat::ada::shellextension::clue_todo_start",
+                        "chat::ada::shellextension::clue_todo_response"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::ada::shellextension::clue_todo_about",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Great job! You managed to customize your enviroment. Lets explore the TODO extension. Click the number (4) in the right corner to reveal all the TODOs."
+            }
+        },
+        {
+            "name": "chat::ada::shellextension::clue_todo_start",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "There should be a list of default TODO tasks, but one looks cryptic, select that one below to proceed."
+            }
+        },
+        {
+            "name": "chat::ada::shellextension::clue_todo_response",
+            "type": "input-user",
+            "data": {
+                "actor": "Ada",
+                "input": {
+                    "type": "choice",
+                    "settings": {
+                        "prompt": "Your Answer",
+                        "choices": {
+                            "1234": {
+                                "text": "1234"
+                            },
+                            "1CF86": {
+                                "text": "1CF86"
+                            },
+                            "8I903": {
+                                "text": "8I903"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "1234": [
+                        "chat::ada::shellextension::clue_todo_again",
+                        "chat::ada::shellextension::clue_todo_response"
+                    ],
+                    "8I903": [
+                        "chat::ada::shellextension::clue_todo_again",
+                        "chat::ada::shellextension::clue_todo_response"
+                    ],
+                    "1CF86": [
+                        "chat::ada::shellextension::clue_todo_success",
+                        "artifact::shellextension:todo"
+                    ]
+                }
+            }
+        },
+        {
+            "name": "chat::ada::shellextension::clue_todo_again",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Hmm, check again, that was not the right one."
+            }
+        },
+        {
+            "name": "chat::ada::shellextension::clue_todo_success",
+            "type": "chat-actor",
+            "data": {
+                "actor": "Ada",
+                "message": "Congratulations! You uncovered the hidden TODO task!"
+            }
+        },
+        {
+            "name": "artifact::shellextension:todo",
+            "type": "register-artifact",
+            "data": {
+                "name": "artifact::shellextension:finished"
             }
         },
         {
@@ -3615,6 +3835,9 @@
                             "intro": {
                                 "text": "Introduction"
                             },
+                            "shellextension": {
+                                "text": "Shell extensions - Customize all the things"
+                            },
                             "showmehow": {
                                 "text": "Terminal - Dig into the system"
                             },
@@ -3639,6 +3862,11 @@
                 "responses": {
                     "intro": [
                         "start-mission::intro",
+                        "chat::marlon::where_to_go::response",
+                        "chat::marlon::where_to_go::input"
+                    ],
+                    "shellextension": [
+                        "shellextension::start-mission::shellextension",
                         "chat::marlon::where_to_go::response",
                         "chat::marlon::where_to_go::input"
                     ],
