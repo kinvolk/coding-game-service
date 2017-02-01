@@ -989,7 +989,7 @@
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Processing",
-                    "path": "org.processing.App.desktop"
+                    "path": "/sysroot/flatpak/exports/share/applications/org.processing.App.desktop"
                 }
             }
         },
