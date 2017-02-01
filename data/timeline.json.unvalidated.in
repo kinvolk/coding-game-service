@@ -984,12 +984,12 @@
         },
         {
             "name": "chat::ada::processing::show_icon",
-            "type": "chat-actor-attachment",
+            "type": "chat-actor-desktop-attachement",
             "data": {
                 "actor": "Ada",
                 "attachment": {
                     "desc": "Processing",
-                    "path": "/sysroot/flatpak/exports/share/applications/org.processing.App.desktop"
+                    "desktop-app": "org.processing.App.desktop"
                 }
             }
         },
