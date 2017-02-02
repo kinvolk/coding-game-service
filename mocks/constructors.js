@@ -49,7 +49,8 @@ const Descriptors = {
     ]
 };
 const createChatController = jasmine.createSpyObj.bind(this, 'ChatControllerMock', [
-    'sendChatMessage'
+    'sendChatMessage',
+    'reset'
 ]);
 const createExternalService = jasmine.createSpyObj.bind(this, 'ExternalServiceMock', [
     'connectHandlers',
