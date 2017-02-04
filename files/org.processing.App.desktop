@@ -1,9 +1,0 @@
-[Desktop Entry]
-Type=Application
-Name=Processing
-GenericName=Processing
-Comment=Programming environment for creating images, animations and interactions
-Exec=/usr/bin/flatpak run --branch=master --arch=x86_64 --command=processing org.processing.App %f
-Icon=org.processing.App
-Categories=Development;IDE;
-MimeType=text/x-processing;

@@ -2,7 +2,6 @@
 arbitrary_files = \
 	files/sw.txt \
 	files/test.txt \
-	files/org.processing.App.desktop \
 	files/classes.py \
 	files/functions.py \
 	files/processing.png \
