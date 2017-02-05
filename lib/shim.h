@@ -1,3 +1,11 @@
+/* lib/shim.h
+ *
+ * Copyright (c) 2017 Endless Mobile Inc.
+ *
+ * A small helper library to ease integration with coding-game-service'
+ * external events.
+ */
+
 #ifndef _CODING_GAME_SERIVCE_SHIM_H
 #define _CODING_GAME_SERVICE_SHIM_H
 
