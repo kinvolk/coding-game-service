@@ -1,7 +1,6 @@
 // tests/js/testCodingGameService.js
 //
 // Copyright (c) 2016 Endless Mobile Inc.
-// All Rights Reserved.
 //
 // These tests actually exercise the entire timeline to make sure that
 // all the events work as intended. The ordering of tests here matters

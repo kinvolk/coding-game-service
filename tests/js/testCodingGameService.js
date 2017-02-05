@@ -1,7 +1,6 @@
 // tests/js/testCodingGameService.js
 //
-// Copyright (c) 2016 Endless Mobile Inc.
-// All Rights Reserved.
+// Copyright (c) 2016-2017 Endless Mobile Inc.
 //
 // These unit tests test the underlying functionality in CodingGameController
 // (apart from the actual sequencing of events themselves).
