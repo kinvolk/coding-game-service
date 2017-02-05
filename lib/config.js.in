@@ -1,2 +1,8 @@
+// lib/config.js.in
+//
+// Copyright (c) 2016-2017 Endless Mobile Inc.
+//
+// This module contains constants for where files are installed.
+
 var coding_files_dir = '%CODING_FILES_DIR%';
 var coding_copy_files_script = '%CODING_COPY_FILES_SCRIPT%';
