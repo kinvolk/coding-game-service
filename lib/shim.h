@@ -22,7 +22,7 @@ G_DECLARE_FINAL_TYPE (CodingGameServiceAppIntegrationController,
                       APP_INTEGRATION_CONTROLLER,
                       GObject)
 
-CodingGameServiceAppIntegrationController *coding_game_service_app_integration_controller_new ();
+CodingGameServiceAppIntegrationController *coding_game_service_app_integration_controller_new (void);
 
 typedef void (*CodingGameServiceAppIntegrationControllerInterestCallback)(CodingGameServiceAppIntegrationController *controller, gpointer user_data);
 
