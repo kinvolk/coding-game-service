@@ -218,7 +218,7 @@ coding_game_service_app_integration_controller_init(CodingGameServiceAppIntegrat
 
 CodingGameServiceAppIntegrationController *
 coding_game_service_app_integration_controller_new () {
-  return g_object_new(CODING_GAME_SERVICE_TYPE_APP_INTEGRATION_CONTROLLER);
+  return g_object_new(CODING_GAME_SERVICE_TYPE_APP_INTEGRATION_CONTROLLER, NULL);
 }
 
 static void
