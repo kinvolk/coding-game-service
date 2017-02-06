@@ -19,6 +19,7 @@ arbitrary_files = \
 	files/line/line.pde \
 	files/martian/martian.pde \
 	files/wave/wave.pde \
+	files/extension-todo.png \
 	$(NULL)
 
 filesdir = $(pkgdatadir)
