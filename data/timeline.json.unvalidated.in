@@ -2904,18 +2904,18 @@
                     }
                 },
                 "responses": {
-                    "op4": [
+                    "op2": [
                         "chat::konrad::popquiz::misc::finished"
                     ],
                     "op1": [
                         "chat::konrad::popquiz::misc::wrong",
                         "chat::konrad::popquiz::misc::ready"
                     ],
-                    "op2": [
+                    "op3": [
                         "chat::konrad::popquiz::misc::wrong",
                         "chat::konrad::popquiz::misc::ready"
                     ],
-                    "op3": [
+                    "op4": [
                         "chat::konrad::popquiz::misc::wrong",
                         "chat::konrad::popquiz::misc::ready"
                     ]
